@@ -1,10 +1,14 @@
+import qrcode from 'qrcode.react';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from '../logo.svg';
+import './styles/App.css';
+import QRCode from 'qrcode.react';
+
 
 function App() {
   return (
     <div className="App">
+      <QRCode value="http://facebook.github.io/react/" />,
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
