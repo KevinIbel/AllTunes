@@ -122,6 +122,3 @@
    *     "200": 
    *       description: "successful operation"
    */
-
-  
-          
