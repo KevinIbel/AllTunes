@@ -10,24 +10,23 @@
  *    - "application/json"
  *   produces:
  *     - "application/json"
- *   parameters:
- *   - in: "body"
- *     name: "body"
- *     description: ""
+ *   requestBody:
  *     required: true
- *     schema:
- *       type: "object"
- *       properties:
- *         hostName:
- *           type: "string"
- *           example: "jamesangel140"
+ *     content:
+ *       description: "The name of the host of the room"
+ *       schema:
+ *         type: "object"
+ *         properties:
+ *           hostname:
+ *             type: "string"
+ *             example: "jamesangel140"
  *   responses:
  *     "200":
  *       description: "successful operation"
  *       schema:
  *         type: "object"
  *         properties:
- *           hostName:
+ *           hostname:
  *             type: "string"
  *             example: "jamesangel140"
  *           key:
@@ -53,7 +52,7 @@
  *     schema:
  *       type: "object"
  *       properties:
- *         hostName:
+ *         hostname:
  *           type: "string"
  *           example: "jamesangel140"
  *   responses:
@@ -62,7 +61,7 @@
  *       schema:
  *         type: "object"
  *         properties:
- *           hostName:
+ *           hostname:
  *             type: "string"
  *             example: "jamesangel140"
  *  delete:
@@ -82,7 +81,7 @@
  *     schema:
  *       type: "object"
  *       properties:
- *         hostName:
+ *         hostname:
  *           type: "string"
  *           example: "jamesangel140"
  *   responses:
@@ -107,7 +106,7 @@
  *       items:
  *         type: "object"
  *         properties:
- *           hostName:
+ *           hostname:
  *             type: "string"
  *             example: "jamesangel140"
  *           key:
@@ -124,28 +123,28 @@
  */
 
 const express = require("express");
-const RoomOrchestrator = require("../controllers/roomOrchestrator");
+const Controller = require("../controllers/controller");
 const router = express.Router();
 
 
-const roomOrchestrator = new RoomOrchestrator();
+const controller = new Controller();
 
 router.post("/", (req, res) => {
-  const data = roomOrchestrator.createRoom();
-  res.send(data);
+  const data = controller.createRoom(req.body.hostname);
+  res.status(data.status).json(data.data);
 });
 router.put("/", (req, res) => {
-  const data = roomOrchestrator.addCustomer();
-  res.send(data);
+  const data = controller.addCustomer(req.body.customerUsername, req.body.roomKey);
+  res.status(data.status).json(data.data);
 });
 router.delete("/", (req, res) => {
-  const data = roomOrchestrator.deleteRoom();
-  res.send(data);
+  const data = controller.deleteRoom(req.body.hostname, req.body.roomKey);
+  res.status(data.status).json(data.data);
 });
 
 router.get("/", (req, res) => {
-  const data = roomOrchestrator.listInfo();
-  res.send(data);
+  const data = controller.listInfo();
+  res.status(data.status).json(data.data);
 });
 
 module.exports = router;

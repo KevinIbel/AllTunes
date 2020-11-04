@@ -1,26 +1,42 @@
 var Room = require("./room");
 
 class RoomOrchestrator {
-  constructor(hostname) {
+  constructor() {
     this.rooms = {};
   }
 
   addCustomer = (customerUsername, roomKey) => {
-    this.roomKey.push(customerUsername);
+    if (this.rooms[roomKey]) {
+      if (!this.rooms[roomKey].customers.includes(customerUsername)) {
+        this.rooms[roomKey].addCustomer(customerUsername);
+      } else {
+        throw "customer already in room";
+      }
+    } else {
+      throw "room does not exist";
+    }
   };
 
   createRoom = (hostname) => {
-    const room = new Room(hostname);
-    this.rooms.key = room;
-    return room.key;
+    while (true) {
+      const room = new Room(hostname);
+      if (!this.rooms[room.key]) {
+        this.rooms[room.key] = room;
+        return room.key;
+      }
+    }
   };
 
   deleteRoom = (roomKey) => {
-    delete this.rooms.roomKey;
+    if (this.rooms[roomKey]) {
+      delete this.rooms[roomKey];
+    } else {
+      throw "room does not exist";
+    }
   };
 
   listInfo = () => {
-    return rooms;
+    return this.rooms;
   };
 }
 
