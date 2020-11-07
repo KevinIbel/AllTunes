@@ -7,7 +7,7 @@ const swaggerOptions = {
       description:
         "This is a simple CRUD API application made with Express and documented with Swagger",
     },
-    host: "localhost:8000/",
+    host: "localhost:8000",
     basePath: "/",
   },
   apis: ["./api/Room/routes/index.js"],
