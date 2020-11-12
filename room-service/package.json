@@ -1,27 +1,22 @@
 {
-  "name": "backend",
+  "name": "room-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "Room mircoservice",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "test": "mocha --recursive"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@kubernetes/client-node": "^0.13.0",
-    "axios": "^0.21.0",
     "chai": "^4.2.0",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
     "mocha": "^8.2.1",
     "spotify-web-api-node": "^4.0.0",
-    "supertest": "^6.0.0",
-    "swagger-jsdoc": "^5.0.0",
+    "supertest": "^6.0.1",
+    "swagger-jsdoc": "^5.0.1",
     "swagger-ui-express": "^4.1.4"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.6"
   }
 }
