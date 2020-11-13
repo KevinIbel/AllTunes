@@ -137,10 +137,6 @@ router.put("/", (req, res) => {
   const data = controller.addCustomer(req.body.customerUsername);
   res.status(data.status).json(data.data);
 });
-router.delete("/", (req, res) => {
-  const data = controller.deleteRoom(req.body.hostname);
-  res.status(data.status).json(data.data);
-});
 
 router.get("/", (req, res) => {
   const data = controller.listInfo();

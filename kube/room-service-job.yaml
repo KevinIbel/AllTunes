@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: room-service
 spec:
-  replicas: 0
+  replicas: 2
   selector:
     matchLabels:
       app: room-service
@@ -16,4 +16,6 @@ spec:
         - name: app
           image: jamesangel/alltunes-room-service
           ports:
-            - containerPort: 8000
+            - name: http
+              containerPort: 8888
+              protocol: TCP
