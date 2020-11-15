@@ -1,64 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './room.css';
+import './index.css';
 
-import SpotifyWebApi from 'spotify-web-api-js';
-const spotifyApi = new SpotifyWebApi();
-
-class userroom extends Component {
-  constructor(){
-    super();
-    const params = this.getHashParams();
-    const token = params.access_token;
-    if (token) {
-      spotifyApi.setAccessToken(token);
-    }
-    this.state = {
-      loggedIn: token ? true : false,
-      nowPlaying: { name: 'Not Checked', albumArt: '' }
-    }
-  }
-  getHashParams() {
-    var hashParams = {};
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-        q = window.location.hash.substring(1);
-    e = r.exec(q)
-    while (e) {
-       hashParams[e[1]] = decodeURIComponent(e[2]);
-       e = r.exec(q);
-    }
-    return hashParams;
-  }
-    getNowPlaying(){
-      spotifyApi.getMyCurrentPlaybackState()
-        .then((response) => {
-          this.setState({
-            nowPlaying: {
-                name: response.item.name, 
-                albumArt: response.item.album.images[0].url
-  
-              }
-          });
-        })
-    }
-  
+class App extends React.Component {
   render() {
     return (
       <section>
-        <div class="container grid" ><div id="titleText" title="titleText" class="titleText">AllTunes</div></div>
-        <div class = "vertical"></div>
-        <div>
-          <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
+        <div class="main">
+          <div id="titleText" title="titleText" class="titleText">AllTunes</div><br></br>
+          <div><img src="https://i.imgur.com/4BUimGK.png" class="spotifyArt" title="spotifyArt" alt="album art"/></div><br></br>
+          <div class="spotifyTrackInfo" title="spotifyTrackInfo">Track: Pain in My Chest - Artist: Ghostface666 - Album: Just a Rapper Wid Melodies</div>
         </div>
-        <div>
-          Now Playing: {  this.state.nowPlaying.name }
+        <div class="menu">
+          <div id="totalUsers" title="totalUsers" class="totalUsers">Total users: 0</div>
         </div>
-        { this.state.loggedIn &&
-          <button onClick={() => this.getNowPlaying()}>
-            Check Now Playing
-          </button>
-        }
-        expect(linkElement).toBeInTheDocument();
+        
       </section>
     );
   }
@@ -68,7 +24,7 @@ class userroom extends Component {
 // ========================================
 
 ReactDOM.render(
-  <userroom />,
+  <App />,
   document.getElementById('root')
 );
 
