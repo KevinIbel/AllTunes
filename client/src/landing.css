@@ -1,0 +1,29 @@
+body {
+	color:#000000;
+    background-color:#000000;
+}
+
+div {
+    font-family:Trebuchet MS, Helvetica, sans-serif;
+    font-size:50px;
+    text-align: center;
+    color: white;
+}
+
+.buttoncss {
+    color: #ffffff !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #000000;
+    padding: 20px;
+    border: 4px solid #ffffff !important;
+    display: inline-block;
+    transition: all 0.4s ease 0s;
+    }
+
+    .buttoncss:hover {
+        color: #000000 !important;
+        background: #ffffff;
+        border-color: #000000 !important;
+        transition: all 0.4s ease 0s;
+        }
