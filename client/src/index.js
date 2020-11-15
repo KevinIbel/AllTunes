@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-<<<<<<< HEAD
+import App from './components/App';
+import * as serviceWorker from './serviceWorker';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
@@ -43,10 +44,6 @@ class Index extends React.Component {
 
 
 // ========================================
-=======
-import App from './components/App';
-import * as serviceWorker from './serviceWorker';
->>>>>>> 5f8b1801a0e20f6392afcd4230a00b811f99edeb
 
 ReactDOM.render(
   <Index />,

@@ -10,11 +10,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
-<<<<<<< HEAD
-    "spotify-web-api-js": "^1.5.1"
-=======
+    "spotify-web-api-js": "^1.5.1",
     "spotify-web-api-node": "^4.0.0"
->>>>>>> 5f8b1801a0e20f6392afcd4230a00b811f99edeb
   },
   "scripts": {
     "start": "react-scripts start",
