@@ -1,21 +1,13 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: room-service
+  name: room-service-job
 spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: room-service
   template:
-    metadata:
-      labels:
-        app: room-service
     spec:
       containers:
-        - name: app
-          image: jamesangel/alltunes-room-service
-          ports:
-            - name: http
-              containerPort: 8888
-              protocol: TCP
+      - name: app
+        image: jamesangel/alltunes-room-service
+        command: ["node", "index.js"]
+      restartPolicy: Never
+        
