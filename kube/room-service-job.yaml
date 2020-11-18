@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: room-service-job
+spec:
+  parallelism: 1    
+  completions: 1000 
+  template:
+    spec: 
+      containers:
+      - name: app
+        image: jamesangel/alltunes-room-service
+        command: ["node", "index.js"]
+      restartPolicy: Never
+        
