@@ -44,8 +44,8 @@ class Controller {
     var data;
     var status;
     if (this.room) {
-      data = this.room.listInfo();
       status = "200";
+      data = this.room.listInfo();
     } else {
       status = "200";
       data = {};
