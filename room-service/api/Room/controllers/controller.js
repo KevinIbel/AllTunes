@@ -1,22 +1,28 @@
 const crypto = require("crypto");
-const Room = require("../../Room/room");
-//var musicManager = require('../../../music_manager');
+const Room = require("../room");
 
 class Controller {
-  constructor(room) {
+  constructor() {
     this.room;
   }
 
   createRoom = (hostname) => {
     var status;
     var data;
+    if (this.room) {
+      status = "400";
+      data = "room has already been created";
+      return { status, data };
+    }
     if (hostname) {
       this.room = new Room(hostname);
       status = "201";
       data = { key: this.room.key };
+      return { status, data };
     } else {
       status = "400";
       data = "must have hosts username";
+      return { status, data };
     }
   };
 
@@ -24,29 +30,25 @@ class Controller {
     var status;
     var data;
     if (this.room) {
-      try {
-        status = "202";
-        data = this.room.addCustomer(customerUsername);
-      } catch (error) {
-        status = "400";
-        data = error;
-      }
+      status = "202";
+      data = this.room.addCustomer(customerUsername);
+      return { status };
     } else {
-      status = "400"
-      data = "Room has not been created, use POST /room to create a room"
+      status = "400";
+      data = "Room has not been created, use POST /room to create a room";
+      return { status, data };
     }
-    return { status, data };
   };
 
   listInfo = () => {
     var data;
     var status;
-    if(this.room){
+    if (this.room) {
       data = this.room.listInfo();
       status = "200";
     } else {
-      status = "400";
-      data = "Room has not been created, use POST /room to create a room";
+      status = "200";
+      data = {};
     }
     return { status, data };
   };

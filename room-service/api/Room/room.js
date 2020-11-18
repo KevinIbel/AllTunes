@@ -18,6 +18,14 @@ class Room {
   getMusic = () => {
     return this.musicManager.getMusic();
   };
+
+  listInfo = () => {
+    return {
+      host: this.hostname,
+      customers: this.customers,
+      key: this.key,
+    }
+  }
 }
 
 module.exports = Room;

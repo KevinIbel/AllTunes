@@ -143,4 +143,5 @@ router.get("/", (req, res) => {
   res.status(data.status).json(data.data);
 });
 
-module.exports = router;
+
+module.exports = { router } ;

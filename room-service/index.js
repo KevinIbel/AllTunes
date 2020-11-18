@@ -4,16 +4,15 @@ const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const { swaggerOptions } = require("./constants");
 const specs = swaggerJsdoc(swaggerOptions);
-const router = require('./api/routes/index')
-const Room = require('./Room/room');
+const { router } = require('./api/Room/routes/router');
 
 const app = express();
 const port = 8888;
 
-
+//room router
 app.use('/room', router);
 
-
+//default get - to be removed
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -28,7 +27,3 @@ app.delete("/", (req, res) => {
 });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
-
-
-
-module.exports;
