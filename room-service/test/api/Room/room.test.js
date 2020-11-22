@@ -1,7 +1,7 @@
 const assert = require("assert");
 const chai = require("chai");
 const expect = chai.expect;
-const Room = require("../../../../api/Room/controllers/room");
+const Room = require("../../../api/Room/room");
 
 describe("Room Tests", function () {
   context("Constructor Tests", function () {

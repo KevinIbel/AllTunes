@@ -126,19 +126,15 @@ const express = require("express");
 const Controller = require("../controllers/controller");
 const router = express.Router();
 
-
 const controller = new Controller();
 
 router.post("/", (req, res) => {
   const data = controller.createRoom(req.body.hostname);
   res.status(data.status).json(data.data);
 });
+
 router.put("/", (req, res) => {
-  const data = controller.addCustomer(req.body.customerUsername, req.body.roomKey);
-  res.status(data.status).json(data.data);
-});
-router.delete("/", (req, res) => {
-  const data = controller.deleteRoom(req.body.hostname, req.body.roomKey);
+  const data = controller.addCustomer(req.body.customerUsername);
   res.status(data.status).json(data.data);
 });
 
@@ -147,4 +143,5 @@ router.get("/", (req, res) => {
   res.status(data.status).json(data.data);
 });
 
-module.exports = router;
+
+module.exports = { router } ;
