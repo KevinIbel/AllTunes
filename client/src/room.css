@@ -5,20 +5,27 @@
 div.main {
     width: 75%;
     float: left;
-    border: 1px solid red; /* guideline */
 }
 
 div.menu {
     width: 25%;
     float: right;
     padding: 15px;
-    border: 1px solid red; /* guideline */
 }
 
 div.totalUsers {
     font-family:Trebuchet MS, Helvetica, sans-serif;
     font-size:20px;
     text-align: center;
+    text-decoration: underline;
+    color: white;
+}
+
+div.hostedBy {
+    font-family:Trebuchet MS, Helvetica, sans-serif;
+    font-size:20px;
+    text-align: center;
+    text-decoration: underline;
     color: white;
 }
 
@@ -48,9 +55,30 @@ img.spotifyArt {
     margin-right: auto;
 }
 
-.vertical { 
-    border-left: 2px solid rgb(255, 255, 255); 
-    height: 1000px; 
-    position:absolute; right: 500px; top: 20px;
-    background-image: linear-gradient(to right, transparent, rgb(48,49,51), transparent);
-} 
+img.editName {
+    border-radius: 8px;
+    display: block;
+    display: inline-block;
+}
+
+div.divider
+{
+	content: "";
+	position: absolute;
+	left: 5%;
+	right: 5%;
+	width: 60%;
+	height: 1px;
+	background-image: linear-gradient(to right, transparent, rgb(255, 255, 255), transparent);
+}
+
+div.queue {
+    font-family:Trebuchet MS, Helvetica, sans-serif;
+    font-size:20px;
+    text-align: center;
+    color: white;
+}
+
+ul {
+    list-style-type: none;
+}
