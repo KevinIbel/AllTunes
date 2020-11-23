@@ -11,6 +11,7 @@ class App extends React.Component {
           <div><img src="https://i.imgur.com/4BUimGK.png" class="spotifyArt" title="spotifyArt" alt="album art"/></div><br></br>
           <div class="spotifyTrackInfo" title="spotifyTrackInfo">Track: Pain in My Chest - Artist: Ghostface666 - Album: Just a Rapper Wid Melodies</div><br></br>
           <div class="divider"></div><br></br>
+          <button class='button'></button>
           <div class="queue">Queue
             <ul>
               <li>Track: Goat - Artist: Lil Tjay - Album: Goat (Single)</li><br></br>
