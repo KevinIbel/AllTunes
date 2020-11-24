@@ -1,6 +1,9 @@
 import React from 'react';
 import moment from 'moment';
+
 import withUiActions from '../../../../../hoc/uiHoc';
+
+
 
 const album = ({ album, onAlbumClick }) => (
   <div onClick={() => onAlbumClick(album.id)}>

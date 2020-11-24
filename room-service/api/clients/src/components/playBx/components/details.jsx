@@ -15,6 +15,9 @@ const details = props => {
       <div className="add-remove-section">
         <p
           onClick={() => props.onAlbumClick(props.album)}
+          className={
+            'song-name' + (props.songName.length > 30 ? ' overflow' : '')
+          }
         >
           {props.songName}
         </p>
@@ -28,6 +31,7 @@ const details = props => {
             >
               {artist.name}
             </span>
+            {i + 1 !== artists ? ', ' : ''}
           </span>
         ))}
       </div>

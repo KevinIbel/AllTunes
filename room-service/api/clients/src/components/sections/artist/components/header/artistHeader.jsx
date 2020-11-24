@@ -1,4 +1,6 @@
 import React from 'react';
+
+import './artistHeader.css';
 import withPlayer from '../../../../../hoc/playerHoc';
 
 const artistHeader = ({

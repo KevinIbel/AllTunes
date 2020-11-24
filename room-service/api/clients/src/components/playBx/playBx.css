@@ -1,24 +1,24 @@
-.songdur-container {
+.song-sider-container {
   display: flex;
   width: 40%;
   margin: 0 auto;
   align-items: center;
   margin-top: 0px; }
-  .songdur-container span {
+  .song-sider-container span {
     font-size: 10px;
     color: #aaa; }
-    .songdur-container span:first-of-type {
+    .song-sider-container span:first-of-type {
       padding-right: 4px; }
-    .songdur-container span:last-of-type {
+    .song-sider-container span:last-of-type {
       padding-left: 4px; }
-  .songdur-container .duration {
+  .song-sider-container .song-sider {
     margin: 0 auto;
     width: 90%;
     height: 4px;
     background-color: dimgray;
     transition: width 0.1s;
     border-radius: 4px; }
-    .songdur-container .duration .position-sider {
+    .song-sider-container .song-sider .position-sider {
       background-color: black; }
 
 .player-container .details-section {

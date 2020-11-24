@@ -4,20 +4,18 @@ import { bindActionCreators } from 'redux';
 
 import { setModal } from '../../store/actions/uiActions';
 
-import TrackCover from '../../components/trackCover/trackCover';
 
-
-class DisImg extends Component {
+class Modal extends Component {
+  state = {};
   render() {
     return (
-      <div className="left-section">
-        <div className="buttom-section">
-          <TrackCover />
-        </div>
+      <div>
       </div>
     );
   }
 }
+
+
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
@@ -26,8 +24,6 @@ const mapDispatchToProps = dispatch => {
     dispatch
   );
 };
-
 export default connect(
-  null,
   mapDispatchToProps
-)(DisImg);
+)(Modal);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from './buttons';
+import Button from './controlButton';
 
 const songsControl = props => (
   <div className="song-control">

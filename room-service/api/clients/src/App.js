@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { setToken } from './store/actions/sessionActions';
 import { fetchUser } from './store/actions/userActions';
 
-import LeftSection from './containers/leftSection/leftSection';
+import CurrPlaying from './containers/currPlaying/currPlaying';
 import MainSection from './containers/mainSection/mainSection';
 
 import Login from './spotify/login';
@@ -49,7 +49,7 @@ class App extends Component {
     return (
       <div>
         <WebPlaybackReact {...webPlaybackSdkProps}>
-            <LeftSection />
+            <CurrPlaying />
             <MainSection />
         </WebPlaybackReact>
       </div>

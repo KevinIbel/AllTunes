@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import Details from './components/details';
-import SongsControl from './components/songsControl';
-import Duration from './components/durationMs';
-import withPlayer from '../../hoc/playerHoc';
+
 import './playBx.css';
+
+import DetailSection from './components/details';
+import SongsControl from './components/songsControl';
+import SongSider from './components/songSider';
+import withPlayer from '../../hoc/playerHoc';
+
 class playBx extends Component {
   toSeconds = ms => ms / 1000;
 
@@ -16,7 +19,7 @@ class playBx extends Component {
     return (
       <div className="player-container">
         {this.props.currentSong.id ? (
-          <Details
+          <DetailSection
             ids={
               this.props.currentSong.linked_from.id
                 ? `${this.props.currentSong.linked_from.id},${
@@ -33,7 +36,7 @@ class playBx extends Component {
         <SongsControl
           {...this.props}
         />
-        <Duration
+        <SongSider
           isEnabled
           value={position / duration}
           position={position}

@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { fetchSearchData } from '../../../store/actions/searchActions';
+
 import Index from './components/index/index';
 import NoResults from './components/noResults/noResults';
 import Results from './components/results/results';
+
+import './search.css';
 
 class Search extends Component {
   state = {

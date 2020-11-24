@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import Table from '../../songsTable/albumTable/albumTable';
 import withStatus from '../../../hoc/statusHoc';
 

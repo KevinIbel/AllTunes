@@ -7,10 +7,11 @@ import { setModal } from '../../store/actions/uiActions';
 import TrackCover from '../../components/trackCover/trackCover';
 
 
-class DisImg extends Component {
+class disPlayin extends Component {
   render() {
     return (
       <div className="left-section">
+
         <div className="buttom-section">
           <TrackCover />
         </div>
@@ -30,4 +31,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   null,
   mapDispatchToProps
-)(DisImg);
+)(disPlayin);

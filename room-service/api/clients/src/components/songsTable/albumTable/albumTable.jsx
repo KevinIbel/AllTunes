@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import '../../sections/artist/components/popular/popular.css';
+
 import Song from '../items/song';
 import withSongsStatus from '../hoc/songHoc';
 
