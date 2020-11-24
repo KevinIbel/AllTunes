@@ -18,7 +18,6 @@
       margin-bottom: 0px; }
     .current-artist-header-container .current-artist-info p {
       text-transform: uppercase;
-      font-family: 'Proxima Thin', Georgia, sans-serif;
       font-size: 13px; }
   @media (max-width: 900px) {
     .current-artist-header-container .current-artist-image {
