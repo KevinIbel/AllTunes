@@ -1,0 +1,17 @@
+img.spotifyArt {
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.artist-name {
+    font-family:Trebuchet MS, Helvetica, sans-serif;
+    text-align: center;
+    color: white;
+}
+
+div.song-name {
+    font-family:Trebuchet MS, Helvetica, sans-serif;
+    text-align: center;
+}
