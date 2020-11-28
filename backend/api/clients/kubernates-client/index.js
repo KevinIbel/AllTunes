@@ -100,8 +100,8 @@ async function createPod(port) {
 
   axios(config)
     .then(function (response) {
-      console.log(response.data.items);
-      return response.body.metadata.name;
+      console.log(response.data.metadata.name);
+      return response.data.metadata.name;
     })
     .catch(function (error) {
       console.log(error);
@@ -125,6 +125,5 @@ async function deletePod(podName) {
       console.log(error);
     });
 }
-
 
 module.exports = { getPodsData, createPod, deletePod };
