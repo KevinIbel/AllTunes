@@ -1,0 +1,32 @@
+{
+    "kind": "Pod",
+    "apiVersion": "v1",
+    "metadata": {
+        "labels": {
+            "app": "room-service"
+        },
+        "namespace": "default",
+        "generateName": "room-service-manual-pod-"
+    },
+    "spec": {
+        "hostNetwork": true,
+        "containers": [
+            {
+                "name": "app",
+                "image": "jamesangel/alltunes-room-service",
+                "command": [
+                    "node",
+                    "index.js"
+                ],
+                "ports": [
+                    {
+                        "containerPort": 8888,
+                        "hostPort": 8888
+                    }
+                ]
+            }
+        ],
+        "restartPolicy": "Never",
+        "terminationGracePeriodSeconds": 30
+    }
+}

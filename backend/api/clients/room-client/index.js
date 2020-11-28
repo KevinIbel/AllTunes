@@ -47,4 +47,4 @@ async function deleteRoom(roomIp, host) {
     });
 }
 
-module.exports = { increasePods, decreasePods, getPodsData };
+module.exports = { initRoom, addCustomer, deleteRoom};
