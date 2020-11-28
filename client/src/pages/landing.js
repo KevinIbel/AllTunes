@@ -16,7 +16,4 @@ class Landing extends React.Component {
     }
 }
 
-ReactDOM.render(
-    <Landing />,
-    document.getElementById('root')
-  );
+export default Landing
