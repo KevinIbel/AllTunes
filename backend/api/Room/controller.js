@@ -4,6 +4,8 @@ const {
   deletePod,
 } = require("../clients/kubernates-client/index");
 
+const { initRoom, addCustomer, deleteRoom} = require('../clients/room-client/index');
+
 class RoomController {
   constructor() {
     this.portsToUse = [8888];
@@ -12,13 +14,28 @@ class RoomController {
   }
 
   async createRoom(hostname) {
-    await createPod(this.portsToUse[0]);
-    this.UsedPorts[0] = this.portsToUse[0]
+    const podName = await createPod(this.portsToUse[0]);
+    this.UsedPorts[0] = this.portsToUse[0];
+    while(!this.isPodReady(podName)){
+      continue;
+    }
+    const key = await initRoom('')
+    return key;
   }
 
-  initaliseRoom(){
-
+  async isPodReady(podName) {
+    const podStatus = await getPodsData();
+    const pod = podStatus.filter((pod) => {
+      return pod.metadata.name == podName ? true : false;
+    })[0];
+    console.log(podStatus);
+    if(pod){
+      return pod.status.phase == 'Running' ? true :false;
+    }
   }
+
+
 }
 
-module.exports = RoomController
+new RoomController().isPodReady("room-service-manual-pod-knslh");
+module.exports = RoomController;
