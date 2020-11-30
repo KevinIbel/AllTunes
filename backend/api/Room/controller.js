@@ -14,12 +14,17 @@ class RoomController {
   }
 
   async createRoom(hostname) {
-    const podName = await createPod(this.portsToUse[0]);
+    const pod = await createPod(this.portsToUse[0]);
     this.UsedPorts[0] = this.portsToUse[0];
-    while(!this.isPodReady(podName)){
-      continue;
+    var isPodReady =await this.isPodReady(pod.metadata.name)
+    console.log(isPodReady);
+    while(!isPodReady){
+      console.log(isPodReady);
+      isPodReady = await this.isPodReady(pod.metadata.name);
     }
-    const key = await initRoom('')
+    const podIP = await this.getPodId(pod.metadata.name);
+    console.log("podId", podIP)
+    const key = await initRoom(podIP, hostname)
     return key;
   }
 
@@ -28,14 +33,23 @@ class RoomController {
     const pod = podStatus.filter((pod) => {
       return pod.metadata.name == podName ? true : false;
     })[0];
-    console.log(podStatus);
     if(pod){
+      console.log(pod.status.phase);
       return pod.status.phase == 'Running' ? true :false;
     }
+  }
+
+  async getPodId(podName) {
+    const podStatus = await getPodsData();
+    const pod = podStatus.filter((pod) => {
+      return pod.metadata.name == podName ? true : false;
+    })[0];
+    console.log("pod", pod)
+    return pod.status.podIP;
   }
 
 
 }
 
-new RoomController().isPodReady("room-service-manual-pod-knslh");
+
 module.exports = RoomController;

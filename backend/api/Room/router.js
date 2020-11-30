@@ -5,8 +5,8 @@ const router = express.Router();
 const controller = new RoomController();
 
 router.post("/", async (req, res) => {
-  await controller.createRoom();
-  res.status('200')
+  const key = await controller.createRoom('jamesangel140');
+  res.status('200').json(key);
 });
 
 router.put("/", (req, res) => {

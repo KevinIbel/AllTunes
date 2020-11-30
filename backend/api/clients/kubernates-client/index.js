@@ -1,70 +1,7 @@
 const axios = require("axios");
 const roomServiceDefinition = require("./room-service-pod.json");
 
-const kubernatesUrl = "localhost:8001";
-
-async function getJob(namespace, name) {
-  var config = {
-    method: "get",
-    url: `http://${kubernatesUrl}/apis/batch/v1/namespaces/${namespace}/jobs/${name}`,
-  };
-
-  return axios(config)
-    .then(function (response) {
-      return response.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
-
-async function increaseJobs(namespace, name) {
-  const job = await getJob(namespace, name);
-
-  const data = { spec: { parallelism: job.spec.parallelism + 1 } };
-  console.log(data);
-
-  var config = {
-    method: "patch",
-    url: `http://${kubernatesUrl}/apis/batch/v1/namespaces/${namespace}/jobs/${name}`,
-    headers: {
-      "Content-Type": "application/strategic-merge-patch+json",
-    },
-    data: data,
-  };
-
-  return axios(config)
-    .then(function (response) {
-      return response.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
-
-async function decreaseJobs(namespace, name) {
-  const job = await getJob(namespace, name);
-
-  const data = { spec: { parallelism: job.spec.parallelism - 1 } };
-  console.log(data);
-
-  var config = {
-    method: "patch",
-    url: `http://${kubernatesUrl}/apis/batch/v1/namespaces/${namespace}/jobs/${name}`,
-    headers: {
-      "Content-Type": "application/strategic-merge-patch+json",
-    },
-    data: data,
-  };
-
-  return axios(config)
-    .then(function (response) {
-      return response.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
+const kubernatesUrl = "kubernetes.default";
 
 async function getPodsData() {
   var config = {
@@ -75,9 +12,8 @@ async function getPodsData() {
     },
   };
 
-  axios(config)
+  return axios(config)
     .then(function (response) {
-      console.log(response.data.items);
       return response.data.items;
     })
     .catch(function (error) {
@@ -98,10 +34,9 @@ async function createPod(port) {
     data: data,
   };
 
-  axios(config)
+  return axios(config)
     .then(function (response) {
-      console.log(response.data.metadata.name);
-      return response.data.metadata.name;
+      return response.data;
     })
     .catch(function (error) {
       console.log(error);
@@ -117,7 +52,7 @@ async function deletePod(podName) {
     },
   };
 
-  axios(config)
+  return axios(config)
     .then(function (response) {
       return response.status;
     })
