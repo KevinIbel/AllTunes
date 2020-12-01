@@ -4,7 +4,11 @@ const {
   deletePod,
 } = require("../clients/kubernates-client/index");
 
-const { initRoom, addCustomer, deleteRoom} = require('../clients/room-client/index');
+const {
+  initRoom,
+  addCustomer,
+  deleteRoom,
+} = require("../clients/room-client/index");
 
 class RoomController {
   constructor() {
@@ -14,18 +18,22 @@ class RoomController {
   }
 
   async createRoom(hostname) {
-    const pod = await createPod(this.portsToUse[0]);
-    this.UsedPorts[0] = this.portsToUse[0];
-    var isPodReady =await this.isPodReady(pod.metadata.name)
-    console.log(isPodReady);
-    while(!isPodReady){
+    try {
+      const pod = await createPod(this.portsToUse[0]);
+      this.UsedPorts[0] = this.portsToUse[0];
+      var isPodReady = await this.isPodReady(pod.metadata.name);
       console.log(isPodReady);
-      isPodReady = await this.isPodReady(pod.metadata.name);
+      while (!isPodReady) {
+        console.log(isPodReady);
+        isPodReady = await this.isPodReady(pod.metadata.name);
+      }
+      const podIP = await this.getPodId(pod.metadata.name);
+      console.log("podId", podIP);
+      const key = await initRoom(podIP, hostname);
+      return {podId, isPodReady, key};
+    } catch (error) {
+      return error;
     }
-    const podIP = await this.getPodId(pod.metadata.name);
-    console.log("podId", podIP)
-    const key = await initRoom(podIP, hostname)
-    return key;
   }
 
   async isPodReady(podName) {
@@ -33,9 +41,9 @@ class RoomController {
     const pod = podStatus.filter((pod) => {
       return pod.metadata.name == podName ? true : false;
     })[0];
-    if(pod){
+    if (pod) {
       console.log(pod.status.phase);
-      return pod.status.phase == 'Running' ? true :false;
+      return pod.status.phase == "Running" ? true : false;
     }
   }
 
@@ -44,12 +52,9 @@ class RoomController {
     const pod = podStatus.filter((pod) => {
       return pod.metadata.name == podName ? true : false;
     })[0];
-    console.log("pod", pod)
+    console.log("pod", pod);
     return pod.status.podIP;
   }
-
-
 }
-
 
 module.exports = RoomController;

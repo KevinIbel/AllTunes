@@ -1,7 +1,9 @@
 const axios = require("axios");
 const roomServiceDefinition = require("./room-service-pod.json");
+const fs = require("fs");
+const { Agent } = require("https");
 
-const kubernatesUrl = "kubernetes.default";
+const kubernatesUrl = "127.0.0.1:8001";
 
 async function getPodsData() {
   var config = {
@@ -17,13 +19,13 @@ async function getPodsData() {
       return response.data.items;
     })
     .catch(function (error) {
-      console.log(error);
+      return error;
     });
 }
 
 async function createPod(port) {
   const data = roomServiceDefinition;
-  data.spec.containers[0].ports[0].hostPort = port;
+  //data.spec.containers[0].ports[0].hostPort = port;
 
   var config = {
     method: "post",
@@ -39,14 +41,14 @@ async function createPod(port) {
       return response.data;
     })
     .catch(function (error) {
-      console.log(error);
+      return error;
     });
 }
 
 async function deletePod(podName) {
   var config = {
     method: "delete",
-    url: `http://${kubernatesUrl}/api/v1/namespaces/default/pods/${name}`,
+    url: `https://${kubernatesUrl}/api/v1/namespaces/default/pods/${name}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -57,7 +59,7 @@ async function deletePod(podName) {
       return response.status;
     })
     .catch(function (error) {
-      console.log(error);
+      return error;
     });
 }
 
