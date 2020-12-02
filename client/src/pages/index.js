@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import  { Redirect } from 'react-router-dom'
+import { landing } from './landing';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
@@ -34,8 +36,8 @@ class Index extends React.Component {
   render() {
     return (
       <section>
-		    <div id="titleText" title="titleText" class="titleText">AllTunes</div>
-		    <div id="bodyText" title="bodyText" class="bodyText">Welcome to All Tunes, this is an application which allows multiple users to connect to a single room where the DJ controls all the music going on! To start, please connect your Spotify account to All Tunes below!</div>
+		    <div id="titleText" title="titleText" class="titleText">AllTunes</div><br></br>
+		    <div id="bodyText" title="bodyText" class="bodyText">Welcome to All Tunes, this is an application which allows multiple users to connect to a single room where the DJ controls all the music going on! To start, please connect your Spotify account to All Tunes below!</div><br></br>
 		    <a href="http://localhost:8888/login"><img src="https://texpatnyc.com/images/spotifyConnect.png" alt="Spotify connect button" width="292" height="51"></img></a>
 	    </section>
     );
