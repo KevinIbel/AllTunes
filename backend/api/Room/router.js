@@ -7,7 +7,7 @@ const controller = new RoomController();
 router.post("/", async (req, res) => {
   try {
     const key = await controller.createRoom("jamesangel140");
-    res.status("200").send({success: "success", TheKey: key });
+    res.status("200").send({ key });
   } catch (error) {
     res.status("400").send({ message: error.message, stack: error.stack });
   }

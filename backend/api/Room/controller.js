@@ -19,18 +19,19 @@ class RoomController {
 
   async createRoom(hostname) {
     try {
-      const pod = await createPod(this.portsToUse[0]);
-      this.UsedPorts[0] = this.portsToUse[0];
+      const port = this.portsToUse[0]
+      this.UsedPorts.push(port);
+      const pod = await createPod(port);
       var isPodReady = await this.isPodReady(pod.metadata.name);
       console.log(isPodReady);
       while (!isPodReady) {
         console.log(isPodReady);
         isPodReady = await this.isPodReady(pod.metadata.name);
       }
-      const podIP = await this.getPodId(pod.metadata.name);
-      console.log("podId", podIP);
+      const podIP = await this.getPodId(pod.metadata.name) + ':' + this.UsedPorts;
+
       const key = await initRoom(podIP, hostname);
-      return {podId, isPodReady, key};
+      return key
     } catch (error) {
       return error;
     }

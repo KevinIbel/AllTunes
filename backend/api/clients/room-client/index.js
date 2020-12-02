@@ -6,11 +6,13 @@ async function initRoom(roomIp, hostname) {
   var config = {
     method: "post",
     url: `http://${roomIp}/room`,
+    data: { hostname }
   };
 
   return axios(config)
     .then(function (response) {
-      return response;
+      console.log(response.data)
+      return response.data;
     })
     .catch(function (error) {
       console.log(error);
@@ -25,7 +27,7 @@ async function addCustomer(roomIp, customer) {
   
     return axios(config)
       .then(function (response) {
-        return response;
+        return response.data;
       })
       .catch(function (error) {
         console.log(error);
