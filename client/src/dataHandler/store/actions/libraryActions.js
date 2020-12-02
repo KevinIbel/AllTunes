@@ -1,4 +1,4 @@
-import axios from '../../axios';
+import axios from '../../../../../room-service/api/clients/axios';
 
 const containsSongSuccess = contains => {
   return {

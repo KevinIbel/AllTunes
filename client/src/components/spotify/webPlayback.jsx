@@ -6,7 +6,7 @@ import {
   setStatus,
   setDeviceId,
   setActiveDevice 
- } from '../store/actions/spotify';
+ } from '../../dataHandler/store/actions/spotify';
 
 
 class WebPlayback extends Component {
