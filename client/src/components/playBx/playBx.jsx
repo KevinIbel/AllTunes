@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DetailSection from './components/details';
 import SongsControl from './components/songsControl';
 import SongSider from './components/songSider';
-import withPlayer from '../../hoc/playerHoc';
+import withPlayer from '../../components/hoc/playerHoc';
 import './playBx.css';
 
 class playBx extends Component {

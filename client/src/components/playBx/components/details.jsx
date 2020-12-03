@@ -1,7 +1,7 @@
 import React from 'react';
 
-import withUiActions from '../../../hoc/uiHoc';
-import withStatus from '../../../hoc/statusHoc';
+import withUiActions from '../../hoc/uiHoc';
+import withStatus from '../../hoc/statusHoc';
 
 import './details.css';
 

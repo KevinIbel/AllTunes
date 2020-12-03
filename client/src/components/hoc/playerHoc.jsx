@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {nextSong, previousSong, pauseSong, playSong} from '../store/actions/spotify';
-import { containsCurrentSong } from '../store/actions/libraryActions';
+import {nextSong, previousSong, pauseSong, playSong} from '../../dataHandler/store/actions/spotify';
+import { containsCurrentSong } from '../../dataHandler/store/actions/libraryActions';
 
 export default function(ComposedComponent) {
   class PlayerHoc extends Component {
