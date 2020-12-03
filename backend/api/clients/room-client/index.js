@@ -6,33 +6,32 @@ async function initRoom(roomIp, hostname) {
   var config = {
     method: "post",
     url: `http://${roomIp}/room`,
-    data: { hostname }
+    data: { hostname },
   };
 
   return axios(config)
     .then(function (response) {
-      console.log(response.data)
       return response.data.key;
     })
     .catch(function (error) {
-      console.log(error);
+      return error;
     });
 }
 
 async function addCustomer(roomIp, customer) {
-    var config = {
-      method: "post",
-      url: `http://${roomIp}/room`,
-    };
-  
-    return axios(config)
-      .then(function (response) {
-        return response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+  var config = {
+    method: "post",
+    url: `http://${roomIp}/room`,
+  };
+
+  return axios(config)
+    .then(function (response) {
+      return response.data;
+    })
+    .catch(function (error) {
+      return error;
+    });
+}
 
 async function deleteRoom(roomIp, host) {
   var config = {
@@ -45,8 +44,8 @@ async function deleteRoom(roomIp, host) {
       return response.data;
     })
     .catch(function (error) {
-      console.log(error);
+      return error;
     });
 }
 
-module.exports = { initRoom, addCustomer, deleteRoom};
+module.exports = { initRoom, addCustomer, deleteRoom };

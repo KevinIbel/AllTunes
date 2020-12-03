@@ -6,7 +6,7 @@ const controller = new RoomController();
 
 router.post("/", async (req, res) => {
   const data = await controller.createRoom("jamesangel140");
-  res.status(data.status).send(data.data);
+  res.status(data.status).send(data);
 });
 
 router.get("/", (req, res) => {

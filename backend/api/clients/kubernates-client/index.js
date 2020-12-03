@@ -14,7 +14,7 @@ async function getPodData(name) {
 
   return axios(config)
     .then(function (response) {
-      return response.data.items;
+      return response.data;
     })
     .catch(function (error) {
       return error;
