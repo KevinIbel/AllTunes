@@ -1,14 +1,12 @@
 const axios = require("axios");
 const roomServiceDefinition = require("./room-service-pod.json");
-const fs = require("fs");
-const { Agent } = require("https");
 
 const kubernatesUrl = "127.0.0.1:8001";
 
-async function getPodsData() {
+async function getPodData(name) {
   var config = {
     method: "get",
-    url: `http://${kubernatesUrl}/api/v1/namespaces/default/pods/`,
+    url: `http://${kubernatesUrl}/api/v1/namespaces/default/pods/${name}`,
     headers: {
       "Content-Type": "application/strategic-merge-patch+json",
     },
@@ -64,41 +62,17 @@ async function deletePod(podName) {
 }
 
 async function isPodReady(podName) {
-  const podStatus = await getPodsData();
-  const pod = podStatus.filter((pod) => {
-    return pod.metadata.name == podName ? true : false;
-  })[0];
-  if (pod) {
-    return pod.status.phase == "Running" ? true : false;
-  }
+  const pod = await getPodData(podName);
+  return pod.status.phase == "Running" ? true : false;
 }
 
 async function getPodIP(podName) {
-  const podStatus = await getPodsData();
-  const pod = podStatus.filter((pod) => {
-    return pod.metadata.name == podName ? true : false;
-  })[0];
+  const pod = await getPodData(podName);
   return pod.status.podIP;
 }
 
-async function getPodData(podName) {
-  const podStatus = await getPodsData();
-  return podStatus.filter((pod) => {
-    return pod.metadata.name == podName ? true : false;
-  })[0];
-}
-
-
-// const mockData = {
-//   metadata: {
-//     name: "pod-name-8888"
-//   }
-// }
-
-
 module.exports = {
   getPodData,
-  getPodsData,
   createPod,
   deletePod,
   isPodReady,

@@ -1,6 +1,5 @@
 const {
   getPodData,
-  getPodsData,
   createPod,
   deletePod,
   isPodReady,
@@ -9,8 +8,6 @@ const {
 
 const {
   initRoom,
-  addCustomer,
-  deleteRoom,
 } = require("../clients/room-client/index");
 
 class RoomController {
