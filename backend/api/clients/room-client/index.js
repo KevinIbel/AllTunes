@@ -12,7 +12,7 @@ async function initRoom(roomIp, hostname) {
   return axios(config)
     .then(function (response) {
       console.log(response.data)
-      return response.data;
+      return response.data.key;
     })
     .catch(function (error) {
       console.log(error);

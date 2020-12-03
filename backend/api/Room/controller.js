@@ -1,7 +1,10 @@
 const {
+  getPodData,
   getPodsData,
   createPod,
   deletePod,
+  isPodReady,
+  getPodIP,
 } = require("../clients/kubernates-client/index");
 
 const {
@@ -12,49 +15,54 @@ const {
 
 class RoomController {
   constructor() {
-    this.portsToUse = [8888];
-    this.UsedPorts = [];
-    this.rooms = [];
+    this.rooms = {};
   }
 
   async createRoom(hostname) {
     try {
-      const port = this.portsToUse[0]
-      this.UsedPorts.push(port);
-      const pod = await createPod(port);
-      var isPodReady = await this.isPodReady(pod.metadata.name);
-      console.log(isPodReady);
-      while (!isPodReady) {
-        console.log(isPodReady);
-        isPodReady = await this.isPodReady(pod.metadata.name);
+      const pod = await createPod(); //create new pod in kubernates cluster
+      console.log(pod)
+      var isPodRunning = false;
+      while (!isPodRunning) {
+        //wait until pod is ready
+        isPodRunning = await isPodReady(pod.metadata.name);
       }
-      const podIP = await this.getPodId(pod.metadata.name) + ':' + this.UsedPorts;
+      console.log("pod started")
 
-      const key = await initRoom(podIP, hostname);
-      return key
+      const podIP = (await getPodIP(pod.metadata.name)) + ":8888"; //get ip address of pod
+      console.log("podIP ", podIP);
+      const key = await initRoom(podIP, hostname); //initalise the room with the hostname
+      this.rooms[key] = await getPodData(pod.metadata.name);
+
+      return { status: 201, data: key }; //return room key
     } catch (error) {
-      return error;
+      return { status: 500, data: error.stack };
     }
   }
 
-  async isPodReady(podName) {
-    const podStatus = await getPodsData();
-    const pod = podStatus.filter((pod) => {
-      return pod.metadata.name == podName ? true : false;
-    })[0];
-    if (pod) {
-      console.log(pod.status.phase);
-      return pod.status.phase == "Running" ? true : false;
+  async deleteRoom(roomKey) {
+    try {
+      const pod = this.rooms[roomKey];
+      console.log(this.rooms[roomKey].metadata.name);
+      const data = await deletePod(this.rooms[roomKey].metadata.name);
+      console.log("data", data);
+      delete this.rooms[roomKey];
+      return { status: 200, data: pod };
+    } catch (error) {
+      return { status: 500, data: error.stack };
     }
   }
 
-  async getPodId(podName) {
-    const podStatus = await getPodsData();
-    const pod = podStatus.filter((pod) => {
-      return pod.metadata.name == podName ? true : false;
-    })[0];
-    console.log("pod", pod);
-    return pod.status.podIP;
+  getAllRooms() {
+    return { status: 200, data: this.rooms };
+  }
+
+  getRoom(roomKey) {
+    if (roomKey && this.rooms[roomKey]) {
+      return { status: 200, data: this.rooms[roomKey] };
+    } else {
+      return { status: 400, data: "room does not exist" };
+    }
   }
 }
 

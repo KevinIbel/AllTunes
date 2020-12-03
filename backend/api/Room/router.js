@@ -5,22 +5,25 @@ const router = express.Router();
 const controller = new RoomController();
 
 router.post("/", async (req, res) => {
-  try {
-    const key = await controller.createRoom("jamesangel140");
-    res.status("200").send({ key });
-  } catch (error) {
-    res.status("400").send({ message: error.message, stack: error.stack });
-  }
-});
-
-router.put("/", (req, res) => {
-  const data = controller.addCustomer(req.body.customerUsername);
-  res.status(data.status).json(data.data);
+  const data = await controller.createRoom("jamesangel140");
+  res.status(data.status).send(data.data);
 });
 
 router.get("/", (req, res) => {
-  const data = controller.listInfo();
-  res.status(data.status).json(data.data);
+  const data = controller.getAllRooms();
+  res.status(data.status).send(data.data);
+});
+
+router.get("/:roomKey", (req, res) => {
+  const { roomKey } = req.params;
+  const data = controller.getRoom(roomKey);
+  res.status(data.status).send(data.data);
+});
+
+router.delete("/:roomKey", async (req, res) => {
+  const { roomKey } = req.params;
+  const data = await controller.deleteRoom(roomKey);
+  res.status(data.status).send(data.data);
 });
 
 module.exports = router;

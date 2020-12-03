@@ -16,10 +16,5 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-ADD start.sh /
-RUN chmod +x /start.sh
-
-
-
 EXPOSE 8000:8000
 CMD [ "node", "index.js" ]

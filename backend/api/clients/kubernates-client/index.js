@@ -48,7 +48,7 @@ async function createPod(port) {
 async function deletePod(podName) {
   var config = {
     method: "delete",
-    url: `https://${kubernatesUrl}/api/v1/namespaces/default/pods/${name}`,
+    url: `http://${kubernatesUrl}/api/v1/namespaces/default/pods/${podName}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -63,4 +63,44 @@ async function deletePod(podName) {
     });
 }
 
-module.exports = { getPodsData, createPod, deletePod };
+async function isPodReady(podName) {
+  const podStatus = await getPodsData();
+  const pod = podStatus.filter((pod) => {
+    return pod.metadata.name == podName ? true : false;
+  })[0];
+  if (pod) {
+    return pod.status.phase == "Running" ? true : false;
+  }
+}
+
+async function getPodIP(podName) {
+  const podStatus = await getPodsData();
+  const pod = podStatus.filter((pod) => {
+    return pod.metadata.name == podName ? true : false;
+  })[0];
+  return pod.status.podIP;
+}
+
+async function getPodData(podName) {
+  const podStatus = await getPodsData();
+  return podStatus.filter((pod) => {
+    return pod.metadata.name == podName ? true : false;
+  })[0];
+}
+
+
+// const mockData = {
+//   metadata: {
+//     name: "pod-name-8888"
+//   }
+// }
+
+
+module.exports = {
+  getPodData,
+  getPodsData,
+  createPod,
+  deletePod,
+  isPodReady,
+  getPodIP,
+};
