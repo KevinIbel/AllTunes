@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 const MusicManager = require("../../MusicManager/index");
-const SpotifyClient = require("../../api/clients/Spotify-client/index");
+const SpotifyClient = require("../clients/Spotify-client/index");
 class Room {
   /**
    * @param {Object} host The host of the room

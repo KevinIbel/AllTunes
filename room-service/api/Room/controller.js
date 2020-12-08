@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const Room = require("../room");
+const Room = require("./Room");
 
 class Controller {
   constructor() {
