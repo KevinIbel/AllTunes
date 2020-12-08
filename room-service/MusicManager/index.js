@@ -3,41 +3,55 @@ class MusicManager {
     this.allTracks = [];
   }
 
-  reduceUserTracks = (data) => {
+  /**
+   * This function reduces the amount of information returned from spotify to just the information we need.
+   * @param {Array} tracks An array of tracks given from spotify.
+   */
+  reduceUserTracks = (tracks) => {
     // Reduce the data to track name, artists, uri, and counter
-    return data.items.reduce(function (trackAcc, currTrack) {
-        var name = currTrack.name;
-        var uri = currTrack.uri;
-        var artists = currTrack.artists.reduce(function (artistAcc, currArtist) {
-          artistAcc.push(currArtist.name);
-          return artistAcc;
-        }, []);
-        trackAcc.push({
-          "name": currTrack.name,
-          "artists": artists,
-          "uri": currTrack.uri,
-          "counter": 0
-        });
-        return trackAcc;
+    return tracks.reduce(function (trackAcc, currTrack) {
+      var name = currTrack.name;
+      var uri = currTrack.uri;
+      var artists = currTrack.artists.reduce(function (artistAcc, currArtist) {
+        artistAcc.push(currArtist.name);
+        return artistAcc;
+      }, []);
+      trackAcc.push({
+        name: name,
+        artists: artists,
+        uri: uri,
+        counter: 0,
+      });
+      return trackAcc;
     }, []);
   };
 
+  /**
+   * This function updates the music manager with a new users tracks.
+   * @param {Array} userTracks  A reduced array of tracks, ensure tracks are reduced using .reduceUserTracks()
+   */
   updateAllTracks = (userTracks) => {
     // For all new user tracks, if a track is a duplicate increase the existing one's counter. Otherwise add it to the array.
-    for (var i=0; i<userTracks.length; i++) {
-        var duplicate = this.allTracks.find(track => track.uri == userTracks[i].uri);
-        if (duplicate !== undefined) {
-          this.allTracks[this.allTracks.indexOf(duplicate)]["counter"] = duplicate.counter+1;
-        } else {
-          this.allTracks.push(userTracks[i]);
-        }
+    for (var i = 0; i < userTracks.length; i++) {
+      var duplicate = this.allTracks.find(
+        (track) => track.uri == userTracks[i].uri
+      );
+      if (duplicate !== undefined) {
+        this.allTracks[this.allTracks.indexOf(duplicate)]["counter"] =
+          duplicate.counter + 1;
+      } else {
+        this.allTracks.push(userTracks[i]);
+      }
     }
     // Tracks are sorted by their counter (number of duplicate occurances).
     this.allTracks.sort(function (a, b) {
-        return b.counter - a.counter;
+      return b.counter - a.counter;
     });
   };
 
+  /**
+   * @returns All the tracks in the music manager.
+   */
   getAllTracks = () => {
     return this.allTracks;
   };

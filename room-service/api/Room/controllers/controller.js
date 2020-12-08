@@ -6,7 +6,12 @@ class Controller {
     this.room;
   }
 
-  createRoom = (hostname) => {
+  /**
+   * @param {Object} host The customer to add to the room
+   * @param {string} host.username The customers username
+   * @param {string} host.token The Authentication token of the user given by Spotify.
+   */
+  createRoom = (host) => {
     var status;
     var data;
     if (this.room) {
@@ -14,8 +19,8 @@ class Controller {
       data = "room has already been created";
       return { status, data };
     }
-    if (hostname) {
-      this.room = new Room(hostname);
+    if (host.token && host.hostname) {
+      this.room = new Room(host);
       status = "201";
       data = { key: this.room.key };
       return { status, data };
@@ -26,13 +31,18 @@ class Controller {
     }
   };
 
-  addCustomer = (customerUsername) => {
+  /**
+   * @param {Object} customer The customer to add to the room
+   * @param {string} customer.username The customers username
+   * @param {string} customer.token The Authentication token of the user given by Spotify.
+   */
+  addCustomer = async (customer) => {
     var status;
     var data;
     if (this.room) {
       status = "202";
-      data = this.room.addCustomer(customerUsername);
-      return { status };
+      data = await this.room.addCustomer(customer);
+      return { status, data };
     } else {
       status = "400";
       data = "Room has not been created, use POST /room to create a room";

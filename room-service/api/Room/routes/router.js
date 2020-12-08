@@ -129,12 +129,12 @@ const router = express.Router();
 const controller = new Controller();
 
 router.post("/", (req, res) => {
-  const data = controller.createRoom(req.body.hostname);
+  const data = controller.createRoom(req.body);
   res.status(data.status).json(data.data);
 });
 
-router.put("/", (req, res) => {
-  const data = controller.addCustomer(req.body.customerUsername);
+router.put("/", async (req, res) => {
+  const data = await controller.addCustomer(req.body);
   res.status(data.status).json(data.data);
 });
 
@@ -143,5 +143,4 @@ router.get("/", (req, res) => {
   res.status(data.status).json(data.data);
 });
 
-
-module.exports = { router } ;
+module.exports = { router };
