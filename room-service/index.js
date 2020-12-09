@@ -10,6 +10,7 @@ const app = express();
 const port = 8888;
 
 //room router
+app.use(bodyParser.json())
 app.use('/room', router);
 
 //default get - to be removed
@@ -18,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 const server = app.listen(port, () => {
-  console.log(`New room has been created, running on http://localhost:${port}`);
+  console.log(`Room-service started, running on http://localhost:${port}`);
 });
 
 app.delete("/", (req, res) => {

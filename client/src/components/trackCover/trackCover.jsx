@@ -1,5 +1,5 @@
 import React from 'react';
-import withPlayer from '../../hoc/playerHoc';
+import withPlayer from '../../components/hoc/playerHoc';
 import './trackCover.css';
 
 const trackCover = props => {

@@ -1,4 +1,4 @@
-import axios from '../../axios';
+import axios from '../../../../../room-service/api/clients/axios';
 
 export const setToken = token => {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
