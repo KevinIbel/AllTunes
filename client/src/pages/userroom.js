@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './room.css';
 
-class App extends React.Component {
+class Userroom extends React.Component {
   render() {
     return (
       <section>
@@ -31,11 +31,4 @@ class App extends React.Component {
   }
 }
 
-
-// ========================================
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
-
+export default Userroom;
