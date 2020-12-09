@@ -2,23 +2,37 @@ import React, {useEffect} from 'react';
 import {createRoom} from '../dataHandler/clients/backend';
 import ReactDOM from 'react-dom';
 import './loading.css';
+import { Redirect } from 'react-router-dom';
 
 class Loading extends React.Component {
-  render() {
-    return (
-      <div class="loadingText">The page is loading, you will be redirected shortly!</div>
-    );
-  }
+    constructor(){
+        super()
+        this.state = { roomKey: null };
+      }
 
-  async componentDidMount() {
+      async componentDidMount() {
       const params = this.getHashParams();
       const token = params.access_token;
       const host = {
         token: token,
-        username: 'kwvin'
+        hostname: 'kwvin'
       }
-      const key = await createRoom(host)
+      const {key} = await createRoom(host)
+      this.state.roomKey = key;
   }
+    
+      render() {
+        if(this.state.roomKey){
+          var isLoading = <Redirect to="/hostroom"></Redirect>
+        } else {
+          var isLoading = <div class="loadingText">The page is loading, you will be redirected shortly!</div>
+        }
+        return (
+          <div>{isLoading}</div>
+        );
+      }
+
+  
 
   getHashParams() {
     var hashParams = {};

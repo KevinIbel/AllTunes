@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const swaggerJsdoc = require("swagger-jsdoc");
@@ -10,6 +11,7 @@ const app = express();
 const port = 8888;
 
 //room router
+app.use(cors())
 app.use(bodyParser.json())
 app.use('/room', router);
 
