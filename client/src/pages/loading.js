@@ -1,14 +1,38 @@
-import React, { useEffect } from "react";
-import { createRoom } from "../dataHandler/clients/backend";
-import ReactDOM from "react-dom";
-import "./loading.css";
-import { Redirect } from "react-router-dom";
+import React, {useEffect} from 'react';
+import {createRoom} from '../dataHandler/clients/backend';
+import './loading.css';
+import { Redirect } from 'react-router-dom';
 
 class Loading extends React.Component {
-  constructor() {
-    super();
-    this.state = { roomKey: null };
+    constructor(){
+        super()
+        this.state = { roomKey: null };
+      }
+
+      async componentDidMount() {
+      const params = this.getHashParams();
+      const token = params.access_token;
+      const host = {
+        token: token,
+        hostname: 'kwvin'
+      }
+      const {key} = await createRoom(host)
+      this.state.roomKey = key;
   }
+    
+      render() {
+        if(this.state.roomKey){
+          var isLoading = <Redirect to="/hostroom"></Redirect>
+        } else {
+          var isLoading = <div class="loadingText">The page is loading, you will be redirected shortly!</div>
+        }
+        return (
+          <div>{isLoading}</div>
+        );
+      }
+
+  
+
   getHashParams() {
     var hashParams = {};
     var e,
@@ -21,6 +45,7 @@ class Loading extends React.Component {
     }
     return hashParams;
   }
+<<<<<<< Updated upstream
   
   async componentDidMount() {
     const params = this.getHashParams();
@@ -50,3 +75,8 @@ class Loading extends React.Component {
 }
 
 export default Loading;
+=======
+}
+
+export default Loading;
+>>>>>>> Stashed changes
