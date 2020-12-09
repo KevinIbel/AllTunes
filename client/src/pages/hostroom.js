@@ -1,35 +1,84 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {setToken, fetchUser} from '../dataHandler/store/actions/spotify';
+import CurrPlaying from '../containers/currPlaying/currPlaying';
+import MainSection from '../containers/mainSection/mainSection';
+import Login from '../components/spotify/login';
+import WebPlaybackReact from '../components/spotify/webPlayback';
 import './room.css';
 
-class Hostroom extends React.Component {
+
+
+window.onSpotifyWebPlaybackSDKReady = () => {};
+
+class App extends React.Component {
+  state = {
+    playerLoaded: false,
+
+  access_token: 'BQAafNxBivrmTCwyJgAx20eBjYV0j8PkZx8AZ9YwFvczTOC8SmTjaj_-HEFkX_G6H6CoWrrIGkhiN74TZuRrusFFwkTX6ETiiYT0KM_5ftM-ZlgOGkE8BIEsr9oWoEtp5qSSm2JROaUhbAYGqyxhyyGBnPpVyv87qXjMYUE7yTbasP7clKSDLb4Vw4M'
+  };
+
+  componentDidMount(){
+    const {roomKey,access_token} = this.getHashParams()
+    console.log(roomKey,access_token)
+    this.setState({...this.state,access_token,roomKey})
+  }
+
+  getHashParams() {
+    var hashParams = {};
+    var e,
+      r = /([^&;=]+)=?([^&;]*)/g,
+      q = window.location.hash.substring(1);
+    e = r.exec(q);
+    while (e) {
+      hashParams[e[1]] = decodeURIComponent(e[2]);
+      e = r.exec(q);
+    }
+    return hashParams;
+  }
+  
   render() {
+    let webPlaybackSdkProps = {
+      playerName: 'Alltunes App',
+      playerRefreshRateMs: 1000,
+      playerAutoConnect: true,
+      onPlayerRequestAccessToken: () => this.state.access_token,
+      onPlayerLoading: () => {},
+      onPlayerWaitingForDevice: () => {
+        this.setState({ playerLoaded: true });
+      },
+      onPlayerError: e => {
+        console.log(e);
+      },
+      onPlayerDeviceSelected: () => {
+        this.setState({ playerLoaded: true });
+      }
+    };
+
     return (
-      <section>
-        <div class="main">
-          <div id="titleText" title="titleText" class="titleText">AllTunes</div><br></br>
-          <div><img src="https://i.imgur.com/4BUimGK.png" class="spotifyArt" title="spotifyArt" alt="album art"/></div><br></br>
-          <div class="spotifyTrackInfo" title="spotifyTrackInfo">Track: Pain in My Chest - Artist: Ghostface666 - Album: Just a Rapper Wid Melodies</div><br></br>
-          <div class="divider"></div><br></br>
-          <button class='button'></button>
-          <div class="queue">Queue
-            <ul>
-              <li>Track: Goat - Artist: Lil Tjay - Album: Goat (Single)</li><br></br>
-              <li>Track: Moonwalking in Calabasas Remix - Artist: DDG, Blueface - Album: Moonwalking in Calabasas Remix (Single)</li><br></br>
-              <li>...</li><br></br>
-              <li>...</li><br></br>
-              <li>...</li>
-            </ul>
-          </div>
-        </div>
-        <div class="menu">
-          <div id="hostedBy" title="hostedBy" class="hostedBy">Hosted by: lowaaa</div><br></br>
-          <div id="totalUsers" title="totalUsers" class="totalUsers">Total users: 0</div>
-        </div>
-        
-      </section>
+      <div class="main">
+        <WebPlaybackReact {...webPlaybackSdkProps}>
+            <CurrPlaying />
+            <MainSection />
+        </WebPlaybackReact>
+      </div>
+      
     );
   }
 }
 
-export default Hostroom;
+const mapStateToProps = state => {
+  return {
+    token: state.sessionReducer.token
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  setToken: token => dispatch(setToken(token)),
+  fetchUser: () => dispatch(fetchUser())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
