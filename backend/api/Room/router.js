@@ -5,7 +5,9 @@ const router = express.Router();
 const controller = new RoomController();
 
 router.post("/", async (req, res) => {
-  const data = await controller.createRoom("jamesangel140");
+  const { host } = req.body;
+  console.log(req.body);
+  const data = await controller.createRoom(host);
   res.status(data.status).send(data);
 });
 

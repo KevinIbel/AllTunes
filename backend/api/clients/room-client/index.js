@@ -2,11 +2,11 @@ const axios = require("axios");
 
 //const roomIp = "127.0.0.1:8001";
 
-async function initRoom(roomIp, hostname) {
+async function initRoom(roomIp, host) {
   var config = {
     method: "post",
     url: `http://${roomIp}/room`,
-    data: { hostname },
+    data: host,
   };
 
   return axios(config)

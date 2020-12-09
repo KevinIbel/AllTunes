@@ -15,9 +15,10 @@ class RoomController {
     this.rooms = {};
   }
 
-  async createRoom(hostname) {
+  async createRoom(host) {
     try {
       const pod = await createPod(); //create new pod in kubernates cluster
+      console.log(pod)
       var isPodRunning = false;
       while (!isPodRunning) {
         //wait until pod is ready
@@ -25,7 +26,7 @@ class RoomController {
       }
       await wait(5000);
       const podIP = (await getPodIP(pod.metadata.name)) + ":8888"; //get ip address of pod
-      const key = await initRoom(podIP, hostname); //initalise the room with the hostname
+      const key = await initRoom(podIP, host); //initalise the room with the hostname
       this.rooms[key] = await getPodData(pod.metadata.name);
       return { status: 201, data: key }; //return room key
     } catch (error) {
