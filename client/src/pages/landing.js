@@ -8,7 +8,7 @@ import SpotifyWebApi from "spotify-web-api-js";
 
 var client_id = "aeedb64c42db49bf8413aab94c44637c"; // Your client id
 var client_secret = "ffdf9085c89a4cdebb7012ebdac175b4"; // Your secret
-var redirect_uri = "http://localhost:3000/hostroom/"; // Your redirect uri
+var redirect_uri = "http://localhost:3000/loading/"; // Your redirect uri
 var scope = 'user-read-private user-read-email user-read-playback-state';
 const spotifyApi = new SpotifyWebApi();
 
@@ -17,30 +17,17 @@ class Landing extends React.Component {
         this.props.history.push(path);
       }
 
-      constructor() {
-        super();
-        const params = this.getHashParams();
-        const token = params.access_token;
-        if (token) {
-          spotifyApi.setAccessToken(token);
-        }
-        this.state = {
-          loggedIn: token ? true : false,
-        };
-      }
-    
-      getHashParams() {
-        var hashParams = {};
-        var e,
-          r = /([^&;=]+)=?([^&;]*)/g,
-          q = window.location.hash.substring(1);
-        e = r.exec(q);
-        while (e) {
-          hashParams[e[1]] = decodeURIComponent(e[2]);
-          e = r.exec(q);
-        }
-        return hashParams;
-      }
+      // constructor() {
+      //   super();
+      //   const params = this.getHashParams();
+      //   const token = params.access_token;
+      //   if (token) {
+      //     spotifyApi.setAccessToken(token);
+      //   }
+      //   this.state = {
+      //     loggedIn: token ? true : false,
+      //   };
+      // }
 
       login() {
         var redirect =
