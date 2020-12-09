@@ -17,3 +17,7 @@ spec:
           image: jamesangel/alltunes-backend
           ports:
             - containerPort: 8000
+        - name: sidecar
+          image: jamesangel/sidecar
+          ports:
+          - containerPort: 8001
