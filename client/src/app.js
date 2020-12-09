@@ -1,72 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {setToken, fetchUser} from './dataHandler/store/actions/spotify';
-import CurrPlaying from './containers/currPlaying/currPlaying';
-import MainSection from './containers/mainSection/mainSection';
-import Login from './components/spotify/login';
-import WebPlaybackReact from './components/spotify/webPlayback';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Hostroom from "./pages/hostroom";
+import Userroom from "./pages/userroom";
+import Landing from "./pages/landing";
+import Index from "./pages/index";
 
-window.onSpotifyWebPlaybackSDKReady = () => {};
-
-class App extends Component {
-  state = {
-    playerLoaded: false
-  };
-
-  componentDidMount() {
-    const token = Login.getToken();
-    if (!token) {
-      Login.logInWithSpotify();
-    } else {
-      this.setState({ token: token });
-      this.props.setToken(token);
-      this.props.fetchUser();
-    }
-  }
-
-  render() {
-    let webPlaybackSdkProps = {
-      playerName: 'Alltunes App',
-      playerRefreshRateMs: 1000,
-      playerAutoConnect: true,
-      onPlayerRequestAccessToken: () => this.state.token,
-      onPlayerLoading: () => {},
-      onPlayerWaitingForDevice: () => {
-        this.setState({ playerLoaded: true });
-      },
-      onPlayerError: e => {
-        console.log(e);
-      },
-      onPlayerDeviceSelected: () => {
-        this.setState({ playerLoaded: true });
-      }
-    };
-
+export default function App() {
     return (
-      <div class="main">
-        <WebPlaybackReact {...webPlaybackSdkProps}>
-            <CurrPlaying />
-            <MainSection />
-        </WebPlaybackReact>
-      </div>
-      
+      <Router>
+          {/* A <Switch> looks through its children <Route>s and
+              renders the first one that matches the current URL. */}
+          <Switch>
+            <Route path="/hostroom">
+              <Hostroom />
+            </Route>
+            <Route path="/landing">
+              <Landing />
+            </Route>
+            <Route path="/userroom">
+              <Userroom />
+            </Route>
+            <Route path="/">
+              <Index />
+            </Route>
+          </Switch>
+      </Router>
     );
   }
-}
 
-const mapStateToProps = state => {
-  return {
-    token: state.sessionReducer.token
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  setToken: token => dispatch(setToken(token)),
-  fetchUser: () => dispatch(fetchUser())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+  
