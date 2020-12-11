@@ -1,26 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {setToken, fetchUser} from '../dataHandler/store/actions/spotify';
-import CurrPlaying from '../containers/currPlaying/currPlaying';
-import MainSection from '../containers/mainSection/mainSection';
-import WebPlaybackReact from '../components/spotify/webPlayback';
-import Top from '../components/topBar/Top';
-import PlayBox from '../components/playBox/playBox';
-
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setToken, fetchUser } from "../dataHandler/store/actions/spotify";
+import CurrPlaying from "../containers/currPlaying/currPlaying";
+import MainSection from "../containers/mainSection/mainSection";
+import WebPlaybackReact from "../components/spotify/webPlayback";
+import Top from "../components/topBar/Top";
+import PlayBox from "../components/playBox/playBox";
 
 window.onSpotifyWebPlaybackSDKReady = () => {};
 
 class App extends React.Component {
   state = {
     playerLoaded: false,
-  access_token: 'BQAafNxBivrmTCwyJgAx20eBjYV0j8PkZx8AZ9YwFvczTOC8SmTjaj_-HEFkX_G6H6CoWrrIGkhiN74TZuRrusFFwkTX6ETiiYT0KM_5ftM-ZlgOGkE8BIEsr9oWoEtp5qSSm2JROaUhbAYGqyxhyyGBnPpVyv87qXjMYUE7yTbasP7clKSDLb4Vw4M'
+    access_token: null,
   };
 
-  componentDidMount(){
-    const {roomKey,access_token} = this.getHashParams()
-    console.log(roomKey,access_token)
-    this.setState({...this.state,access_token,roomKey})
+  componentDidMount() {
+    const { roomKey, access_token } = this.getHashParams();
+    this.setState({ ...this.state, access_token, roomKey });
+    this.props.setToken(access_token);
   }
 
   getHashParams() {
@@ -35,50 +33,45 @@ class App extends React.Component {
     }
     return hashParams;
   }
-  
-  
+
   render() {
     let webPlaybackSdkProps = {
-      playerName: 'Alltunes App',
+      playerName: "Alltunes App",
       playerRefreshRateMs: 1000,
       playerAutoConnect: true,
       onPlayerRequestAccessToken: () => this.state.access_token,
       onPlayerLoading: () => {},
-      startStatePolling:() => {},
+      startStatePolling: () => {},
       onPlayerWaitingForDevice: () => {
         this.setState({ playerLoaded: true });
       },
-      onPlayerError: e => {
+      onPlayerError: (e) => {
         console.log(e);
       },
       onPlayerDeviceSelected: () => {
         this.setState({ playerLoaded: true });
-      }
+      },
     };
     return (
       <div class="main">
         <WebPlaybackReact {...webPlaybackSdkProps}>
-            <CurrPlaying />
-            <MainSection />
+          <CurrPlaying />
+          <MainSection />
         </WebPlaybackReact>
       </div>
-      
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    token: state.sessionReducer.token
+    token: state.sessionReducer.token,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  setToken: token => dispatch(setToken(token)),
-  fetchUser: () => dispatch(fetchUser())
+const mapDispatchToProps = (dispatch) => ({
+  setToken: (token) => dispatch(setToken(token)),
+  fetchUser: () => dispatch(fetchUser()),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
