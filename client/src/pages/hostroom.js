@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import {setToken, fetchUser} from '../dataHandler/store/actions/spotify';
 import CurrPlaying from '../containers/currPlaying/currPlaying';
 import MainSection from '../containers/mainSection/mainSection';
-import Login from '../components/spotify/login';
 import WebPlaybackReact from '../components/spotify/webPlayback';
-import './room.css';
+import Top from '../components/topBar/Top';
+import PlayBox from '../components/playBox/playBox';
 
 
 
@@ -14,7 +14,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {};
 class App extends React.Component {
   state = {
     playerLoaded: false,
-
   access_token: 'BQAafNxBivrmTCwyJgAx20eBjYV0j8PkZx8AZ9YwFvczTOC8SmTjaj_-HEFkX_G6H6CoWrrIGkhiN74TZuRrusFFwkTX6ETiiYT0KM_5ftM-ZlgOGkE8BIEsr9oWoEtp5qSSm2JROaUhbAYGqyxhyyGBnPpVyv87qXjMYUE7yTbasP7clKSDLb4Vw4M'
   };
 
@@ -37,6 +36,7 @@ class App extends React.Component {
     return hashParams;
   }
   
+  
   render() {
     let webPlaybackSdkProps = {
       playerName: 'Alltunes App',
@@ -44,6 +44,7 @@ class App extends React.Component {
       playerAutoConnect: true,
       onPlayerRequestAccessToken: () => this.state.access_token,
       onPlayerLoading: () => {},
+      startStatePolling:() => {},
       onPlayerWaitingForDevice: () => {
         this.setState({ playerLoaded: true });
       },
@@ -54,7 +55,6 @@ class App extends React.Component {
         this.setState({ playerLoaded: true });
       }
     };
-
     return (
       <div class="main">
         <WebPlaybackReact {...webPlaybackSdkProps}>

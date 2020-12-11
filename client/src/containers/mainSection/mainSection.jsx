@@ -6,8 +6,11 @@ import PlayBox from '../../components/playBox/playBox';
 class MainSection extends Component {
   render = () => {
     let name = this.props.user.display_name;
+    console.log(name);
     let img = this.props.user.display_picture;
+    console.log(img);
     let id = this.props.user.id;
+    console.log(id);
       
     return (
       <div className="main-section">

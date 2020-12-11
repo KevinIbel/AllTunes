@@ -15,6 +15,4 @@ class currPlaying extends Component {
   }
 }
 
-export default connect(
-  null
-)(currPlaying);
+export default connect(null)(currPlaying);

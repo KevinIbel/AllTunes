@@ -140,7 +140,4 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(WebPlayback);
+export default connect(null,mapDispatchToProps)(WebPlayback);
