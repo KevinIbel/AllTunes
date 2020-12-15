@@ -7,9 +7,9 @@ class MusicManager {
    * This function reduces the amount of information returned from spotify to just the information we need.
    * @param {Array} tracks An array of tracks given from spotify.
    */
-  reduceUserTracks = (tracks) => {
+  reduceUserTracks = (data) => {
     // Reduce the data to track name, artists, uri, and counter
-    return tracks.reduce(function (trackAcc, currTrack) {
+    return data.items.reduce(function (trackAcc, currTrack) {
       var name = currTrack.name;
       var uri = currTrack.uri;
       var artists = currTrack.artists.reduce(function (artistAcc, currArtist) {
