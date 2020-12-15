@@ -55,10 +55,10 @@ class App extends React.Component {
     };
     return (
       <div class="main">
-        {/* <WebPlaybackReact {...webPlaybackSdkProps}>
+        <WebPlaybackReact {...webPlaybackSdkProps}>
           <CurrPlaying />
           <MainSection />
-        </WebPlaybackReact> */}
+        </WebPlaybackReact> 
         <TrackTable></TrackTable>
       </div>
     );

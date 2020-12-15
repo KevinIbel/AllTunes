@@ -4,9 +4,10 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
+import Button from "../trackTable/queueButton";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { lighten, makeStyles } from "@material-ui/core/styles";
+import {makeStyles } from "@material-ui/core/styles";
 
 
 
@@ -15,6 +16,7 @@ function formatRows(rows) {
     const newRow = {};
     newRow.artists = currentValue.artists.join();
     newRow.name = currentValue.name;
+    newRow.uri = currentValue.uri;
     accumulator.push(newRow);
     return accumulator;
   }, []);
@@ -223,7 +225,7 @@ export default function TrackTable() {
                     <TableCell align="left">{row.artists}</TableCell>
                     <TableCell align="left">{row.name}</TableCell>
                     <TableCell>
-                      <p>button</p>
+                    <Button songuri={row.uri}>Add to Queue</Button>
                     </TableCell>
                   </TableRow>
                 );
