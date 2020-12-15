@@ -17,18 +17,6 @@ class Landing extends React.Component {
         this.props.history.push(path);
       }
 
-      // constructor() {
-      //   super();
-      //   const params = this.getHashParams();
-      //   const token = params.access_token;
-      //   if (token) {
-      //     spotifyApi.setAccessToken(token);
-      //   }
-      //   this.state = {
-      //     loggedIn: token ? true : false,
-      //   };
-      // }
-
       login() {
         var redirect =
           "https://accounts.spotify.com/authorize?" +

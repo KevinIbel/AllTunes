@@ -6,6 +6,7 @@ import MainSection from "../containers/mainSection/mainSection";
 import WebPlaybackReact from "../components/spotify/webPlayback";
 import Top from "../components/topBar/Top";
 import PlayBox from "../components/playBox/playBox";
+import TrackTable from "../components/trackTable/TrackTable";
 
 window.onSpotifyWebPlaybackSDKReady = () => {};
 
@@ -54,10 +55,11 @@ class App extends React.Component {
     };
     return (
       <div class="main">
-        <WebPlaybackReact {...webPlaybackSdkProps}>
+        {/* <WebPlaybackReact {...webPlaybackSdkProps}>
           <CurrPlaying />
           <MainSection />
-        </WebPlaybackReact>
+        </WebPlaybackReact> */}
+        <TrackTable></TrackTable>
       </div>
     );
   }
