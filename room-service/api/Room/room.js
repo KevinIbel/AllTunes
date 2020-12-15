@@ -33,8 +33,9 @@ class Room {
       const UserTracks = await new SpotifyClient(customer).getFavTracks();
       const reducedTrack = this.musicManager.reduceUserTracks(UserTracks);
       this.musicManager.updateAllTracks(reducedTrack);
-      const getTrack = this.musicManager.getAllTracks();
-      return getTrack;
+      const updatedTracks = this.musicManager.getAllTracks();
+      //ws.send(updatedTracks);
+      return updatedTracks;
     } catch (error) {
       return error;
     }
