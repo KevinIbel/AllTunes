@@ -18,7 +18,7 @@ class Room {
       .toUpperCase();
     new SpotifyClient(host).getFavTracks().then((hostTracks) => {
       const reducedTracks = this.musicManager.reduceUserTracks(hostTracks);
-      this.musicManager.updateAllTracks(reducedTrack);
+      this.musicManager.updateAllTracks(reducedTracks);
       this.broadcastTracks(reducedTracks);
     });
   }
@@ -32,8 +32,8 @@ class Room {
     this.customers.push(customer);
     try {
       const UserTracks = await new SpotifyClient(customer).getFavTracks();
-      const reducedTrack = this.musicManager.reduceUserTracks(UserTracks);
-      this.musicManager.updateAllTracks(reducedTrack);
+      const reducedTracks = this.musicManager.reduceUserTracks(UserTracks);
+      this.musicManager.updateAllTracks(reducedTracks);
       const updatedTracks = this.musicManager.getAllTracks();
       this.broadcastTracks(updatedTracks);
       return updatedTracks;
