@@ -62,7 +62,7 @@ wsServer.on('connection', socket => {
       });
       console.log("Broadcasted message.");
     } catch (e) {
-      console.log("Failed to broadcast.");
+      console.log("Failed to broadcast. " + e);
     }
   });
 });
