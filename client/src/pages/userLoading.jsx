@@ -41,10 +41,6 @@ export default class UserLoading extends Component {
       console.error(error);
     }
   }
-  // if (this.state.roomKey) {
-  //   var isLoading = (
-  //     <Redirect to={`/hostroom/#roomKey=${this.state.roomKey}&access_token=${this.state.access_token}`}></Redirect>
-  //   );
 
   render() {
     if (this.state.isAddedToRoom) {
