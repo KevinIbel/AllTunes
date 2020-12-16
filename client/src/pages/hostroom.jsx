@@ -1,11 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { setToken, fetchUser } from "../dataHandler/store/actions/spotify";
 import CurrPlaying from "../containers/currPlaying/currPlaying";
 import MainSection from "../containers/mainSection/mainSection";
 import WebPlaybackReact from "../components/spotify/webPlayback";
-import Top from "../components/topBar/Top";
-import PlayBox from "../components/playBox/playBox";
 import TrackTable from "../components/trackTable/TrackTable";
 
 window.onSpotifyWebPlaybackSDKReady = () => {};

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './room.css';
+import './style/room.css';
 
 class Userroom extends React.Component {
   render() {
