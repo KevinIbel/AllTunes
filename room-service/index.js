@@ -49,8 +49,8 @@ wsServer.on('connection', socket => {
     socket.send("[Server] Connection still alive.");
   });
   // Handle incoming messages.
-  /*The WS server should only receive music manager tracks.
-    The WS server should send the tracks to all the other WS clients (customers) connected.
+  /*The WS server only receives music manager tracks. The message is a string (JSON.stringify).
+    The WS server sends the tracks to all the other WS clients (customers) connected.
     TODO: Currently the code is based on the assumptions above. Have guards to make sure only the
           tracks will be broadcast since other messages can be received. */ 
   socket.on('message', message => {

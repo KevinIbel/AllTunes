@@ -71,7 +71,7 @@ class Room {
 
     wsClient.on('open', () => {
       console.log("WS client connected. Attempting to send music manager tracks to WS server.");
-      wsClient.send(tracks);
+      wsClient.send(JSON.stringify(tracks));
       console.log("Finished sending. Now disconnecting.")
       wsClient.close(1000, "Tracks sent.");
     });
