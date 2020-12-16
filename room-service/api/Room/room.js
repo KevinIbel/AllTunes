@@ -67,12 +67,12 @@ class Room {
   broadcastTracks = (tracks) => {
     // This WS client's only purpose is to send the music manager tracks to the server then close.
     const ws = require('ws');
-    const wsClient = new WebSocket('ws://localhost:8000');
+    const wsClient = new ws('ws://localhost:8888');
 
     wsClient.on('open', () => {
-      console.log("WS client connected.\nAttempting to send music manager tracks to WS server.");
+      console.log("WS client connected. Attempting to send music manager tracks to WS server.");
       wsClient.send(tracks);
-      console.log("Finished sending.\nNow disconnecting.")
+      console.log("Finished sending. Now disconnecting.")
       wsClient.close(1000, "Tracks sent.");
     });
   };
