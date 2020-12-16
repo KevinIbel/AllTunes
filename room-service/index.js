@@ -49,11 +49,20 @@ wsServer.on('connection', socket => {
     socket.send("Connection still alive.");
   });
   // Handle incoming messages.
+  /*The WS server should only receive music manager tracks.
+    The WS server should send the tracks to all the other WS clients (customers) connected.
+    TODO: Currently the code is based on the assumptions above. Have guards to make sure only the
+          tracks will be broadcast since other messages can be received. */ 
   socket.on('message', message => {
     try {
-      socket.send("The user's tracks have been added to the MusicManager");
+      wsServer.clients.forEach(client => {
+        if (client !== socket && client.readyState === WebSocket.OPEN) {
+          client.send(message);
+        }
+      });
+      console.log("Broadcasted message.");
     } catch (e) {
-      console.log("Client's message != valid JSON.");
+      console.log("Failed to broadcast. " + e);
     }
   });
 });
