@@ -1,6 +1,6 @@
 const ws = require('ws');
  
-const wsClient = new WebSocket('ws://localhost:8000');
+const wsClient = new ws('ws://localhost:8888');
 
 wsClient.on('open', () => {
   console.log("WS client connected.");
