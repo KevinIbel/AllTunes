@@ -1,0 +1,10 @@
+body {
+	color:#121212;
+    background-color:#121212;
+}
+
+#form{
+    position: fixed;
+    top: 40%;
+    left:40%;
+}

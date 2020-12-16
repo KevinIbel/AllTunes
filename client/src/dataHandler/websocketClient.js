@@ -1,17 +1,17 @@
-const WebSocket = require('ws');
+const ws = require('ws');
  
-const ws = new WebSocket('ws://localhost:8000');
+const wsClient = new ws('ws://localhost:8888');
 
-ws.on('open', () => {
-  console.log("This WS client has connected to the WS server.");
+wsClient.on('open', () => {
+  console.log("WS client connected.");
 });
 
-ws.on('close', () => {
-  console.log("This WS client's connection with the WS server has closed.");
+wsClient.on('close', () => {
+  console.log("WS client disconnected.");
 });
  
-ws.on('message', data => {
+wsClient.on('message', data => {
 	console.log("Received: " + data);
 	// The data being received should be the
-	//updated track list (whenever a new customer joins the room).
+	// updated track list (whenever a new customer joins the room).
 });

@@ -36,24 +36,33 @@ wsServer.on('connection', socket => {
   
   // When the connection is opened, the socket is alive.
   socket.isAlive = true;
-  console.log("Connection opened.");
+  console.log("[Server] Connection opened.");
   // When the connection is closed, the socket is not alive. Terminate the socket.
   socket.on('close', () => {
     socket.isAlive = false;
-    console.log("Connection closed.");
+    console.log("[Server] Connection closed.");
     socket.terminate();
   });
   // When sucessfully pinged, the health check is completed so set the socket to alive.
   socket.on('pong', () => {
     socket.isAlive = true;
-    socket.send("Connection still alive.");
+    socket.send("[Server] Connection still alive.");
   });
   // Handle incoming messages.
+  /*The WS server only receives music manager tracks. The message is a string (JSON.stringify).
+    The WS server sends the tracks to all the other WS clients (customers) connected.
+    TODO: Currently the code is based on the assumptions above. Have guards to make sure only the
+          tracks will be broadcast since other messages can be received. */ 
   socket.on('message', message => {
     try {
-      socket.send("The user's tracks have been added to the MusicManager");
+      wsServer.clients.forEach(client => {
+        if (client !== socket && client.readyState === WebSocket.OPEN) {
+          client.send(message);
+        }
+      });
+      console.log("[Server] Broadcasted message: " + message);
     } catch (e) {
-      console.log("Client's message != valid JSON.");
+      console.log("[Server] Failed to broadcast. " + e);
     }
   });
 });
