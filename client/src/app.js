@@ -4,6 +4,7 @@ import Hostroom from "./pages/hostroom";
 import Userroom from "./pages/userroom";
 import Landing from "./pages/landing";
 import Loading from "./pages/loading";
+import UserLoading from "./pages/userLoading";
 
 export default function App() {
     return (
@@ -17,11 +18,14 @@ export default function App() {
             <Route path="/loading">
               <Loading />
             </Route>
-            <Route path="/">
-              <Landing />
+            <Route path="/UserLoading">
+              <UserLoading />
             </Route>
             <Route path="/userroom">
               <Userroom />
+            </Route>
+            <Route path="/">
+              <Landing />
             </Route>
           </Switch>
       </Router>
