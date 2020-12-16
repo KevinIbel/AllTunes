@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { addCustomer } from "../dataHandler/clients/backend";
 import { Redirect } from "react-router-dom";
-import "./userLoading.css";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import "./style/userLoading.css";
 
 export default class UserLoading extends Component {
   constructor() {

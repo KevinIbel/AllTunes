@@ -1,28 +1,20 @@
 import React from "react";
-import "./landing.css";
 import { withRouter } from "react-router-dom";
-
 import querystring from "querystring";
-
-import SpotifyWebApi from "spotify-web-api-js";
+import "./style/landing.css";
 
 var client_id = "aeedb64c42db49bf8413aab94c44637c"; // Your client id
 var client_secret = "ffdf9085c89a4cdebb7012ebdac175b4"; // Your secret
 var scope =
   "streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-modify user-top-read";
-const spotifyApi = new SpotifyWebApi();
 
 class Landing extends React.Component {
-  nextPath(path) {
-    this.props.history.push(path);
-  }
-
   login(customer) {
     var redirect_uri;
-    if(customer=="host"){
+    if (customer == "host") {
       redirect_uri = "http://localhost:3000/loading/";
     } else {
-      redirect_uri ="http://localhost:3000/userloading/";
+      redirect_uri = "http://localhost:3000/userloading/";
     }
     var redirect =
       "https://accounts.spotify.com/authorize?" +
