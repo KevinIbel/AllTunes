@@ -17,8 +17,9 @@ class Room {
       .substring(0, 10)
       .toUpperCase();
     new SpotifyClient(host).getFavTracks().then((hostTracks) => {
-      const reducedTrack = this.musicManager.reduceUserTracks(hostTracks);
+      const reducedTracks = this.musicManager.reduceUserTracks(hostTracks);
       this.musicManager.updateAllTracks(reducedTrack);
+      this.broadcastTracks(reducedTracks);
     });
   }
 
@@ -34,7 +35,7 @@ class Room {
       const reducedTrack = this.musicManager.reduceUserTracks(UserTracks);
       this.musicManager.updateAllTracks(reducedTrack);
       const updatedTracks = this.musicManager.getAllTracks();
-      //ws.send(updatedTracks);
+      this.broadcastTracks(updatedTracks);
       return updatedTracks;
     } catch (error) {
       return error;
@@ -58,6 +59,22 @@ class Room {
       key: this.key,
       tracks: this.musicManager.getAllTracks(),
     };
+  };
+
+  /**
+   * @param {Array} tracks Tracks in the music manager.
+   */
+  broadcastTracks = (tracks) => {
+    // This WS client's only purpose is to send the music manager tracks to the server then close.
+    const ws = require('ws');
+    const wsClient = new WebSocket('ws://localhost:8000');
+
+    wsClient.on('open', () => {
+      console.log("WS client connected.\nAttempting to send music manager tracks to WS server.");
+      wsClient.send(tracks);
+      console.log("Finished sending.\nNow disconnecting.")
+      wsClient.close(1000, "Tracks sent.");
+    });
   };
 }
 
