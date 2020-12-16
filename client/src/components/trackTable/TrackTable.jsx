@@ -212,8 +212,6 @@ export default function TrackTable(props) {
             <EnhancedTableHead host={host} classes={classes} />
             <TableBody>
               {rows.map((row, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`;
-
                 return (
                   <TableRow tabIndex={-1} key={row.name}>
                     <TableCell align="left">{row.artists}</TableCell>

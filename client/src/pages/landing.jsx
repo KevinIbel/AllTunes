@@ -4,14 +4,13 @@ import querystring from "querystring";
 import "./style/landing.css";
 
 var client_id = "aeedb64c42db49bf8413aab94c44637c"; // Your client id
-var client_secret = "ffdf9085c89a4cdebb7012ebdac175b4"; // Your secret
 var scope =
   "streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-modify user-top-read";
 
 class Landing extends React.Component {
   login(customer) {
     var redirect_uri;
-    if (customer == "host") {
+    if (customer === "host") {
       redirect_uri = "http://localhost:3000/loading/";
     } else {
       redirect_uri = "http://localhost:3000/userloading/";
@@ -45,8 +44,6 @@ class Landing extends React.Component {
           <a
             type="button"
             class="buttoncss"
-            href=""
-            target="_blank"
             rel="nofollow noopener"
             href={this.login("host")}
           >
@@ -58,8 +55,6 @@ class Landing extends React.Component {
           <a
             type="button"
             class="buttoncss"
-            href=""
-            target="_blank"
             rel="nofollow noopener"
             href={this.login("joiner")}
           >

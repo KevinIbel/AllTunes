@@ -51,7 +51,7 @@ export default class UserLoading extends Component {
       );
     } else {
       return (
-        <form noValidate>
+        <form noValidate id={"form"}>
           <TextField
             onChange={(event) => {
               this.setState({ ...this.state, roomKey: event.target.value });

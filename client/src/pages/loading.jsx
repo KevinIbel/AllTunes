@@ -34,14 +34,15 @@ class Loading extends React.Component {
   }
 
   render() {
+    var isLoading;
     if (this.state.roomKey) {
-      var isLoading = (
+      isLoading = (
         <Redirect
           to={`/hostroom/#roomKey=${this.state.roomKey}&access_token=${this.state.access_token}`}
         ></Redirect>
       );
     } else {
-      var isLoading = (
+      isLoading = (
         <div class="loadingText">
           The page is loading, you will be redirected shortly!
         </div>

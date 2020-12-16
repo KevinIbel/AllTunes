@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Hostroom from "./pages/hostroom";
 import Userroom from "./pages/userroom";
 import Landing from "./pages/landing";
