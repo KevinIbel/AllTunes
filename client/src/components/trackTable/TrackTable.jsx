@@ -4,12 +4,10 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
-import Button from "../trackTable/queueButton";
+import QueueButton from "../trackTable/queueButton";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import {makeStyles } from "@material-ui/core/styles";
-
-
+import { makeStyles } from "@material-ui/core/styles";
 
 function formatRows(rows) {
   return rows.reduce((accumulator, currentValue) => {
@@ -148,23 +146,27 @@ const unformattedRows = [
 const rows = formatRows(unformattedRows);
 
 const headCells = [
-    { id: "artists", label: "Artists" },
+  { id: "artists", label: "Artists" },
   { id: "name", label: "Track Name" },
 ];
 
-function EnhancedTableHead() {
+function EnhancedTableHead(props) {
+  const { host } = props;
   return (
     <TableHead>
       <TableRow>
         {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={"left"}
-          >{headCell.label}</TableCell>
+          <TableCell key={headCell.id} align={"left"}>
+            {headCell.label}
+          </TableCell>
         ))}
-        <TableCell padding="checkbox">
-          <p>Button</p>
-        </TableCell>
+        {host ? (
+          <TableCell padding="checkbox">
+            <p>Button</p>
+          </TableCell>
+        ) : (
+          <div></div>
+        )}
       </TableRow>
     </TableHead>
   );
@@ -194,14 +196,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TrackTable() {
+export default function TrackTable(props) {
   const classes = useStyles();
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { host } = props;
 
   return (
     <div className={classes.root}>
@@ -210,12 +207,9 @@ export default function TrackTable() {
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
             aria-label="enhanced table"
           >
-            <EnhancedTableHead
-              classes={classes}
-            />
+            <EnhancedTableHead host={host} classes={classes} />
             <TableBody>
               {rows.map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`;
@@ -224,9 +218,13 @@ export default function TrackTable() {
                   <TableRow tabIndex={-1} key={row.name}>
                     <TableCell align="left">{row.artists}</TableCell>
                     <TableCell align="left">{row.name}</TableCell>
-                    <TableCell>
-                    <Button songuri={row.uri}>Add to Queue</Button>
-                    </TableCell>
+                    {host ? (
+                      <TableCell padding="checkbox">
+                        <QueueButton songuri={row.uri}></QueueButton>
+                      </TableCell>
+                    ) : (
+                      <div></div>
+                    )}
                   </TableRow>
                 );
               })}

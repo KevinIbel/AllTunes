@@ -6,13 +6,14 @@ import MainSection from "../containers/mainSection/mainSection";
 import WebPlaybackReact from "../components/spotify/webPlayback";
 import TrackTable from "../components/trackTable/TrackTable";
 
-window.onSpotifyWebPlaybackSDKReady = () => {};
-
 class App extends React.Component {
-  state = {
-    playerLoaded: false,
-    access_token: null,
-  };
+  constructor() {
+    super();
+    this.state = {
+      playerLoaded: false,
+      access_token: null,
+    };
+  }
 
   componentDidMount() {
     const { roomKey, access_token } = this.getHashParams();
@@ -53,11 +54,12 @@ class App extends React.Component {
     };
     return (
       <div class="main">
-        <WebPlaybackReact {...webPlaybackSdkProps}>
-          <CurrPlaying />
-          <MainSection />
-        </WebPlaybackReact> 
-        <TrackTable></TrackTable>
+          <WebPlaybackReact {...webPlaybackSdkProps}>
+            <CurrPlaying />
+            <MainSection />
+          </WebPlaybackReact>
+          <br></br>
+          <TrackTable host={true}></TrackTable>
       </div>
     );
   }
