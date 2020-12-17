@@ -28,7 +28,7 @@ export default function(ComposedComponent) {
       />
     );
   }
-
+//testbug
   const mapStateToProps = state => {
     return {
       currentSong: state.playerReducer.status
