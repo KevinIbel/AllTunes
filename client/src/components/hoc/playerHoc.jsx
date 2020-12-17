@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {nextSong, previousSong, pauseSong, playSong} from '../../dataHandler/store/actions/spotify';
+import {nextSong, previousSong, pauseSong, playSong, seekSong} from '../../dataHandler/store/actions/spotify';
 import { containsCurrentSong } from '../../dataHandler/store/actions/libraryActions';
 
 export default function(ComposedComponent) {
@@ -51,6 +51,7 @@ export default function(ComposedComponent) {
         previousSong,
         pauseSong,
         playSong,
+        seekSong,
         containsCurrentSong
       },
       dispatch
