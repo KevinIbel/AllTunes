@@ -61,7 +61,7 @@ export const playSong = (context = false, offset) => {
     type: 'PLAY_STATE'
   };
 };
-//testing merge.
+
 export const playTracks = (tracks, offset) => {
   axios.put('/me/player/play', {
     uris: tracks,
