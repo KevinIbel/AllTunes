@@ -46,7 +46,6 @@ wsServer.on('connection', socket => {
   // When sucessfully pinged, the health check is completed so set the socket to alive.
   socket.on('pong', () => {
     socket.isAlive = true;
-    socket.send("[Server] Connection still alive.");
   });
   // Handle incoming messages.
   /*The WS server only receives music manager tracks. The message is a string (JSON.stringify).
@@ -60,7 +59,7 @@ wsServer.on('connection', socket => {
           client.send(message);
         }
       });
-      console.log("[Server] Broadcasted message: " + message);
+      console.log("[Server] Broadcasted message: " + message.substring(0,20));
     } catch (e) {
       console.log("[Server] Failed to broadcast. " + e);
     }

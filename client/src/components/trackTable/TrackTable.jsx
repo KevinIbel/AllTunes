@@ -143,7 +143,24 @@ const unformattedRows = [
   },
 ];
 
-const rows = formatRows(unformattedRows);
+let rows = formatRows(unformattedRows);
+
+const ws = new WebSocket('ws://localhost:8888');
+ws.onmessage = message => {
+  try {
+    const tracks = JSON.parse(message.data);
+    rows = formatRows(tracks);
+  } catch (e) {
+    console.log(e);
+  }
+}
+ws.onclose = () => {
+  console.log('disconnected')
+  // automatically try to reconnect on connection loss
+  this.setState({
+    ws: new WebSocket(URL),
+  })
+}
 
 const headCells = [
   { id: "artists", label: "Artists" },
