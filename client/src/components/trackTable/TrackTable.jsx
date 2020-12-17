@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,6 +8,8 @@ import QueueButton from "../trackTable/queueButton";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
+
+const ws = new WebSocket('ws://localhost:8888');
 
 function formatRows(rows) {
   return rows.reduce((accumulator, currentValue) => {
@@ -143,7 +145,7 @@ const unformattedRows = [
   },
 ];
 
-const rows = formatRows(unformattedRows);
+const defaultRows = formatRows(unformattedRows);
 
 const headCells = [
   { id: "artists", label: "Artists" },
@@ -199,6 +201,20 @@ const useStyles = makeStyles((theme) => ({
 export default function TrackTable(props) {
   const classes = useStyles();
   const { host } = props;
+
+  const [rows, setRows] = useState(defaultRows);
+  
+  useEffect(() => {
+    ws.onmessage = (message) => {
+      try {
+        const tracks = formatRows(JSON.parse(message.data));
+        setRows(tracks);
+      } catch (e) {
+        // TODO: Make sure messages are always tracks.
+        console.log(e);
+      }
+    };
+  }, []);
 
   return (
     <div className={classes.root}>

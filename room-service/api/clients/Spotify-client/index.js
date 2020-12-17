@@ -17,7 +17,7 @@ class SpotifyClient {
   getFavTracks() {
     var config = {
       method: "get",
-      url: "https://api.spotify.com/v1/me/top/tracks",
+      url: "https://api.spotify.com/v1/me/top/tracks?limit=50",
       headers: {
         Authorization: "Bearer " + this.token,
       },
