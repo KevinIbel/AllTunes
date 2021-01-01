@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DetailSection from './components/details';
 import SongsControl from './components/songsControl';
-import SongSider from './components/songSider';
+import DurationMs from './components/durationMs';
 import withPlayer from '../../components/hoc/playerHoc';
 import './playBx.css';
 
@@ -35,7 +35,7 @@ class playBx extends Component {
         <SongsControl
           {...this.props}
         />
-        <SongSider
+        <DurationMs
           isEnabled
           value={position / duration}
           position={position}

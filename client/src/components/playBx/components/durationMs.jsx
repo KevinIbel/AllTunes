@@ -54,12 +54,12 @@ const ProgressBar = ({
   value,
   ...props
 }) => (
-  <div className="songdur-container">
+  <div className="song-sider-container">
     <FormattedTime numSeconds={props.position} />
     <Slider
       isEnabled={isEnabled}
       direction={direction}
-      className="duration"
+      className="song-sider"
       style={{
         cursor: 'pointer'
       }}
