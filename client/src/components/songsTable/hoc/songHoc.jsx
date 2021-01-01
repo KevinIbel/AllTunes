@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {
-  containsSong
-} from '../../../store/actions/libraryActions';
+import {containsCurrentSong} from '../../../store/actions/libraryActions';
 
 export default function(ComposedComponent) {
   class StatusHoc extends Component {
@@ -30,7 +28,7 @@ export default function(ComposedComponent) {
       let i, j, temparray;
       for (i = 0, j = songs.length; i < j; i += 25) {
         temparray = songs.slice(i, i + 25);
-        await this.props.containsSong(temparray.join(',')).then(response => {
+        await this.props.containsCurrentSong(temparray.join(',')).then(response => {
           this.setSongs(response);
         });
       }
@@ -60,7 +58,7 @@ export default function(ComposedComponent) {
   const mapDispatchToProps = dispatch => {
     return bindActionCreators(
       {
-       containsSong      },
+        containsCurrentSong      },
       dispatch
     );
   };

@@ -20,13 +20,4 @@ export const containsCurrentSong = id => {
   };
 };
 
-export const containsSong = id => {
-  return async () => {
-    try {
-      const response = await axios.get(`/me/tracks/contains?ids=${id}`);
-      return response.data;
-    } catch (error) {
-      return error;
-    }
-  };
-};
+
