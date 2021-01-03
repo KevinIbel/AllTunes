@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {playSong, pauseSong, playTracks} from '../../dataHandler/store/actions/spotify';
-import {containsSong} from '../../dataHandler/store/actions/libraryActions';
+import {containsCurrentSong} from '../../dataHandler/store/actions/libraryActions';
 
 export default function(ComposedComponent) {
   class StatusHoc extends Component {
@@ -30,7 +30,7 @@ export default function(ComposedComponent) {
         pauseSong,
         playSong,
         playTracks,
-        containsSong,
+        containsCurrentSong,
           },
       dispatch
     );
