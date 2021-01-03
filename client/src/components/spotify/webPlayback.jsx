@@ -1,36 +1,32 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Fragment, useEffect } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { 
+import {
   setStatus,
   setDeviceId,
-  setActiveDevice 
- } from '../../dataHandler/store/actions/spotify';
+  setActiveDevice,
+} from "../../dataHandler/store/actions/spotify";
 
+function WebPlayback(props) {
+  const playerName = "Alltunes App";
+  const playerAutoConnect = true;
+  let statePollingInterval;
+  let deviceSelectedInterval;
+  let webPlaybackInstance;
 
-class WebPlayback extends Component {
-  deviceSelectedInterval = null;
-  statePollingInterval = null;
-  webPlaybackInstance = null;
-
-  state = {
-    playerReady: false,
-    playerSelected: false
-  };
-
-  async handleState(state) {
+  async function handleState(state) {
     if (state) {
-      this.props.setStatus(state);
+      props.setStatus(state);
     } else {
-      this.clearStatePolling();
-      await this.waitForDeviceToBeSelected();
+      clearStatePolling();
+      await waitForDeviceToBeSelected();
     }
   }
 
-  waitForSpotify() {
-    return new Promise(resolve => {
-      if ('Spotify' in window) {
+  function waitForSpotify() {
+    return new Promise((resolve) => {
+      if ("Spotify" in window) {
         resolve();
       } else {
         window.onSpotifyWebPlaybackSDKReady = () => {
@@ -40,14 +36,13 @@ class WebPlayback extends Component {
     });
   }
 
-  waitForDeviceToBeSelected() {
-    return new Promise(resolve => {
-      this.deviceSelectedInterval = setInterval(() => {
-        if (this.webPlaybackInstance) {
-          this.webPlaybackInstance.getCurrentState().then(state => {
+  function waitForDeviceToBeSelected() {
+    return new Promise((resolve) => {
+      deviceSelectedInterval = setInterval(() => {
+        if (webPlaybackInstance) {
+          webPlaybackInstance.getCurrentState().then((state) => {
             if (state !== null) {
-              this.startStatePolling();
-              clearInterval(this.deviceSelectedInterval);
+              clearInterval(deviceSelectedInterval);
               resolve(state);
             }
           });
@@ -56,88 +51,79 @@ class WebPlayback extends Component {
     });
   }
 
-  startStatePolling() {
-    this.statePollingInterval = setInterval(async () => {
-      let state = await this.webPlaybackInstance.getCurrentState();
-      await this.handleState(state);
-    }, this.props.playerRefreshRateMs || 1000);
+  function clearStatePolling() {
+    clearInterval(statePollingInterval);
   }
 
-  clearStatePolling() {
-    clearInterval(this.statePollingInterval);
-  }
-
-  async setupWebPlaybackEvents() {
+  async function setupWebPlaybackEvents() {
     let { Player } = window.Spotify;
 
-    this.webPlaybackInstance = new Player({
-      name: this.props.playerName,
-      getOAuthToken: async callback => {
-        if (typeof this.props.onPlayerRequestAccessToken !== 'undefined') {
-          let userAccessToken = await this.props.onPlayerRequestAccessToken();
+    webPlaybackInstance = new Player({
+      name: playerName,
+      getOAuthToken: async (callback) => {
+        if (typeof props.access_token !== "undefined") {
+          let userAccessToken = await props.access_token;
           callback(userAccessToken);
         }
-      }
+      },
     });
 
-    this.webPlaybackInstance.on('initialization_error', e => {
-      this.props.onPlayerError(e.message);
+    webPlaybackInstance.on("initialization_error", (e) => {
+      console.log(e);
     });
 
-    this.webPlaybackInstance.on('authentication_error', e => {
-      this.props.onPlayerError(e.message);
+    webPlaybackInstance.on("authentication_error", (e) => {
+      console.log(e);
     });
 
-    this.webPlaybackInstance.on('account_error', e => {
-      this.props.onPlayerError(e.message);
+    webPlaybackInstance.on("account_error", (e) => {
+      console.log(e);
     });
 
-    this.webPlaybackInstance.on('playback_error', e => {
-      this.props.onPlayerError(e.message);
+    webPlaybackInstance.on("playback_error", (e) => {
+      console.log(e);
     });
 
-    this.webPlaybackInstance.on('player_state_changed', async state => {
-      await this.handleState(state);
+    webPlaybackInstance.on("player_state_changed", async (state) => {
+      await handleState(state);
     });
 
-    this.webPlaybackInstance.on('ready', data => {
-      this.props.setDeviceId(data.device_id);
-      this.props.setActiveDevice(data.device_id);
+    webPlaybackInstance.on("ready", (data) => {
+      props.setDeviceId(data.device_id);
+      props.setActiveDevice(data.device_id);
     });
 
-    if (this.props.playerAutoConnect) {
-      this.webPlaybackInstance.connect();
+    if (playerAutoConnect) {
+      webPlaybackInstance.connect();
     }
   }
 
-  setupWaitingForDevice() {
-    return new Promise(resolve => {
-      this.webPlaybackInstance.on('ready', data => {
+  function setupWaitingForDevice() {
+    return new Promise((resolve) => {
+      webPlaybackInstance.on("ready", (data) => {
         resolve(data);
       });
     });
   }
 
-  async componentWillMount() {
-    this.props.onPlayerLoading();
-    await this.waitForSpotify();
-    await this.setupWebPlaybackEvents();
-    let device_data = await this.setupWaitingForDevice();
-    this.props.onPlayerWaitingForDevice(device_data);
-    await this.waitForDeviceToBeSelected();
-    this.props.onPlayerDeviceSelected();
-  }
+  useEffect(() => {
+    const init = async () => {
+      await waitForSpotify();
+      await setupWebPlaybackEvents();
+      await setupWaitingForDevice();
+      await waitForDeviceToBeSelected();
+    };
+    init()
+  }, []);
 
-  render() {
-    return <Fragment>{this.props.children}</Fragment>;
-  }
+  return <Fragment>{props.children}</Fragment>;
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     { setDeviceId, setActiveDevice, setStatus },
     dispatch
   );
 };
 
-export default connect(null,mapDispatchToProps)(WebPlayback);
+export default connect(null, mapDispatchToProps)(WebPlayback);
