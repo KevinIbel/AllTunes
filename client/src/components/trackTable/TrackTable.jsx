@@ -38,7 +38,9 @@ const useStyles = makeStyles((theme) => ({
 export default function TrackTable(props) {
   const classes = useStyles();
   const host = props.host;
-  var socket = io("http://localhost:8888");
+  const ws = new WebSocket('ws://localhost:8888');
+
+  
 
   const [roomKey, setRoomKey] = useState(props.roomKey);
   const [access_token, setAccess_token] = useState(props.access_token);
@@ -53,11 +55,16 @@ export default function TrackTable(props) {
   }, props.roomKey);
 
   useEffect(() => {
-    socket.on("tracks", function (data) {
-      console.log("GOT DATA");
-      setRows(formatRows(data));
-    });
-  });
+    ws.onmessage = (message) => {
+      try {
+        const tracks = formatRows(JSON.parse(message.data));
+        setRows(tracks);
+      } catch (e) {
+        // TODO: Make sure messages are always tracks.
+        console.log(e);
+      }
+    };
+  }, []);
 
   function formatRows(rows) {
     return rows.reduce((accumulator, currentValue) => {
