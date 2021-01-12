@@ -54,6 +54,7 @@ export default function(ComposedComponent) {
       />
     );
   }
+  const userName = this.props.user.display_name || this.props.user.id;
 
   const mapDispatchToProps = dispatch => {
     return bindActionCreators(

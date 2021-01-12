@@ -9,7 +9,6 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
 import TrackCover from "../trackCover/trackCover";
-import { io } from "socket.io-client";
 
 const useStyles = makeStyles((theme) => ({
   root: {
