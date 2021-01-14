@@ -18,7 +18,7 @@ class playBx extends Component {
       <div className="player-container">
         {this.props.currentSong.id ? (
           <DetailSection
-            ids={
+            idv s={
               this.props.currentSong.linked_from.id
                 ? `${this.props.currentSong.linked_from.id},${
                     this.props.currentSong.id
@@ -32,6 +32,7 @@ class playBx extends Component {
             albumName={this.props.currentSong.album.name || ''}
           />
         ) : null}
+        
         <SongsControl
           {...this.props}
         />

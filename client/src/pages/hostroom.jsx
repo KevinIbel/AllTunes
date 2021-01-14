@@ -3,6 +3,7 @@ import { setToken } from "../dataHandler/store/actions/spotify";
 import Footer from "../components/footer/footer";
 import UserDetails from "../components/userDetails/userDetails";
 import UserSection from "../components/userSection/userSection";
+import QueueSection from "../components/queueSection/queueSection";
 import WebPlaybackReact from "../components/spotify/webPlayback";
 import TrackTable from "../components/trackTable/TrackTable";
 import "./style/hostroom.css";
@@ -44,6 +45,12 @@ export default function Hostroom(props) {
       roomKey={roomKey}
       >
       </UserSection>
+      <QueueSection
+      host={true}
+      access_token={access_token}
+      roomKey={roomKey}
+      >
+      </QueueSection>
     </div>
   );
 }
