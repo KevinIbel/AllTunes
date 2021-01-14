@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: client
+  name: room-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: client
+      app: room-service
   template:
     metadata:
       labels:
-        app: client
+        app: room-service
     spec:
       containers:
         - name: app
-          image: jamesangel/alltunes-client-server
+          image: jamesangel/alltunes-room-service
           ports:
-            - containerPort: 3000
+            - containerPort: 8000

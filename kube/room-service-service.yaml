@@ -2,13 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: default
-  name: "backend-service"
+  name: "room-service-service"
 spec:
   selector:
-    app: backend
+    app: room-service
   type: LoadBalancer
   ports:
-  - port: 8000
+  - port: 8888
     protocol: TCP
-    targetPort: 8000
-  loadBalancerIP: "35.187.88.243"
+    targetPort: 8888

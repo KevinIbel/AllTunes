@@ -1,11 +1,14 @@
 import axios from 'axios';
 
+const backendUrl = process.env.NODE_ENV == 'development' ? "http://localhost:8888/room" : "http://35.187.88.243:8000/room"
+console.log(process.env.NODE_ENV)
+
 export async function createRoom(host) {
     let response = () => {
         return new Promise(function(resolve, reject) {
             var config = {
                 method: 'post',
-                url: 'http://localhost:8888/room',
+                url: backendUrl,
                 headers: { 
                   'Content-Type': 'application/json'
                 },
@@ -29,7 +32,7 @@ export async function createRoom(host) {
         return new Promise(function(resolve, reject) {
             var config = {
                 method: 'put',
-                url: 'http://localhost:8888/room',
+                url: backendUrl,
                 headers: { 
                   'Content-Type': 'application/json'
                 },

@@ -7,13 +7,15 @@ var client_id = "aeedb64c42db49bf8413aab94c44637c"; // Your client id
 var scope =
   "streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-modify user-top-read";
 
+const url = process.env.NODE_ENV == 'development' ? "http://localhost:3000" : "http://35.187.88.243:3000"
+
 export default function Landing(props) {
   function login(customer) {
     var redirect_uri;
     if (customer === "host") {
-      redirect_uri = "http://localhost:3000/loading/";
+      redirect_uri = `${url}/loading/`;
     } else {
-      redirect_uri = "http://localhost:3000/userloading/";
+      redirect_uri = `${url}/userloading/`;
     }
     var redirect =
       "https://accounts.spotify.com/authorize?" +
