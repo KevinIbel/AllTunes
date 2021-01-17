@@ -11,7 +11,7 @@ export default function Loading(props) {
       async function initRoom() {
       const host = {
         token: props.access_token,
-        hostname: props.display_name,
+        hostname: props.display_name, 
       };
       const data = await createRoom(host);
       setRoomKey(data.key);

@@ -59,7 +59,7 @@ wsServer.on('connection', socket => {
           client.send(message);
         }
       });
-      console.log("[Server] Broadcasted message: " + message.substring(0,20));
+      console.log("[Server] Broadcasted message: " + message.substring(0,100));
     } catch (e) {
       console.log("[Server] Failed to broadcast. " + e);
     }

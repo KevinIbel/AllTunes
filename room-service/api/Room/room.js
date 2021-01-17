@@ -6,7 +6,7 @@ class Room {
 
   /**
    * @param {Object} host The host of the room
-   * @param {String} host.display_name The username of the host
+   * @param {String} host.hostname The username of the host
    * @param {String} host.token The Authentication token of the user given by Spotify.
    */
   constructor(host) {
@@ -22,6 +22,10 @@ class Room {
       const reducedTracks = this.musicManager.reduceUserTracks(hostTracks);
       this.musicManager.updateAllTracks(reducedTracks);
       this.broadcastTracks(reducedTracks);
+      console.log("host:" + JSON.stringify(host));
+      this.customers.push(host.hostname);
+      console.log("customers after adding host:" + this.customers);
+      this.broadcastPeople(this.customers);
     });
   }
 
@@ -37,13 +41,18 @@ class Room {
    //};
 
   addCustomer = async (customer) => {
-    this.customers.push(customer);
     try {
+      // Update the tracks in the room and send the updated list to everyone in the room.
       const UserTracks = await new SpotifyClient(customer).getFavTracks();
       const reducedTracks = this.musicManager.reduceUserTracks(UserTracks);
       this.musicManager.updateAllTracks(reducedTracks);
       const updatedTracks = this.musicManager.getAllTracks();
       this.broadcastTracks(updatedTracks);
+      // Update the people in the room and send the updated list to everyone in the room.
+      console.log("customer:" + JSON.stringify(customer));
+      this.customers.push(customer.username);
+      console.log("customers after adding a customer:" + this.customers);
+      this.broadcastPeople(this.customers);
       return updatedTracks;
     } catch (error) {
       return error;
@@ -92,9 +101,27 @@ class Room {
 
     wsClient.on('open', () => {
       console.log("WS client connected. Attempting to send music manager tracks to WS server.");
-      wsClient.send(JSON.stringify(tracks));
+      const messageToSend = { type: "tracks", data: tracks }
+      wsClient.send(JSON.stringify(messageToSend));
       console.log("Finished sending. Now disconnecting.")
       wsClient.close(1000, "Tracks sent.");
+    });
+  };
+
+  /**
+   * @param {Array} people People in the room.
+   */
+  broadcastPeople = (people) => {
+    // This WS client's only purpose is to send the names of the people in the room to the server then close.
+    const ws = require('ws');
+    const wsClient = new ws('ws://localhost:8888');
+
+    wsClient.on('open', () => {
+      console.log("WS client connected. Attempting to send the user list of the room to WS server.");
+      const messageToSend = { type: "userlist", data: people }
+      wsClient.send(JSON.stringify(messageToSend));
+      console.log("Finished sending. Now disconnecting.")
+      wsClient.close(1000, "User list sent.");
     });
   };
 }

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { setToken } from "../../dataHandler/store/actions/spotify";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import StarIcon from '@material-ui/icons/Star';
+import UserDetails from "../userDetails/userDetails";
+import { Container } from "@material-ui/core";
 
 const header = {
     padding: "10px 20px",
@@ -37,31 +40,47 @@ const style = {
 
 
 
-export default function InsetList() {
+export default function InsetList(props) {
+  const host = props.host;
+  const ws = new WebSocket('ws://localhost:8888');
+
+  const [listItems, setListItems] = useState([]);
+
+  useEffect(() => {
+    // Only update the list when the message contains a user list.
+    ws.onmessage = (message) => {
+      try {
+        const contents = JSON.parse(message.data);
+        console.log("TYPE OF MSG:" + (contents.type));
+        if (contents.type == "userlist") {
+          console.log("contentsdata:" + JSON.stringify(contents.data));
+          console.log("contentsdatatype:" + (typeof contents.data));
+          setListItems(contents.data);
+          console.log(contents.data);
+        }
+      } catch (e) {
+        // If the message isn't a user list, the list isn't updated.
+        console.log(e);
+      }
+    };
+  }, []);
+
   return (
+    <Container>
     <div>   
         <h3 style={header}> Room Lobby</h3>
     
     <List style ={style} component="nav"  aria-label="contacts">
-      <ListItem button>
-        <ListItemIcon>
-          <StarIcon />
-        </ListItemIcon>
-        <ListItemText primary="Chelsea Otakan" />
-      </ListItem>
-      <ListItem button>
-        <ListItemText inset primary="Eric Hoffman" />
-      </ListItem>
-      <ListItem>
-        <ListItemText inset primary="bleeblah" />
-      </ListItem>
-      <ListItem>
-        <ListItemText inset primary="blahblee" />
-      </ListItem>
-      <ListItem>
-        <ListItemText inset primary="eelbhalb" />
-      </ListItem>
-    </List>
+      {listItems.map((custName,index) => {
+        console.log(custName);
+        return (
+          <ListItemText inset primary={custName}>
+ 
+          </ListItemText>
+        );
+})}
+</List>
     </div>
+  </Container>
   );
 }

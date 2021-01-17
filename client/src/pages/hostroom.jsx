@@ -41,8 +41,6 @@ export default function Hostroom(props) {
       ></TrackTable>
       <UserSection
       host={true}
-      access_token={access_token}
-      roomKey={roomKey}
       >
       </UserSection>
 

@@ -54,12 +54,18 @@ export default function TrackTable(props) {
   }, props.roomKey);
 
   useEffect(() => {
+    // Only update the rows when the message contains tracks.
     ws.onmessage = (message) => {
       try {
-        const tracks = formatRows(JSON.parse(message.data));
-        setRows(tracks);
+        const contents = JSON.parse(message.data);
+        console.log("TYPE OF MSG:" + contents.type);
+        if (contents.type == "tracks") {
+          console.log("contentsdata:" + JSON.stringify(contents.data));
+          console.log("contentsdatatype:" + (typeof contents.data));
+          setRows(formatRows(contents.data));
+        }
       } catch (e) {
-        // TODO: Make sure messages are always tracks.
+        // If the message doesn't have tracks, the rows aren't updated.
         console.log(e);
       }
     };
