@@ -1,10 +1,12 @@
 const crypto = require("crypto");
 const MusicManager = require("../../MusicManager/index");
 const SpotifyClient = require("../clients/Spotify-client/index");
+
 class Room {
+
   /**
    * @param {Object} host The host of the room
-   * @param {String} host.username The username of the host
+   * @param {String} host.display_name The username of the host
    * @param {String} host.token The Authentication token of the user given by Spotify.
    */
   constructor(host) {
@@ -25,9 +27,15 @@ class Room {
 
   /**
    * @param {Object} customer The customer to add to the room
-   * @param {string} customer.username The customers username
+   * @param {string} customer.display_name The customers username
    * @param {string} customer.token The Authentication token of the user given by Spotify.
    */
+
+   //getCustomerName = async (customer) => {
+    //this.customer.username(getUserProfile())
+   
+   //};
+
   addCustomer = async (customer) => {
     this.customers.push(customer);
     try {
@@ -60,6 +68,19 @@ class Room {
       tracks: this.musicManager.getAllTracks(),
     };
   };
+
+  /**
+   * @param {Object} customer The customer to add to the room
+   * @returns {Object} All the music in the room
+   */
+  addTracks = async (customer) => {
+    const UserTracks = await new SpotifyClient(customer).getFavTracks();
+    const reducedTracks = this.musicManager.reduceUserTracks(UserTracks);
+    this.musicManager.updateAllTracks(reducedTracks);
+    const updatedTracks = this.musicManager.getAllTracks();
+    this.broadcastTracks(updatedTracks);
+    return updatedTracks
+  }
 
   /**
    * @param {Array} tracks Tracks in the music manager.

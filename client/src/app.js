@@ -6,10 +6,13 @@ import Landing from "./pages/landing";
 import Loading from "./pages/loading";
 import UserLoading from "./pages/userLoading";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { displayName } from "qrcode.react";
+import axios from "axios";
 
 export default function App() {
   const [access_token, setAccess_token] = useState();
   const [roomKey, setRoomKey] = useState();
+  const [display_name, setDisplayName] = useState();
 
   function getHashParams() {
     var hashParams = {};
@@ -30,6 +33,31 @@ export default function App() {
     setAccess_token(hashParams.access_token);
   }, [roomKey, access_token]);
 
+
+  useEffect(() => {
+    if(access_token){
+      async function getUserData(){
+        var config = {
+          method: "get",
+          url: "https://api.spotify.com/v1/me",
+          headers: {
+            Authorization: "Bearer " + access_token,
+          },
+        };
+        var data = await axios(config)
+        .then(function (response) {
+          return response.data.display_name;
+        })
+        .catch(function (error) {
+          throw error; 
+        });
+        console.log(data)
+        setDisplayName(data);
+      }
+      getUserData();
+    }
+  }, [access_token]);
+
   return (
     <ThemeProvider
       theme={createMuiTheme({
@@ -45,16 +73,16 @@ export default function App() {
               renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/hostroom">
-            <Hostroom access_token={access_token} roomKey={roomKey} />
+            <Hostroom access_token={access_token} roomKey={roomKey} display_name={display_name}  />
           </Route>
           <Route path="/loading">
-            <Loading access_token={access_token} roomKey={roomKey} />
+            <Loading access_token={access_token} roomKey={roomKey} display_name={display_name} />
           </Route>
           <Route path="/UserLoading">
-            <UserLoading access_token={access_token} roomKey={roomKey} />
+            <UserLoading access_token={access_token} roomKey={roomKey} display_name={display_name} />
           </Route>
           <Route path="/userroom">
-            <Userroom access_token={access_token} roomKey={roomKey} />
+            <Userroom access_token={access_token} roomKey={roomKey} display_name={display_name}  />
           </Route>
           <Route path="/">
             <Landing access_token={access_token} roomKey={roomKey}/>

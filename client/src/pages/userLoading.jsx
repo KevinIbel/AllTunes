@@ -11,7 +11,7 @@ export default function UserLoading(props) {
 
   async function addCustomerToRoom() {
     try {
-      await addCustomer({ token: props.access_token, username: "james" });
+      await addCustomer({ token: props.access_token, username: props.display_name });
       setAddedToRoom(true);
     } catch (error) {
       console.error(error);

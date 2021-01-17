@@ -7,16 +7,18 @@ export default function Loading(props) {
   const [roomKey, setRoomKey] = useState();
 
   useEffect(() => {
-    async function initRoom() {
+    if(props.access_token && props.display_name){
+      async function initRoom() {
       const host = {
         token: props.access_token,
-        hostname: "kevin",
+        hostname: props.display_name,
       };
       const data = await createRoom(host);
       setRoomKey(data.key);
     }
     initRoom();
-  }, [props.access_token]);
+  }
+  }, [props.access_token, props.display_name]);
 
   return roomKey ? (
     <Redirect
