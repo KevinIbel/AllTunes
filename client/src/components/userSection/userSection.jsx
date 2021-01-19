@@ -46,17 +46,24 @@ export default function InsetList(props) {
 
   const [listItems, setListItems] = useState([]);
 
+
   useEffect(() => {
     // Only update the list when the message contains a user list.
     ws.onmessage = (message) => {
       try {
         const contents = JSON.parse(message.data);
+
         console.log("TYPE OF MSG:" + (contents.type));
-        if (contents.type == "userlist") {
+
+        if (contents.type == "userlist" ) {
           console.log("contentsdata:" + JSON.stringify(contents.data));
           console.log("contentsdatatype:" + (typeof contents.data));
-          setListItems(contents.data);
+          const setData = new Set(contents.data);
+          const uniqueArray = Array.from(setData);
+          setListItems(uniqueArray);
           console.log(contents.data);
+          console.log(uniqueArray);
+          console.log(setData);
         }
       } catch (e) {
         // If the message isn't a user list, the list isn't updated.

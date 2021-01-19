@@ -40,6 +40,9 @@ class Room {
    
    //};
 
+
+
+
   addCustomer = async (customer) => {
     try {
       // Update the tracks in the room and send the updated list to everyone in the room.

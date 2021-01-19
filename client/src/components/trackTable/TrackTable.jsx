@@ -71,7 +71,9 @@ export default function TrackTable(props) {
     };
   }, []);
 
+  
   function formatRows(rows) {
+    rows.length = 100;
     return rows.reduce((accumulator, currentValue) => {
       const newRow = {};
       newRow.artists = currentValue.artists.join(", ");
@@ -92,7 +94,8 @@ export default function TrackTable(props) {
             aria-labelledby="tableTitle"
             aria-label="enhanced table"
           >
-            <TableBody>
+            <TableBody
+          >
               {rows.map((row, index) => {
                 return (
                   <TableRow tabIndex={-1} key={row.name}>

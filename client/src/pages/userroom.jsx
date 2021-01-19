@@ -24,7 +24,9 @@ export default function Useroom(props) {
 
   return (
     <div class="main">
-
+      <WebPlaybackReact access_token={access_token}>
+       
+      </WebPlaybackReact>
       <UserDetails         
       host={true}
         display_name={props.display_name}
