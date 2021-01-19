@@ -14,7 +14,7 @@ async function initRoom(roomIp, host) {
       return response.data.key;
     })
     .catch(function (error) {
-      return error;
+      throw error;
     });
 }
 

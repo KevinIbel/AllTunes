@@ -11,11 +11,6 @@ class Room {
     this.musicManager = new MusicManager();
     this.host = host;
     this.customers = [];
-    this.key = crypto
-      .randomBytes(20)
-      .toString("hex")
-      .substring(0, 10)
-      .toUpperCase();
     new SpotifyClient(host).getFavTracks().then((hostTracks) => {
       const reducedTracks = this.musicManager.reduceUserTracks(hostTracks);
       this.musicManager.updateAllTracks(reducedTracks);
@@ -56,7 +51,6 @@ class Room {
     return {
       host: this.host,
       customers: this.customers,
-      key: this.key,
       tracks: this.musicManager.getAllTracks(),
     };
   };

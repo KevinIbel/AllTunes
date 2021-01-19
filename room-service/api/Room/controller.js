@@ -1,5 +1,4 @@
-const crypto = require("crypto");
-const Room = require("./Room");
+const Room = require("./room");
 
 class Controller {
   constructor() {
@@ -19,14 +18,14 @@ class Controller {
       data = "room has already been created";
       return { status, data };
     }
-    if (host.token && host.hostname) {
+    if (host.token && host.username) {
       this.room = new Room(host);
       status = "201";
-      data = { key: this.room.key };
+      data = "Successful";
       return { status, data };
     } else {
       status = "400";
-      data = "must have hosts username";
+      data = "must have hosts username and token";
       return { status, data };
     }
   };
@@ -39,10 +38,13 @@ class Controller {
   addCustomer = async (customer) => {
     var status;
     var data;
-    if (this.room) {
+    if (this.room && customer.token && customer.username) {
       status = "202";
       data = await this.room.addCustomer(customer);
       return { status, data };
+    } else if (!customer.token || !customer.username) {
+      status = "400";
+      data = "must have username and token";
     } else {
       status = "400";
       data = "Room has not been created, use POST /room to create a room";

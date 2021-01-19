@@ -5,8 +5,7 @@
         "labels": {
             "app": "room-service"
         },
-        "namespace": "default",
-        "generateName": "room-service-manual-pod-"
+        "namespace": "default"
     },
     "spec": {
         "hostNetwork": true,
