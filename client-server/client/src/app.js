@@ -10,6 +10,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 export default function App() {
   const [access_token, setAccess_token] = useState();
   const [roomKey, setRoomKey] = useState();
+  const [roomIp, setRoomIp] = useState();
 
   function getHashParams() {
     var hashParams = {};
@@ -45,19 +46,19 @@ export default function App() {
               renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/hostroom">
-            <Hostroom access_token={access_token} roomKey={roomKey} />
+            <Hostroom access_token={access_token} roomKey={roomKey} roomIp={roomIp}/>
           </Route>
           <Route path="/loading">
-            <Loading access_token={access_token} roomKey={roomKey} />
+            <Loading access_token={access_token} roomKey={roomKey} roomIp={roomIp} setRoomIp={setRoomIp}/>
           </Route>
           <Route path="/UserLoading">
-            <UserLoading access_token={access_token} roomKey={roomKey} />
+            <UserLoading access_token={access_token} roomKey={roomKey} roomIp={roomIp}/>
           </Route>
           <Route path="/userroom">
-            <Userroom access_token={access_token} roomKey={roomKey} />
+            <Userroom access_token={access_token} roomKey={roomKey} roomIp={roomIp}/>
           </Route>
           <Route path="/">
-            <Landing access_token={access_token} roomKey={roomKey}/>
+            <Landing access_token={access_token} roomKey={roomKey} roomIp={roomIp}/>
           </Route>
         </Switch>
       </Router>

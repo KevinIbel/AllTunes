@@ -36,7 +36,7 @@ class RoomController {
       const serviceIp = (await getServiceIp(roomKey)) + ":8888"; //get ip address of pod
       await initRoom(serviceIp, host); //initialize the room
       this.rooms[roomKey] = serviceIp;
-      return { status: 201, data: "Success"}; //return room key
+      return { status: 201, data: { roomKey, roomIp: serviceIp } }; //return room key
     } catch (error) {
       console.error(error);
       return { status: 500, data: error };

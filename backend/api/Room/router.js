@@ -7,7 +7,7 @@ const controller = new RoomController();
 router.post("/", async (req, res) => {
   const host = req.body;
   const data = await controller.createRoom(host);
-  res.status(data.status).send(data);
+  res.status(data.status).send(data.data);
 });
 
 router.get("/", (req, res) => {

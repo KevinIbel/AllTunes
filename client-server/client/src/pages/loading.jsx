@@ -12,8 +12,11 @@ export default function Loading(props) {
         token: props.access_token,
         username: "kevin",
       };
-      const data = await createRoom(host);
-      setRoomKey(data.key);
+      if (host.token && host.username) {
+        const data = await createRoom(host);
+        setRoomKey(data.roomKey);
+        props.setRoomIp(data.roomIp);
+      }
     }
     initRoom();
   }, [props.access_token]);

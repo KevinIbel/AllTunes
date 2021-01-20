@@ -13,6 +13,7 @@ export async function createRoom(host) {
   let response = () => {
     return new Promise(function (resolve, reject) {
       var config = {
+        timeout: "90000",
         method: "post",
         url: backendUrl,
         headers: {

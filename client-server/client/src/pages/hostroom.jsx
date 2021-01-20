@@ -26,6 +26,7 @@ export default function Hostroom(props) {
       </WebPlaybackReact>
       <br></br>
       <TrackTable
+        roomIp={props.roomIp}
         host={true}
         access_token={access_token}
         roomKey={roomKey}
