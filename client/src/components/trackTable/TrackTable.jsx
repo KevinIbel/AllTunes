@@ -62,6 +62,7 @@ export default function TrackTable(props) {
         if (contents.type == "tracks") {
           console.log("contentsdata:" + JSON.stringify(contents.data));
           console.log("contentsdatatype:" + (typeof contents.data));
+          
           setRows(formatRows(contents.data));
         }
       } catch (e) {

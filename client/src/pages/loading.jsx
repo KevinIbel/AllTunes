@@ -11,14 +11,15 @@ export default function Loading(props) {
       async function initRoom() {
       const host = {
         token: props.access_token,
-        hostname: props.display_name, 
+        hostname: props.display_name,
+        hostid: props.id
       };
       const data = await createRoom(host);
       setRoomKey(data.key);
     }
     initRoom();
   }
-  }, [props.access_token, props.display_name]);
+  }, [props.access_token, props.display_name, props.id]);
 
   return roomKey ? (
     <Redirect

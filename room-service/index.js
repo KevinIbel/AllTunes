@@ -36,11 +36,9 @@ wsServer.on('connection', socket => {
   
   // When the connection is opened, the socket is alive.
   socket.isAlive = true;
-  console.log("[Server] Connection opened.");
   // When the connection is closed, the socket is not alive. Terminate the socket.
   socket.on('close', () => {
     socket.isAlive = false;
-    console.log("[Server] Connection closed.");
     socket.terminate();
   });
   // When sucessfully pinged, the health check is completed so set the socket to alive.

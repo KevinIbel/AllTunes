@@ -13,6 +13,7 @@ export default function App() {
   const [access_token, setAccess_token] = useState();
   const [roomKey, setRoomKey] = useState();
   const [display_name, setDisplayName] = useState();
+  const [id, setId] = useState();
 
   function getHashParams() {
     var hashParams = {};
@@ -46,17 +47,77 @@ export default function App() {
         };
         var data = await axios(config)
         .then(function (response) {
-          return response.data.display_name;
+          return [response.data.display_name, response.data.id];
         })
         .catch(function (error) {
           throw error; 
         });
         console.log(data)
-        setDisplayName(data);
+        setDisplayName(data[0]);
+        setId(data[1]);
       }
+ 
+      
       getUserData();
     }
   }, [access_token]);
+
+
+    useEffect(() => {
+    if(access_token){
+      async function getUserData(){
+        var config = {
+          method: "get",
+          url: "https://api.spotify.com/v1/me",
+          headers: {
+            Authorization: "Bearer " + access_token,
+          },
+        };
+        var data = await axios(config)
+        .then(function (response) {
+          return [response.data.display_name, response.data.id];
+        })
+        .catch(function (error) {
+          throw error; 
+        });
+        console.log(data)
+        setDisplayName(data[0]);
+        setId(data[1]);
+      }
+ 
+      
+      getUserData();
+    }
+  }, [access_token]);
+
+
+  useEffect(() => {
+    if(access_token){
+      async function followUser(){
+        var config = {
+          method: "put",
+          url: "https://api.spotify.com/v1/me/following",
+          headers: {
+            Authorization: "Bearer " + access_token,
+          },
+        };
+        var data = await axios(config)
+        .then(function (response) {
+          return [response.data.display_name, response.data.id];
+        })
+        .catch(function (error) {
+          throw error; 
+        });
+        console.log(data)
+        setDisplayName(data[0]);
+        setId(data[1]);
+      }
+ 
+      
+      followUser();
+    }
+  }, [access_token]);
+  
 
   return (
     <ThemeProvider
@@ -73,16 +134,16 @@ export default function App() {
               renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/hostroom">
-            <Hostroom access_token={access_token} roomKey={roomKey} display_name={display_name}  />
+            <Hostroom access_token={access_token} roomKey={roomKey} display_name={display_name} id={id}/>
           </Route>
           <Route path="/loading">
-            <Loading access_token={access_token} roomKey={roomKey} display_name={display_name} />
+            <Loading access_token={access_token} roomKey={roomKey} display_name={display_name} id={id}/>
           </Route>
           <Route path="/UserLoading">
-            <UserLoading access_token={access_token} roomKey={roomKey} display_name={display_name} />
+            <UserLoading access_token={access_token} roomKey={roomKey} display_name={display_name} id={id}/>
           </Route>
           <Route path="/userroom">
-            <Userroom access_token={access_token} roomKey={roomKey} display_name={display_name}  />
+            <Userroom access_token={access_token} roomKey={roomKey} display_name={display_name} id={id}/>
           </Route>
           <Route path="/">
             <Landing access_token={access_token} roomKey={roomKey}/>
