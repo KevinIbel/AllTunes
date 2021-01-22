@@ -8,6 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import StarIcon from '@material-ui/icons/Star';
 import UserDetails from "../userDetails/userDetails";
 import { Container } from "@material-ui/core";
+import { Box } from '@material-ui/core';
+
 
 const header = {
   
@@ -33,13 +35,20 @@ const style = {
     padding: '15px',
     textAlign: 'center',
     background: 'rgb(40, 40, 40)',
+    textDecoration: 'none'
  };
 
+ const userStyle = {
+  textAlign: 'center', // <-- the magic
+  fontWeight: 'bold',
+  fontSize: 18,
+  marginTop: 0,
+  width: 200};
  const thin ={
-padding: '0',
-fontSize: 'fontSizeSmall',
-flexShrink: '0',
-display: 'inline-block'
+  display: 'flex',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  
  };
 export default function InsetList(props) {
   const host = props.host;
@@ -76,21 +85,25 @@ export default function InsetList(props) {
         <h3 style={header}> Room Lobby</h3>
         { userIds.map(uid => {
           return (
-          <ListItem>
+          <ListItem >        
             {userIds[0] == uid ? (
-              <div>
-              <a button='true' target="_blank"href={"https://open.spotify.com/user/" + uid}>
-            
-              <ListItemText  primary={userDisplayNames[userIds.indexOf(uid)]}> </ListItemText>   
+              <div>  
+                <Box alignItems="center" display="flex">     
+                <StarIcon style={thin}></StarIcon>              
+  
+ <a style={{thin, textDecoration: 'none',color: 'rgb(30 215 96)'}} button='true' target="_blank"href={"https://open.spotify.com/user/" + uid}>
+ <ListItemText  primary={userDisplayNames[userIds.indexOf(uid)]}> </ListItemText>   
             </a> 
-            <StarIcon></StarIcon>
+            <StarIcon style={thin}></StarIcon>              
+
+            </Box>    
             </div>
             ) : (
-              <div>
-              <a button='true' target="_blank"href={"https://open.spotify.com/user/" + uid}>
-              <ListItemText inset primary={userDisplayNames[userIds.indexOf(uid)]}></ListItemText>   
+              <div style={userStyle}>
+              <a  style={userStyle} style={{textDecoration: 'none',color: 'rgb(30 215 96)'}} button='true' target="_blank"href={"https://open.spotify.com/user/" + uid}>
+              <ListItemText  primary={userDisplayNames[userIds.indexOf(uid)]}></ListItemText>   
             </a> 
-           /</div>
+           </div>
             )
             }
             
