@@ -23,9 +23,7 @@ class Room {
       const reducedTracks = this.musicManager.reduceUserTracks(hostTracks);
       this.musicManager.updateAllTracks(reducedTracks);
       this.broadcastTracks(reducedTracks);
-      console.log("host:" + JSON.stringify(host));
       this.customers[host.hostid] = host.hostname;
-      console.log("customers after adding host:" + this.customers);
       this.broadcastPeople(this.customers);
     });
   }
@@ -44,22 +42,15 @@ class Room {
 
 
   addCustomer = async (customer) => {
-    console.log("ATTEMPTING TO ADD CUSTOMER");
     try {
-      console.log("in the try");
       // Check if the user has already joined the room.
-        console.log("tokens: " + Object.keys(this.customers));
-        console.log("cusid: " + customer.userid);
-      
-        // Update the tracks in the room and send the updated list to everyone in the room.
         if (!Object.keys(this.customers).includes(customer.userid)){
+          // Update the tracks and userlist in the room.
           const UserTracks = await new SpotifyClient(customer).getFavTracks(); 
           const reducedTracks = this.musicManager.reduceUserTracks(UserTracks);
           this.musicManager.updateAllTracks(reducedTracks);
           // Update the people in the room and send the updated list to everyone in the room.
-          console.log("customer:" + JSON.stringify(customer));
           this.customers[customer.userid] = customer.username;
-          console.log("customers after adding a customer:" + this.customers);
         }
         const roomTracks = this.musicManager.getAllTracks()
         this.broadcastTracks(roomTracks);

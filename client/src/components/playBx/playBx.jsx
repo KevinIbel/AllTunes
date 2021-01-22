@@ -3,7 +3,6 @@ import DetailSection from './components/details';
 import SongsControl from './components/songsControl';
 import DurationMs from './components/durationMs';
 import withPlayer from '../../components/hoc/playerHoc';
-import './playBx.css';
 
 class playBx extends Component {
   toSeconds = ms => ms / 1000;

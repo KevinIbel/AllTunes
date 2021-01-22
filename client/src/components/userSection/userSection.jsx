@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { setToken } from "../../dataHandler/store/actions/spotify";
 import List from '@material-ui/core/List';
@@ -10,41 +10,43 @@ import UserDetails from "../userDetails/userDetails";
 import { Container } from "@material-ui/core";
 
 const header = {
-    padding: "10px 20px",
-    textAlign: "center",
-    height: '100%',
-    width: '100%',
-    overflow: 'hidden',
-    position: 'fixed',
-    top: '-35px',
-    right: '0px',
-    bottom: '10px',
-    width: '210px',
-    position: 'fixed',
-    width: '210px',
-    fontSize: "22px",
-    zIndex: '999',
+  
+  
     color: 'rgb(30 215 96)'
   }
 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+      maxWidth: 360,
+      backgroundColor: theme.palette.background.paper,
+    },
+  }));
 const style = {
     height: '100%',
     top: '0px',
-    right: '0px',
-    width: '210px',
+    right:'0vw',
     position: 'fixed',
+    overflowWrap: 'break-word',
+    display: 'inline-block',
     color: 'rgb(30 215 96)',
+    padding: '15px',
     textAlign: 'center',
-    background: 'rgb(40, 40, 40)'
+    background: 'rgb(40, 40, 40)',
  };
 
-
-
+ const thin ={
+padding: '0',
+fontSize: 'fontSizeSmall',
+flexShrink: '0',
+display: 'inline-block'
+ };
 export default function InsetList(props) {
   const host = props.host;
   const ws = new WebSocket('ws://localhost:8888');
+  const classes = useStyles();
 
-  const [listItems, setListItems] = useState([]);
+  const [userList, setUserList] = useState([]);
 
 
   useEffect(() => {
@@ -52,16 +54,12 @@ export default function InsetList(props) {
     ws.onmessage = (message) => {
       try {
         const contents = JSON.parse(message.data);
-        console.log("ehe" + contents);
-        console.log("TYPE OF MSG:" + (contents.type));
-
         if (contents.type == "userlist" ) {
-          console.log("contentsdata:" + JSON.stringify(contents.data));
-          console.log("OBJ:" + Object.values(contents.data));
-          setListItems(Object.values(contents.data));
-          console.log(setListItems);
-          console.log(contents.data);
-
+          // Make and set the List of users to display.
+          console.log("message.data:"+contents.data);
+          console.log("message.data keys:"+Object.keys(contents.data));
+          console.log("message.data values:"+Object.values(contents.data));
+          setUserList(makeUserList(Object.keys(contents.data), Object.values(contents.data)));
         }
       } catch (e) {
         // If the message isn't a user list, the list isn't updated.
@@ -70,22 +68,45 @@ export default function InsetList(props) {
     };
   }, []);
 
-  return (
+   function makeUserList(userIds, userDisplayNames) {
+    // The userlistObj has keys of ids, and values of display names.
+    return (
     <Container>
-    <div>   
+      <List component="nav" style={style}  aria-label="contacts">
         <h3 style={header}> Room Lobby</h3>
-    
-    <List style ={style} component="nav"  aria-label="contacts">
-    <StarIcon /> {listItems.map((custName,index) => {
-        console.log("michael jackson:" + custName);
-        return (
-          <ListItemText inset primary={custName}>
+        { userIds.map(uid => {
+          return (
+          <ListItem>
+            {userIds[0] == uid ? (
+              <div>
+              <a button='true' target="_blank"href={"https://open.spotify.com/user/" + uid}>
+            
+              <ListItemText  primary={userDisplayNames[userIds.indexOf(uid)]}> </ListItemText>   
+            </a> 
+            <StarIcon></StarIcon>
+            </div>
+            ) : (
+              <div>
+              <a button='true' target="_blank"href={"https://open.spotify.com/user/" + uid}>
+              <ListItemText inset primary={userDisplayNames[userIds.indexOf(uid)]}></ListItemText>   
+            </a> 
+           /</div>
+            )
+            }
+            
+          </ListItem>
+        )})}
+      </List>
+    </Container>
+    )
+  };
+
  
-          </ListItemText>
-        );
-})}
-</List>
+
+  
+    return (
+      <div>
+    {userList}
     </div>
-  </Container>
   );
 }

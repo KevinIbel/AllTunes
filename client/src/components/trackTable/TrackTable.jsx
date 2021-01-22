@@ -58,11 +58,7 @@ export default function TrackTable(props) {
     ws.onmessage = (message) => {
       try {
         const contents = JSON.parse(message.data);
-        console.log("TYPE OF MSG:" + contents.type);
         if (contents.type == "tracks") {
-          console.log("contentsdata:" + JSON.stringify(contents.data));
-          console.log("contentsdatatype:" + (typeof contents.data));
-          
           setRows(formatRows(contents.data));
         }
       } catch (e) {

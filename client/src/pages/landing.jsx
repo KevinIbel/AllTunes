@@ -5,7 +5,7 @@ import Container from "@material-ui/core/Container";
 
 var client_id = "aeedb64c42db49bf8413aab94c44637c"; // Your client id
 var scope =
-  "streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-modify user-top-read";
+  "streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-modify user-top-read user-follow-modify";
 
 export default function Landing(props) {
   function login(customer) {

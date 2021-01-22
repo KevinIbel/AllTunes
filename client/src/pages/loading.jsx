@@ -7,13 +7,16 @@ export default function Loading(props) {
   const [roomKey, setRoomKey] = useState();
 
   useEffect(() => {
-    if(props.access_token && props.display_name){
+    if(props.access_token && props.display_name && props.id){
       async function initRoom() {
       const host = {
         token: props.access_token,
         hostname: props.display_name,
         hostid: props.id
+        
       };
+      console.log("hostid"+props.id);
+      console.log("displayname"+props.display_name);
       const data = await createRoom(host);
       setRoomKey(data.key);
     }

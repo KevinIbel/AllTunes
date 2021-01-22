@@ -14,6 +14,7 @@ export default function App() {
   const [roomKey, setRoomKey] = useState();
   const [display_name, setDisplayName] = useState();
   const [id, setId] = useState();
+  const [followId, setFollowId] = useState();
 
   function getHashParams() {
     var hashParams = {};
@@ -63,34 +64,6 @@ export default function App() {
   }, [access_token]);
 
 
-    useEffect(() => {
-    if(access_token){
-      async function getUserData(){
-        var config = {
-          method: "get",
-          url: "https://api.spotify.com/v1/me",
-          headers: {
-            Authorization: "Bearer " + access_token,
-          },
-        };
-        var data = await axios(config)
-        .then(function (response) {
-          return [response.data.display_name, response.data.id];
-        })
-        .catch(function (error) {
-          throw error; 
-        });
-        console.log(data)
-        setDisplayName(data[0]);
-        setId(data[1]);
-      }
- 
-      
-      getUserData();
-    }
-  }, [access_token]);
-
-
   useEffect(() => {
     if(access_token){
       async function followUser(){
@@ -103,14 +76,13 @@ export default function App() {
         };
         var data = await axios(config)
         .then(function (response) {
-          return [response.data.display_name, response.data.id];
+          return response.data.followId;
         })
         .catch(function (error) {
           throw error; 
         });
         console.log(data)
-        setDisplayName(data[0]);
-        setId(data[1]);
+        setFollowId(data);
       }
  
       
@@ -134,16 +106,16 @@ export default function App() {
               renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/hostroom">
-            <Hostroom access_token={access_token} roomKey={roomKey} display_name={display_name} id={id}/>
+            <Hostroom access_token={access_token} roomKey={roomKey} display_name={display_name} id={id} followId={followId}/>
           </Route>
           <Route path="/loading">
-            <Loading access_token={access_token} roomKey={roomKey} display_name={display_name} id={id}/>
+            <Loading access_token={access_token} roomKey={roomKey} display_name={display_name} id={id} followId={followId}/>
           </Route>
           <Route path="/UserLoading">
-            <UserLoading access_token={access_token} roomKey={roomKey} display_name={display_name} id={id}/>
+            <UserLoading access_token={access_token} roomKey={roomKey} display_name={display_name} id={id} followId={followId}/>
           </Route>
           <Route path="/userroom">
-            <Userroom access_token={access_token} roomKey={roomKey} display_name={display_name} id={id}/>
+            <Userroom access_token={access_token} roomKey={roomKey} display_name={display_name} id={id} followId={followId}/>
           </Route>
           <Route path="/">
             <Landing access_token={access_token} roomKey={roomKey}/>
