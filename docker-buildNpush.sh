@@ -4,7 +4,7 @@ npm run build
 
 cd ..
 
-cp -r ./client/build ./client-server/build
+cp -r ./client/build ./client-server
 
 
 
@@ -20,3 +20,4 @@ docker build -t jamesangel/alltunes-client-server ./client-server
 
 docker push jamesangel/alltunes-client-server
 
+kubectl apply -f ./kube

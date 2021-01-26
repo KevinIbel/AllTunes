@@ -36,13 +36,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TrackTable(props) {
+  console.log(props.roomIp)
   const classes = useStyles();
-  const host = props.host;
-  // const wsUrl =
-  //   process.env.NODE_ENV == "development"
-  //     ? "ws://localhost:8888"
-  //     : "ws://" + props.roomIp;
-
   const [roomKey, setRoomKey] = useState(props.roomKey);
   const [access_token, setAccess_token] = useState(props.access_token);
   const [rows, setRows] = useState([]);
@@ -105,7 +100,7 @@ export default function TrackTable(props) {
                     </TableCell>
                     <TableCell align="left">{row.artists}</TableCell>
                     <TableCell align="left">{row.name}</TableCell>
-                    {host ? (
+                    {props.host ? (
                       <TableCell padding="checkbox">
                         <div style={{ paddingRight: "10px" }}>
                           <QueueButton

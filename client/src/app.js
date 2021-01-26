@@ -52,7 +52,7 @@ export default function App() {
             <Loading access_token={access_token} roomKey={roomKey} roomIp={roomIp} setRoomIp={setRoomIp}/>
           </Route>
           <Route path="/UserLoading">
-            <UserLoading access_token={access_token} roomKey={roomKey} roomIp={roomIp}/>
+            <UserLoading access_token={access_token} roomKey={roomKey} roomIp={roomIp} setRoomIp={setRoomIp}/>
           </Route>
           <Route path="/userroom">
             <Userroom access_token={access_token} roomKey={roomKey} roomIp={roomIp}/>

@@ -11,13 +11,14 @@ export default function UserLoading(props) {
   const [rooms, setRooms] = useState();
 
   useEffect(() => {
-    const getRoomKeys = async () => {
-      const rooms = await getRooms();
-      console.log(rooms);
-      setRooms(rooms);
-    };
     getRoomKeys();
   }, rooms);
+
+  async function getRoomKeys() {
+    const rooms = await getRooms();
+    console.log(rooms);
+    setRooms(rooms);
+  }
 
   async function addCustomerToRoom() {
     try {
@@ -27,6 +28,9 @@ export default function UserLoading(props) {
           rooms[roomKey]
         );
         setAddedToRoom(true);
+        props.setRoomIp(rooms[roomKey])
+      } else {
+        getRoomKeys();
       }
     } catch (error) {
       console.error(error);

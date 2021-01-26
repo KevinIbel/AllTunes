@@ -39,31 +39,24 @@ export async function createRoom(host) {
  * @param {String} host.username
  */
 export async function addCustomer(customer, roomIpAddress) {
-  console.log(customer)
-  console.log(roomIpAddress)
-  let response = () => {
-    return new Promise(function (resolve, reject) {
-      var config = {
-        method: "put",
-        url: roomIpAddress + "room",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: JSON.stringify(customer),
-      };
-
-      return axios(config)
-        .then(function (response) {
-          resolve(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    });
+  var config = {
+    method: "put",
+    baseURL: "http://" + roomIpAddress + "/room",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(customer),
   };
-  return response();
-}
+  console.log(config);
 
+  return axios(config)
+    .then(function (response) {
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
 /**
  * @returns {Object} A mapping of room keys and their addresses
@@ -91,4 +84,3 @@ export async function getRooms(customer) {
   };
   return response();
 }
-
