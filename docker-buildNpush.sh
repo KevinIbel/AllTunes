@@ -1,3 +1,13 @@
+cd client
+
+npm run build 
+
+cd ..
+
+cp -r ./client/build ./client-server/build
+
+
+
 docker build -t jamesangel/alltunes-backend ./backend 
 
 docker push jamesangel/alltunes-backend
