@@ -50,6 +50,9 @@ const style = {
   flexWrap: 'wrap',
   
  };
+
+ //Pushing to master.
+
 export default function InsetList(props) {
   const host = props.host;
   const ws = new WebSocket('ws://localhost:8888');
