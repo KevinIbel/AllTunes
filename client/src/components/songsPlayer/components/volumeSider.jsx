@@ -1,5 +1,5 @@
 import React from 'react';
-import { Direction, Slider, FormattedTime } from 'react-player-controls';
+import { Direction, Slider } from 'react-player-controls';
 
 const SliderBar = ({ value, style, className }) => (
   <div
@@ -53,31 +53,42 @@ const ProgressBar = ({
   direction = Direction.HORIZONTAL,
   value,
   ...props
-}) => (
-  <div className="song-sider-container">
-    <FormattedTime numSeconds={props.position} />
-    <Slider
-      isEnabled={isEnabled}
-      direction={direction}
-      className="song-sider"
-      style={{
-        cursor: 'pointer'
-      }}
-      {...props}
-    >
-      <SliderBar
-        className="position-sider"
-        direction={direction}
-        value={value}
+}) => {
+  const volumeClass =
+    value > 0.5
+      ? 'fa-volume-up'
+      : value === 0
+        ? 'fa-volume-off'
+        : 'fa-volume-down';
+  return (
+    <div className="volume-sider-container">
+      <i
+        onClick={props.onClick}
+        className={'volumen fa ' + volumeClass}
+        aria-hidden="true"
       />
-      <SliderHandle
-        className="handler-sider"
+      <Slider
+        isEnabled={isEnabled}
         direction={direction}
-        value={value}
-      />
-    </Slider>
-    <FormattedTime numSeconds={props.duration || 0} />
-  </div>
-);
+        className="volume-sider"
+        style={{
+          cursor: 'pointer'
+        }}
+        {...props}
+      >
+        <SliderBar
+          className="position-sider"
+          direction={direction}
+          value={value}
+        />
+        <SliderHandle
+          className="handler-sider"
+          direction={direction}
+          value={value}
+        />
+      </Slider>
+    </div>
+  );
+};
 
 export default ProgressBar;

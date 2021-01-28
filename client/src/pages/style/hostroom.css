@@ -1,0 +1,10 @@
+/*  pushing to master */
+.web-playback {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  background: rgb(40, 40, 40);
+  height: 80px;
+  z-index: 2000;
+}

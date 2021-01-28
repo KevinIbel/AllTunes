@@ -10,6 +10,7 @@ class MusicManager {
   reduceUserTracks = (tracks) => {
     // Reduce the data to track name, artists, uri, and counter
     return tracks.reduce(function (trackAcc, currTrack) {
+      var trackCover = currTrack.album.images[1].url; // 0 is a large image (640x640), 1 is medium (300x300), 2 is small (64x64)
       var name = currTrack.name;
       var uri = currTrack.uri;
       var artists = currTrack.artists.reduce(function (artistAcc, currArtist) {
@@ -21,6 +22,7 @@ class MusicManager {
         artists: artists,
         uri: uri,
         counter: 0,
+        trackCover: trackCover,
       });
       return trackAcc;
     }, []);
