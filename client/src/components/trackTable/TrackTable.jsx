@@ -9,7 +9,6 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
 import TrackCover from "../trackCover/trackCover";
-import { io } from "socket.io-client";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,18 +55,23 @@ export default function TrackTable(props) {
         ? "ws://localhost:8888"
         : "ws://" + props.roomIp;
     const ws = new WebSocket(wsUrl);
+    // Only update the rows when the message contains tracks.
     ws.onmessage = (message) => {
       try {
-        const tracks = formatRows(JSON.parse(message.data));
-        setRows(tracks);
+        const contents = JSON.parse(message.data);
+        if (contents.type == "tracks") {
+          setRows(formatRows(contents.data));
+        }
       } catch (e) {
-        // TODO: Make sure messages are always tracks.
+        // If the message doesn't have tracks, the rows aren't updated.
         console.log(e);
       }
     };
   }, [props.roomIp]);
 
+  
   function formatRows(rows) {
+    rows.length = 100;
     return rows.reduce((accumulator, currentValue) => {
       const newRow = {};
       newRow.artists = currentValue.artists.join(", ");
@@ -88,7 +92,8 @@ export default function TrackTable(props) {
             aria-labelledby="tableTitle"
             aria-label="enhanced table"
           >
-            <TableBody>
+            <TableBody
+          >
               {rows.map((row, index) => {
                 return (
                   <TableRow tabIndex={-1} key={row.name}>

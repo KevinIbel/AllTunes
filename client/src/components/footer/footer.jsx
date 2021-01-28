@@ -2,6 +2,8 @@ import React from 'react';
 
 import SongPlayer from '../songsPlayer/songsPlayer';
 
+
+
 const style = {
   position: 'fixed',
   width: '100%',

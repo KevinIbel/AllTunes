@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { setToken } from "../dataHandler/store/actions/spotify";
 import Footer from "../components/footer/footer";
+import UserDetails from "../components/userDetails/userDetails";
+import UserSection from "../components/userSection/userSection";
 import WebPlaybackReact from "../components/spotify/webPlayback";
 import TrackTable from "../components/trackTable/TrackTable";
 import "./style/hostroom.css";
-
+//Pushing to master.
 export default function Hostroom(props) {
   const [playerLoaded, setPlayerLoaded] = useState(false);
   const [access_token, setAccess_token] = useState(props.access_token);
@@ -24,6 +26,13 @@ export default function Hostroom(props) {
       <WebPlaybackReact access_token={access_token}>
         <Footer />
       </WebPlaybackReact>
+      <UserDetails         
+      host={true}
+        access_token={access_token}
+        display_name={props.display_name}
+        roomKey={roomKey}>
+          
+        </UserDetails>
       <br></br>
       <TrackTable
         roomIp={props.roomIp}
@@ -31,6 +40,11 @@ export default function Hostroom(props) {
         access_token={access_token}
         roomKey={roomKey}
       ></TrackTable>
+      <UserSection
+      host={true}
+      >
+      </UserSection>
+
     </div>
   );
 }

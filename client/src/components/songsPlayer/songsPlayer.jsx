@@ -34,6 +34,7 @@ function SongsPlayer(props) {
         />
       ) : null}
       <SongsControl {...props} />
+      
       <SongSider
         isEnabled
         value={position / duration}

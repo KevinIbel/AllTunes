@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "./style/userLoading.css";
+//Pushing to master.
 
 export default function UserLoading(props) {
   const [isAddedToRoom, setAddedToRoom] = useState(false);
@@ -24,11 +25,15 @@ export default function UserLoading(props) {
     try {
       if (rooms[roomKey]) {
         await addCustomer(
-          { token: props.access_token, username: "james" },
+          {
+            token: props.access_token,
+            username: props.display_name,
+            userid: props.id,
+          },
           rooms[roomKey]
         );
         setAddedToRoom(true);
-        props.setRoomIp(rooms[roomKey])
+        props.setRoomIp(rooms[roomKey]);
       } else {
         getRoomKeys();
       }

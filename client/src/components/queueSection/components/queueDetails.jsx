@@ -4,7 +4,7 @@ import withUiActions from "../../hoc/uiHoc";
 import withStatus from "../../hoc/statusHoc";
 import TrackCover from "../../trackCover/trackCover";
 
-function detailsSection(props) {
+function queueDetailsSection(props) {
   const artists = props.artists.length;
   return (
     <div className="details-section">
@@ -29,4 +29,4 @@ function detailsSection(props) {
   );
 };
 
-export default withUiActions(withStatus(detailsSection));
+export default withUiActions(withStatus(queueDetailsSection));

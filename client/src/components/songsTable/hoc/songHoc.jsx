@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {containsCurrentSong} from '../../../store/actions/libraryActions';
+//Pushing to master.
 
 export default function(ComposedComponent) {
   class StatusHoc extends Component {
@@ -54,6 +55,7 @@ export default function(ComposedComponent) {
       />
     );
   }
+  const userName = this.props.user.display_name || this.props.user.id;
 
   const mapDispatchToProps = dispatch => {
     return bindActionCreators(
