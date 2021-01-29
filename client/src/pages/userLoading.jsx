@@ -16,9 +16,13 @@ export default function UserLoading(props) {
   }, rooms);
 
   async function getRoomKeys() {
-    const rooms = await getRooms();
-    console.log(rooms);
-    setRooms(rooms);
+    if ((process.env.NODE_ENV == "development")) {
+      const rooms = {};
+      rooms[roomKey] = "http://localhost:8888";
+      setRooms({ roomKey: "http://localhost:8888" });
+    } else {
+      setRooms(await getRooms());
+    }
   }
 
   async function addCustomerToRoom() {

@@ -41,7 +41,10 @@ export async function createRoom(host) {
 export async function addCustomer(customer, roomIpAddress) {
   var config = {
     method: "put",
-    baseURL: "http://" + roomIpAddress + "/room",
+    baseURL:
+      process.env.NODE_ENV == "development"
+        ? "http://localhost:8888/room"
+        : "http://" + roomIpAddress + "/room",
     headers: {
       "Content-Type": "application/json",
     },
