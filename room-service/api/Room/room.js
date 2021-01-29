@@ -104,10 +104,9 @@ class Room {
       const wsClient = new ws('ws://localhost:8888');
 
       wsClient.on('open', () => {
-        console.log("WS client connected. Attempting to send music manager tracks to WS server.");
         const messageToSend = { type: "tracks", data: tracks }
         wsClient.send(JSON.stringify(messageToSend));
-        console.log("Finished sending. Now disconnecting.")
+        console.log("Succesfully sent music manager tracks to WS server.")
         wsClient.close(1000, "Tracks sent.");
       });
     }, 100);
@@ -123,10 +122,9 @@ class Room {
       const wsClient = new ws('ws://localhost:8888');
 
       wsClient.on('open', () => {
-        console.log("WS client connected. Attempting to send the user list of the room to WS server.");
         const messageToSend = { type: "userlist", data: people }
         wsClient.send(JSON.stringify(messageToSend));
-        console.log("Finished sending. Now disconnecting.")
+        console.log("Succesfully sent user list to WS server.")
         wsClient.close(1000, "User list sent.");
       });
     }, 100);
