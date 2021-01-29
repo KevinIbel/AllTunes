@@ -97,35 +97,39 @@ class Room {
   /**
    * @param {Array} tracks Tracks in the music manager.
    */
-  broadcastTracks = (tracks) => {
-    // This WS client's only purpose is to send the music manager tracks to the server then close.
-    const ws = require('ws');
-    const wsClient = new ws('ws://localhost:8888');
+  broadcastTracks = async (tracks) => {
+    setTimeout(function () {
+      // This WS client's only purpose is to send the music manager tracks to the server then close.
+      const ws = require('ws');
+      const wsClient = new ws('ws://localhost:8888');
 
-    wsClient.on('open', () => {
-      console.log("WS client connected. Attempting to send music manager tracks to WS server.");
-      const messageToSend = { type: "tracks", data: tracks }
-      wsClient.send(JSON.stringify(messageToSend));
-      console.log("Finished sending. Now disconnecting.")
-      wsClient.close(1000, "Tracks sent.");
-    });
+      wsClient.on('open', () => {
+        console.log("WS client connected. Attempting to send music manager tracks to WS server.");
+        const messageToSend = { type: "tracks", data: tracks }
+        wsClient.send(JSON.stringify(messageToSend));
+        console.log("Finished sending. Now disconnecting.")
+        wsClient.close(1000, "Tracks sent.");
+      });
+    }, 100);
   };
 
   /**
    * @param {Array} people People in the room.
    */
-  broadcastPeople = (people) => {
-    // This WS client's only purpose is to send the names of the people in the room to the server then close.
-    const ws = require('ws');
-    const wsClient = new ws('ws://localhost:8888');
+  broadcastPeople = async (people) => {
+    setTimeout(function () {
+      // This WS client's only purpose is to send the names of the people in the room to the server then close.
+      const ws = require('ws');
+      const wsClient = new ws('ws://localhost:8888');
 
-    wsClient.on('open', () => {
-      console.log("WS client connected. Attempting to send the user list of the room to WS server.");
-      const messageToSend = { type: "userlist", data: people }
-      wsClient.send(JSON.stringify(messageToSend));
-      console.log("Finished sending. Now disconnecting.")
-      wsClient.close(1000, "User list sent.");
-    });
+      wsClient.on('open', () => {
+        console.log("WS client connected. Attempting to send the user list of the room to WS server.");
+        const messageToSend = { type: "userlist", data: people }
+        wsClient.send(JSON.stringify(messageToSend));
+        console.log("Finished sending. Now disconnecting.")
+        wsClient.close(1000, "User list sent.");
+      });
+    }, 100);
   };
 }
 
