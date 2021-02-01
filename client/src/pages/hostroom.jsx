@@ -26,13 +26,12 @@ export default function Hostroom(props) {
       <WebPlaybackReact access_token={access_token}>
         <Footer />
       </WebPlaybackReact>
-      <UserDetails         
-      host={true}
+      <UserDetails
+        host={true}
         access_token={access_token}
         display_name={props.display_name}
-        roomKey={roomKey}>
-          
-        </UserDetails>
+        roomKey={roomKey}
+      ></UserDetails>
       <br></br>
       <TrackTable
         roomIp={props.roomIp}
@@ -40,11 +39,7 @@ export default function Hostroom(props) {
         access_token={access_token}
         roomKey={roomKey}
       ></TrackTable>
-      <UserSection
-      host={true}
-      >
-      </UserSection>
-
+      <UserSection host={true} roomIp={props.roomIp}></UserSection>
     </div>
   );
 }

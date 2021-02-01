@@ -26,8 +26,9 @@ export default function UserLoading(props) {
   }
 
   async function addCustomerToRoom() {
+    console.log(rooms[roomKey] || (process.env.NODE_ENV == "development"))
     try {
-      if (rooms[roomKey]) {
+      if (rooms[roomKey] || (process.env.NODE_ENV == "development")) {
         await addCustomer(
           {
             token: props.access_token,

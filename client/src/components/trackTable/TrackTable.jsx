@@ -70,6 +70,7 @@ export default function TrackTable(props) {
   }, [props.roomIp]);
 
   
+  
   function formatRows(rows) {
     rows.length = 100;
     return rows.reduce((accumulator, currentValue) => {

@@ -51,13 +51,18 @@ const thin = {
 //Pushing to master.
 
 export default function InsetList(props) {
-  const ws = new WebSocket("ws://localhost:8888");
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
+    const wsUrl =
+      process.env.NODE_ENV == "development"
+        ? "ws://localhost:8888"
+        : "ws://" + props.roomIp;
+    const ws = new WebSocket(wsUrl);
     // Only update the list when the message contains a user list.
     ws.onmessage = (message) => {
       try {
+        console.log(message)
         const contents = JSON.parse(message.data);
         if (contents.type == "userlist") {
           // Make and set the List of users to display.
@@ -76,7 +81,7 @@ export default function InsetList(props) {
         console.log(e);
       }
     };
-  }, []);
+  }, [props.roomIp]);
 
   function makeUserList(userIds, userDisplayNames) {
     // The userlistObj has keys of ids, and values of display names.
