@@ -1,6 +1,8 @@
 ./client-server/node_modules
 ./client-server/client/node_modules
 client-server/client/node_modules
+client-server/build
+./client-server/build
 backend/node_modules
 room-service/node_modules
 
