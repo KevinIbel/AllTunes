@@ -50,7 +50,6 @@ export async function addCustomer(customer, roomIpAddress) {
     },
     data: JSON.stringify(customer),
   };
-  console.log(config);
 
   return axios(config)
     .then(function (response) {

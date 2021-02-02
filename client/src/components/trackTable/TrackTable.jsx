@@ -35,28 +35,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TrackTable(props) {
-  console.log(props.roomIp)
   const classes = useStyles();
-  const [roomKey, setRoomKey] = useState(props.roomKey);
-  const [access_token, setAccess_token] = useState(props.access_token);
   const [rows, setRows] = useState([]);
 
-  useState(() => {
-    setAccess_token(props.access_token);
-  }, props.access_token);
-
-  useState(() => {
-    setRoomKey(props.roomKey);
-  }, props.roomKey);
-
   useEffect(() => {
-    const wsUrl =
-      process.env.NODE_ENV == "development"
-        ? "ws://localhost:8888"
-        : "ws://" + props.roomIp;
-    const ws = new WebSocket(wsUrl);
+    if (!props.ws) return;
     // Only update the rows when the message contains tracks.
-    ws.onmessage = (message) => {
+    props.ws.onmessage = (message) => {
       try {
         const contents = JSON.parse(message.data);
         if (contents.type == "tracks") {
@@ -67,10 +52,16 @@ export default function TrackTable(props) {
         console.log(e);
       }
     };
-  }, [props.roomIp]);
+  }, [props.roomIp, props.ws]);
 
-  
-  
+  useEffect(() => {
+    if (!props.ws) return;
+
+    props.ws.onopen = () => {
+      props.ws.send("TracksRequest");
+    };
+  }, [props.ws]);
+
   function formatRows(rows) {
     rows.length = 100;
     return rows.reduce((accumulator, currentValue) => {
@@ -93,8 +84,7 @@ export default function TrackTable(props) {
             aria-labelledby="tableTitle"
             aria-label="enhanced table"
           >
-            <TableBody
-          >
+            <TableBody>
               {rows.map((row, index) => {
                 return (
                   <TableRow tabIndex={-1} key={row.name}>
@@ -109,11 +99,13 @@ export default function TrackTable(props) {
                     {props.host ? (
                       <TableCell padding="checkbox">
                         <div style={{ paddingRight: "10px" }}>
-                          <QueueButton
-                            songuri={row.uri}
-                            roomKey={roomKey}
-                            access_token={access_token}
-                          ></QueueButton>
+                          {props.roomKey && props.access_token ? (
+                            <QueueButton
+                              songuri={row.uri}
+                              roomKey={props.roomKey}
+                              access_token={props.access_token}
+                            ></QueueButton>
+                          ) : null}
                         </div>
                       </TableCell>
                     ) : (

@@ -1,45 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { setToken } from "../dataHandler/store/actions/spotify";
 import Footer from "../components/footer/footer";
-import UserDetails from "../components/userDetails/userDetails";
-import UserSection from "../components/userSection/userSection";
+import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
 import WebPlaybackReact from "../components/spotify/webPlayback";
 import TrackTable from "../components/trackTable/TrackTable";
 import "./style/hostroom.css";
-//Pushing to master.
+
 export default function Hostroom(props) {
-  const [playerLoaded, setPlayerLoaded] = useState(false);
-  const [access_token, setAccess_token] = useState(props.access_token);
-  const [roomKey, setRoomKey] = useState(props.roomKey);
+  const [ws, setWs] = useState();
+
+  useEffect(() => {
+    const wsUrl =
+      process.env.NODE_ENV == "development"
+        ? "ws://localhost:8888"
+        : "ws://" + props.roomIp;
+    setWs(new WebSocket(wsUrl));
+  }, [props.roomIp]);
 
   useState(() => {
-    setAccess_token(props.access_token);
     setToken(props.access_token);
   }, props.access_token);
 
-  useState(() => {
-    setRoomKey(props.roomKey);
-  }, props.roomKey);
-
   return (
     <div class="main">
-      <WebPlaybackReact access_token={access_token}>
-        <Footer />
-      </WebPlaybackReact>
-      <UserDetails
-        host={true}
-        access_token={access_token}
-        display_name={props.display_name}
-        roomKey={roomKey}
-      ></UserDetails>
-      <br></br>
-      <TrackTable
-        roomIp={props.roomIp}
-        host={true}
-        access_token={access_token}
-        roomKey={roomKey}
-      ></TrackTable>
-      <UserSection host={true} roomIp={props.roomIp}></UserSection>
+      {props.access_token ? (
+        <WebPlaybackReact access_token={props.access_token}>
+          <Footer />
+        </WebPlaybackReact>
+      ) : null}
+      {ws ? (
+        <TrackTable
+          roomIp={props.roomIp}
+          host={true}
+          access_token={props.access_token}
+          roomKey={props.roomKey}
+          ws={ws}
+        ></TrackTable>
+      ) : null}
+      {/* <LobbyUsers host={true} roomIp={props.roomIp} ws={ws}></LobbyUsers> */}
     </div>
   );
 }

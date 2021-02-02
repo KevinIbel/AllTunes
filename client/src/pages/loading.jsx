@@ -8,26 +8,23 @@ export default function Loading(props) {
   const [roomKey, setRoomKey] = useState();
 
   useEffect(() => {
-    if (props.access_token && props.display_name && props.id) {
+    if (props.access_token && props.display_name && props.userId) {
       async function initRoom() {
         const host = {
           token: props.access_token,
           username: props.display_name,
-          hostid: props.id,
+          hostId: props.userId,
         };
-
-        if (host.token && host.username) {
-          let data = await createRoom(host);
-          if (process.env.NODE_ENV == "development") {
-            data = { roomKey: "00000000" };
-          }
-          setRoomKey(data.roomKey);
-          props.setRoomIp(data.roomIp);
+        let data = await createRoom(host);
+        if (process.env.NODE_ENV == "development") {
+          data = { roomKey: "00000000" };
         }
+        setRoomKey(data.roomKey);
+        props.setRoomIp(data.roomIp);
       }
       initRoom();
     }
-  }, [props.access_token, props.display_name, props.id]);
+  }, [props.access_token, props.display_name, props.userId]);
 
   return roomKey ? (
     <Redirect
