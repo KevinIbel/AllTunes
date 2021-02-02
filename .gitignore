@@ -3,6 +3,14 @@
 client-server/client/node_modules
 client-server/build
 ./client-server/build
+./client-server/package-lock.json
+
+./client/package-lock.json
+
+./backend/package-lock.json
+
+./room-service/package-lock.json
+
 backend/node_modules
 room-service/node_modules
 
