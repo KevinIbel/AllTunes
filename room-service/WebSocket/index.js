@@ -14,7 +14,7 @@ function initWebsocket(server) {
       } else if (message === "LobbyRequest") {
         const lobby = getLobby();
         console.log("Sending Lobby!");
-        socket.send(lobby);
+        socket.send(JSON.stringify({ type: "lobby", data: lobby }));
       } else {
         try {
           wsServer.clients.forEach((client) => {

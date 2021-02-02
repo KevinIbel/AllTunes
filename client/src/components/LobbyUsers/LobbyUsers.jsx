@@ -20,16 +20,24 @@ const style = {
 
 export default function LobbyUsers(props) {
   const [userList, setUserList] = useState([]);
-  const host = props.host;
+  const [ws, setWs] = useState();
 
   useEffect(() => {
-    if (!props.ws) return;
+    const wsUrl =
+      process.env.NODE_ENV == "development"
+        ? "ws://localhost:8888"
+        : "ws://" + props.roomIp;
+    setWs(new WebSocket(wsUrl));
+  }, [props.roomIp]);
 
-    props.ws.onmessage = (message) => {
+  useEffect(() => {
+    if (!ws) return;
+    // Only update the rows when the message contains tracks.
+    ws.onmessage = (message) => {
       try {
+        console.log(message)
         const contents = JSON.parse(message.data);
-        if (contents.type == "userlist") {
-          console.log(contents);
+        if (contents.type == "lobby") {
           setUserList(contents.data);
         }
       } catch (e) {
@@ -37,8 +45,14 @@ export default function LobbyUsers(props) {
         console.log(e);
       }
     };
-    // Only update the list when the message contains a user list.
-  });
+  }, [props.roomIp, ws]);
+
+  useEffect(() => {
+    if (!ws) return;
+    ws.onopen = () => {
+      ws.send("LobbyRequest");
+    };
+  }, [ws]);
 
   return (
     <Container style={style}>
@@ -57,7 +71,7 @@ export default function LobbyUsers(props) {
                     }}
                     button="true"
                     target="_blank"
-                    href={"https://open.spotify.com/user/" + host}
+                    href={"https://open.spotify.com/user/" + user.displayName}
                   >
                     <ListItemText primary={user.displayName}> </ListItemText>
                   </a>
@@ -72,7 +86,7 @@ export default function LobbyUsers(props) {
                     }}
                     button="true"
                     target="_blank"
-                    href={"https://open.spotify.com/user/" + user.userId}
+                    href={"https://open.spotify.com/user/" + user.displayName}
                   >
                     <ListItemText primary={user.displayName}></ListItemText>
                   </a>

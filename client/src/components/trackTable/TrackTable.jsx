@@ -37,11 +37,20 @@ const useStyles = makeStyles((theme) => ({
 export default function TrackTable(props) {
   const classes = useStyles();
   const [rows, setRows] = useState([]);
+  const [ws, setWs] = useState();
 
   useEffect(() => {
-    if (!props.ws) return;
+    const wsUrl =
+      process.env.NODE_ENV == "development"
+        ? "ws://localhost:8888"
+        : "ws://" + props.roomIp;
+    setWs(new WebSocket(wsUrl));
+  }, [props.roomIp]);
+
+  useEffect(() => {
+    if (!ws) return;
     // Only update the rows when the message contains tracks.
-    props.ws.onmessage = (message) => {
+    ws.onmessage = (message) => {
       try {
         const contents = JSON.parse(message.data);
         if (contents.type == "tracks") {
@@ -52,15 +61,14 @@ export default function TrackTable(props) {
         console.log(e);
       }
     };
-  }, [props.roomIp, props.ws]);
+  }, [props.roomIp, ws]);
 
   useEffect(() => {
-    if (!props.ws) return;
-
-    props.ws.onopen = () => {
-      props.ws.send("TracksRequest");
+    if (!ws) return;
+    ws.onopen = () => {
+      ws.send("TracksRequest");
     };
-  }, [props.ws]);
+  }, [ws]);
 
   function formatRows(rows) {
     rows.length = 100;

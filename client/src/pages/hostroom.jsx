@@ -7,16 +7,6 @@ import TrackTable from "../components/trackTable/TrackTable";
 import "./style/hostroom.css";
 
 export default function Hostroom(props) {
-  const [ws, setWs] = useState();
-
-  useEffect(() => {
-    const wsUrl =
-      process.env.NODE_ENV == "development"
-        ? "ws://localhost:8888"
-        : "ws://" + props.roomIp;
-    setWs(new WebSocket(wsUrl));
-  }, [props.roomIp]);
-
   useState(() => {
     setToken(props.access_token);
   }, props.access_token);
@@ -28,16 +18,13 @@ export default function Hostroom(props) {
           <Footer />
         </WebPlaybackReact>
       ) : null}
-      {ws ? (
-        <TrackTable
-          roomIp={props.roomIp}
-          host={true}
-          access_token={props.access_token}
-          roomKey={props.roomKey}
-          ws={ws}
-        ></TrackTable>
-      ) : null}
-      {/* <LobbyUsers host={true} roomIp={props.roomIp} ws={ws}></LobbyUsers> */}
+      <TrackTable
+        roomIp={props.roomIp}
+        host={true}
+        access_token={props.access_token}
+        roomKey={props.roomKey}
+      ></TrackTable>
+      <LobbyUsers host={true} roomIp={props.roomIp}></LobbyUsers>
     </div>
   );
 }
