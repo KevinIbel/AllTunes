@@ -107,13 +107,11 @@ export default function TrackTable(props) {
                     {props.host ? (
                       <TableCell padding="checkbox">
                         <div style={{ paddingRight: "10px" }}>
-                          {props.roomKey && props.access_token ? (
-                            <QueueButton
-                              songuri={row.uri}
-                              roomKey={props.roomKey}
-                              access_token={props.access_token}
-                            ></QueueButton>
-                          ) : null}
+                          <QueueButton
+                            songuri={row.uri}
+                            roomKey={props.roomKey}
+                            access_token={props.access_token}
+                          ></QueueButton>
                         </div>
                       </TableCell>
                     ) : (
