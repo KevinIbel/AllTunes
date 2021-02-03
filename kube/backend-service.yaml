@@ -11,3 +11,4 @@ spec:
   - port: 8000
     protocol: TCP
     targetPort: 8000
+  loadBalancerIP: "35.187.88.243"

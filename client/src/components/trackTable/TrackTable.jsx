@@ -36,24 +36,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TrackTable(props) {
   const classes = useStyles();
-  const host = props.host;
-  const ws = new WebSocket('ws://localhost:8888');
-
-  
-
-  const [roomKey, setRoomKey] = useState(props.roomKey);
-  const [access_token, setAccess_token] = useState(props.access_token);
   const [rows, setRows] = useState([]);
-
-  useState(() => {
-    setAccess_token(props.access_token);
-  }, props.access_token);
-
-  useState(() => {
-    setRoomKey(props.roomKey);
-  }, props.roomKey);
+  const [ws, setWs] = useState();
 
   useEffect(() => {
+    const wsUrl =
+      process.env.NODE_ENV == "development"
+        ? "ws://localhost:8888"
+        : "ws://" + props.roomIp;
+    setWs(new WebSocket(wsUrl));
+  }, [props.roomIp]);
+
+  useEffect(() => {
+    if (!ws) return;
     // Only update the rows when the message contains tracks.
     ws.onmessage = (message) => {
       try {
@@ -66,9 +61,15 @@ export default function TrackTable(props) {
         console.log(e);
       }
     };
-  }, []);
+  }, [props.roomIp, ws]);
 
-  
+  useEffect(() => {
+    if (!ws) return;
+    ws.onopen = () => {
+      ws.send("TracksRequest");
+    };
+  }, [ws]);
+
   function formatRows(rows) {
     rows.length = 100;
     return rows.reduce((accumulator, currentValue) => {
@@ -91,8 +92,7 @@ export default function TrackTable(props) {
             aria-labelledby="tableTitle"
             aria-label="enhanced table"
           >
-            <TableBody
-          >
+            <TableBody>
               {rows.map((row, index) => {
                 return (
                   <TableRow tabIndex={-1} key={row.name}>
@@ -104,13 +104,13 @@ export default function TrackTable(props) {
                     </TableCell>
                     <TableCell align="left">{row.artists}</TableCell>
                     <TableCell align="left">{row.name}</TableCell>
-                    {host ? (
+                    {props.host ? (
                       <TableCell padding="checkbox">
                         <div style={{ paddingRight: "10px" }}>
                           <QueueButton
                             songuri={row.uri}
-                            roomKey={roomKey}
-                            access_token={access_token}
+                            roomKey={props.roomKey}
+                            access_token={props.access_token}
                           ></QueueButton>
                         </div>
                       </TableCell>

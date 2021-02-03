@@ -1,47 +1,16 @@
-import React, { useState } from "react";
-import { setToken } from "../dataHandler/store/actions/spotify";
-import Footer from "../components/footer/footer";
+import React from "react";
 import UserDetails from "../components/userDetails/userDetails";
-import UserSection from "../components/userSection/userSection";
-import WebPlaybackReact from "../components/spotify/webPlayback";
+import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
 import TrackTable from "../components/trackTable/TrackTable";
-import './style/room.css';
-//Pushing to master.
+import "./style/room.css";
 
-
-export default function Useroom(props) {
-  const [playerLoaded, setPlayerLoaded] = useState(false);
-  const [access_token, setAccess_token] = useState(props.access_token);
-  const [roomKey, setRoomKey] = useState(props.roomKey);
-
-  useState(() => {
-    setAccess_token(props.access_token);
-    setToken(props.access_token);
-  }, props.access_token);
-
-  useState(() => {
-    setRoomKey(props.roomKey);
-  }, props.roomKey);
-
+export default function Userroom(props) {
   return (
     <div class="main">
-      <WebPlaybackReact access_token={access_token}>
-       
-      </WebPlaybackReact>
-      <UserDetails         
-      host={true}
-        display_name={props.display_name}
-       >
-          
-        </UserDetails>
+      <UserDetails host={true} display_name={props.display_name}></UserDetails>
       <br></br>
-      <TrackTable
-      ></TrackTable>
-      <UserSection
-      host={true}
-      >
-      </UserSection>
-
+      <TrackTable roomIp={props.roomIp}></TrackTable>
+      <LobbyUsers roomIp={props.roomIp}></LobbyUsers>
     </div>
   );
 }

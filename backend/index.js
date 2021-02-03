@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
@@ -9,6 +10,7 @@ const router = require("./api/Room/router");
 const app = express();
 const port = 8000;
 
+app.use(cors())
 app.use(bodyParser.json());
 app.use("/room", router);
 
