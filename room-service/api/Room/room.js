@@ -84,6 +84,22 @@ class Room {
     return this.customers;
   }
 
+  /**
+   * @param {Object} track The track to add to the play queue.
+   * @returns All the tracks in the play queue after updating.
+   */
+  addToQueue = (track) => {
+    this.musicManager.addToQueue(track);
+    return this.musicManager.getQueue();
+  }
+
+  /**
+   * @returns All the tracks in the play queue.
+   */
+  getQueue() {
+    return this.musicManager.getQueue();
+  };
+
   broadcastChanges(data) {
     const wsClient = new ws("ws://localhost:8888");
     wsClient.on("open", () => {

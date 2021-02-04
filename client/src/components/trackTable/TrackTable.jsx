@@ -108,10 +108,16 @@ export default function TrackTable(props) {
                       <TableCell padding="checkbox">
                         <div style={{ paddingRight: "10px" }}>
                           <QueueButton
+                            ws = {ws}
+                            name = {row.name }
                             songuri={row.uri}
+                            trackCover={row.trackCover}
+                            artists={row.artists}
                             roomKey={props.roomKey}
                             access_token={props.access_token}
+                            
                           ></QueueButton>
+                          
                         </div>
                       </TableCell>
                     ) : (

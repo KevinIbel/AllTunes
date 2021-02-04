@@ -1,6 +1,7 @@
 class MusicManager {
   constructor() {
     this.allTracks = [];
+    this.queue = [];
   }
 
   /**
@@ -56,6 +57,22 @@ class MusicManager {
    */
   getAllTracks = () => {
     return this.allTracks;
+  };
+
+  /**
+   * This function adds a track to the play queue.
+   * @param {Array} userTrack  TO UPDATE
+   */
+  addToQueue = (track) => {
+    this.queue.push(track);
+    return this.queue;
+  };
+
+  /**
+   * @returns All the tracks in the play queue.
+   */
+  getQueue = () => {
+    return this.queue;
   };
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 
@@ -6,6 +6,14 @@ export default function QueueButton(props) {
   const [songuri] = useState(props.songuri);
   const [roomKey, setRoomKey] = useState(props.roomKey);
   const [access_token, setAccess_token] = useState(props.access_token);
+
+  //useEffect(() => {
+  //  const wsUrl =
+  //    process.env.NODE_ENV == "development"
+  //      ? "ws://localhost:8888"
+  //      : "ws://" + props.roomIp;
+  //  setWs(new WebSocket(wsUrl));
+  //}, [props.roomIp]);
 
   useState(() => {
     setAccess_token(props.access_token);
@@ -15,22 +23,9 @@ export default function QueueButton(props) {
     setRoomKey(props.roomKey);
   }, [props.roomKey, roomKey]);
 
-  function queueUpSong() {
-    var config = {
-      method: "post",
-      url: `https://api.spotify.com/v1/me/player/queue/?uri=${songuri}`,
-      headers: {
-        Authorization: "Bearer " + access_token,
-      },
-    };
 
-    return axios(config)
-      .then(function (response) {
-        return response;
-      })
-      .catch(function (error) {
-        throw error;
-      });
+  function addToQueue(track) {
+    props.ws.send(JSON.stringify({ type: "addTrackToQueue", data: track }))
   }
 
   return (
@@ -38,9 +33,9 @@ export default function QueueButton(props) {
       color="secondary"
       variant="contained"
       onClick={() => {
-        queueUpSong();
+      addToQueue({name: props.name, songuri: props.songuri, trackCover: props.trackCover, artists: props.artists});
       }}
-    >
+    > 
       Queue
     </Button>
   );

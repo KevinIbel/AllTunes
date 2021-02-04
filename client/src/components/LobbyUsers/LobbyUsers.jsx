@@ -10,12 +10,13 @@ import "./LobbyUsers.css";
 
 const style = {
   position: "fixed",
-  width: "20%%",
+  width: "20%",
   height: "100%",
   bottom: 0,
-  left: "80%",
+  left: "90%",
   background: "rgb(40, 40, 40)",
   zIndex: 2000,
+  color: "rgb(30 215 96)"
 };
 
 export default function LobbyUsers(props) {

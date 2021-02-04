@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-import QueueDetailsSection from "../components/queueDetails";
+import QueueDetailsSection from "./queueDetails";
 import withPlayer from "../../hoc/playerHoc";
 
 function SongsPlayer(props) {

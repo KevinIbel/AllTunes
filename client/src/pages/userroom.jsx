@@ -2,6 +2,8 @@ import React from "react";
 import UserDetails from "../components/userDetails/userDetails";
 import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
 import TrackTable from "../components/trackTable/TrackTable";
+import QueueSection from "../components/lobbyTopTracks/queueSection";
+
 import "./style/room.css";
 
 export default function Userroom(props) {
@@ -11,6 +13,7 @@ export default function Userroom(props) {
       <br></br>
       <TrackTable roomIp={props.roomIp}></TrackTable>
       <LobbyUsers roomIp={props.roomIp}></LobbyUsers>
+      <QueueSection host={true} roomIp={props.roomIp}></QueueSection>
     </div>
   );
 }

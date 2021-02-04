@@ -4,6 +4,8 @@ import Footer from "../components/footer/footer";
 import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
 import WebPlaybackReact from "../components/spotify/webPlayback";
 import TrackTable from "../components/trackTable/TrackTable";
+import QueueSection from "../components/lobbyTopTracks/queueSection";
+
 import "./style/hostroom.css";
 
 export default function Hostroom(props) {
@@ -24,7 +26,9 @@ export default function Hostroom(props) {
         access_token={props.access_token}
         roomKey={props.roomKey}
       ></TrackTable>
-      <LobbyUsers host={true} roomIp={props.roomIp}></LobbyUsers>
+      <LobbyUsers  roomIp={props.roomIp}></LobbyUsers>
+      <QueueSection host={true} roomIp={props.roomIp}></QueueSection>
+
     </div>
   );
 }
