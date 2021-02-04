@@ -21,7 +21,7 @@ function songsControl(props) {
         icon={
           "play-btn " +
           (props.playing ? "fa-pause-circle-o" : "fa-play-circle-o")
-        }
+        }y
         playBtn
       />
       <Button
