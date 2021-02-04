@@ -30,6 +30,10 @@ export default function App() {
     setAccess_token(hashParams.access_token);
   }, [roomKey, access_token]);
 
+  const getRoomKey = function() {
+    return roomKey;
+  }
+
   return (
     <ThemeProvider
       theme={createMuiTheme({
