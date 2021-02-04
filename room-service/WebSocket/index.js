@@ -15,6 +15,10 @@ function initWebsocket(server) {
         const lobby = getLobby();
         console.log("Sending Lobby!");
         socket.send(JSON.stringify({ type: "lobby", data: lobby }));
+      } else if (message === "QueueRequest") {
+        const lobby = getQueue();
+        console.log("Sending Queue!");
+        socket.send(JSON.stringify({ type: "queue", data: lobby }));
       } else {
         try {
           const contents = JSON.parse(message);

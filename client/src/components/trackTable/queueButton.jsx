@@ -23,7 +23,6 @@ export default function QueueButton(props) {
     setRoomKey(props.roomKey);
   }, [props.roomKey, roomKey]);
 
-
   function addToQueue(track) {
     props.ws.send(JSON.stringify({ type: "addTrackToQueue", data: track }))
   }
