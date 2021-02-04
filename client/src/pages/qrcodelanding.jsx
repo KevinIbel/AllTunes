@@ -7,10 +7,13 @@ var client_id = "aeedb64c42db49bf8413aab94c44637c"; // Your client id
 var scope =
   "streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-modify user-top-read";
 
+//import room key from userroom
+//send the room key to qrcodeloading
+
 export default function Landing(props) {
   function login(customer) {
     var redirect_uri;
-    redirect_uri = "http://localhost:3000/userloading/";
+    redirect_uri = "http://localhost:3000/qrcodeloading/";
     var redirect =
       "https://accounts.spotify.com/authorize?" +
       querystring.stringify({
