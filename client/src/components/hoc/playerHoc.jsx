@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {nextSong, previousSong, pauseSong, playSong, seekSong} from '../../dataHandler/store/actions/spotify';
-import { containsCurrentSong } from '../../dataHandler/store/actions/libraryActions';
+import { compose } from 'redux';
 
-export default function(ComposedComponent) {
-  class PlayerHoc extends Component {
+function withPlayer(WrappedComponent) {
+  return class extends Component {
+    constructor(props) {
+      super(props);
+
+      const wsUrl =
+        process.env.NODE_ENV == 'development' ? 'ws://localhost:8888' : 'ws://' + props.roomIp;
+
+      this.ws = new WebSocket(wsUrl);
+    }
+
     shouldComponentUpdate(nextProps) {
       return nextProps.playing || (this.props.playing && !nextProps.playing);
     }
@@ -20,97 +27,49 @@ export default function(ComposedComponent) {
       }
     }
 
-    /*
-     useEffect(() => {
-    const wsUrl =
-   process.env.NODE_ENV == "development"
-      ? "ws://localhost:8888"
-       : "ws://" + props.roomIp;
-  //  setWs(new WebSocket(wsUrl));
-  //}, [props.roomIp]);
+    nextSong = (skip) => {
+      this.ws.send(JSON.stringify({ type: 'skipSong', data: skip }));
+    };
 
-    mountRoomSockets = () => {
-  
-      // Listen if other users click play/pause/next
-      socket.on('player action', ({ action, message }) => {
-        if (action === 'play' || action === 'pause') {
-          this.handlePlayPauseClick(action);
-          this.displayStatusMessage(message);
-        } else if (action === 'next') {
-          this.displayStatusMessage(message);
-        }
-      });
-  
-      // Listen for the room's current song
-      socket.on('room song', song => {
-        this.setState({ roomSong: song });
-      });
+    previousSong = (prev) => {
+      this.ws.send(JSON.stringify({ type: 'previousSong', data: prev }));
     };
-  
-    // Set statusMsg to display, then remove message after timeout
-    displayStatusMessage = message => {
-      this.setState({ statusMsg: message }, () => {
-        setTimeout(() => {
-          this.setState({ statusMsg: '' });
-        }, 2000);
-      });
+
+    pauseSong = (pause) => {
+      this.ws.send(JSON.stringify({ type: 'pauseSong', data: pause }));
     };
-    */
+
+    playSong = (play) => {
+      this.ws.send(JSON.stringify({ type: 'playSong', data: play }));
+    };
+
+    seekSong = (seek) => {
+      this.ws.send(JSON.stringify({ type: 'seekSong', data: seek }));
+    };
 
     render = () => (
-      <ComposedComponent
+      <WrappedComponent
         {...this.props}
-        playContext={(context, offset) => this.props.playSong(context, offset)}
-        playSong={() => this.props.playSong()}
+        playContext={(context, offset) => this.playSong(context, offset)}
+        nextSong={this.nextSong}
+        previousSong={this.previousSong}
+        pauseSong={this.pauseSong}
+        playSong={this.playSong}
+        seekSong={this.seekSong}
       />
     );
-  }
-//testbug
-  const mapStateToProps = state => {
-    return {
-      currentSong: state.playerReducer.status
-        ? state.playerReducer.status.track_window.current_track
-        : {},
-      contains: state.libraryReducer.containsCurrent ? true : false,
-      trackPosition: state.playerReducer.status
-        ? state.playerReducer.status.position
-        : 0,
-      playing: state.playerReducer.status
-        ? !state.playerReducer.status.paused
-        : false
-    };
   };
-
-
-  function nextSong(skip) {
-    props.ws.send(JSON.stringify({ type: "skipSong", data: skip }))
-  }
-  function previousSong(prev) {
-    props.ws.send(JSON.stringify({ type: "previousSong", data: prev }))
-  }
-  function pauseSong(pause) {
-    props.ws.send(JSON.stringify({ type: "pauseSong", data: pause }))
-  }
-  function playSong(play) {
-    props.ws.send(JSON.stringify({ type: "playSong", data: play }))
-  }
-  function seekSong(seek) {
-    props.ws.send(JSON.stringify({ type: "seekSong", data: seek }))
-  }
-
-  const mapDispatchToProps = dispatch => {
-    return bindActionCreators(
-      {
-        nextSong,
-        previousSong,
-        pauseSong,
-        playSong,
-        seekSong,
-        containsCurrentSong
-      },
-      dispatch
-    );
-  };
-
-  return connect(mapStateToProps,mapDispatchToProps)(PlayerHoc);
 }
+
+const mapStateToProps = (state) => {
+  return {
+    currentSong: state.playerReducer.status
+      ? state.playerReducer.status.track_window.current_track
+      : {},
+    contains: state.libraryReducer.containsCurrent ? true : false,
+    trackPosition: state.playerReducer.status ? state.playerReducer.status.position : 0,
+    playing: state.playerReducer.status ? !state.playerReducer.status.paused : false,
+  };
+};
+
+export default compose(withPlayer, connect(mapStateToProps));

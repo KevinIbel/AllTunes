@@ -19,8 +19,10 @@ function SongsPlayer(props) {
     : 1;
 
   return (
+    
+ 
     <div className="player-container">
-      {props.currentSong.id ? (
+      {(props.currentSong.id) ? (
         <DetailSection
           ids={
             props.currentSong.linked_from.id
@@ -33,8 +35,10 @@ function SongsPlayer(props) {
           artists={props.currentSong.artists || []}
         />
       ) : null}
+      {(props.host) ? (
       <SongsControl {...props} />
-      
+      ) : null}
+      {(props.host) ? (
       <SongSider
         isEnabled
         value={position / duration}
@@ -44,8 +48,10 @@ function SongsPlayer(props) {
           props.seekSong(Math.round(value * duration * 1000))
         }
       />
+      ) : null}
       <VolumeControl />
     </div>
+    
   );
 }
 

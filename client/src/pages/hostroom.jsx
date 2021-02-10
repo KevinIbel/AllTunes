@@ -17,7 +17,10 @@ export default function Hostroom(props) {
     <div class="main">
       {props.access_token ? (
         <WebPlaybackReact access_token={props.access_token}>
-          <Footer />
+          <Footer
+            host={true}
+            roomIp={props.roomIp}
+          ></Footer>
         </WebPlaybackReact>
       ) : null}
       <TrackTable

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import SongPlayer from '../songsPlayer/songsPlayer';
 
 const style = {
@@ -12,9 +11,11 @@ const style = {
   zIndex: 2000
 };
 
+
+
 const footer = props => (
   <div className="footer" style={style}>
-    <SongPlayer />
+    <SongPlayer host={props.host} />
   </div>
 );
 

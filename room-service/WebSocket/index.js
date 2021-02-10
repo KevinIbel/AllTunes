@@ -26,8 +26,6 @@ function initWebsocket(server) {
             const queue = addToQueue(contents.data);
             wsServer.clients.forEach((client) => {
               if (client !== socket && client.readyState === ws.OPEN) {
-                console.log("TRY TO ADD TRACK TO QUEUE:"+JSON.stringify(contents.data))
-                console.log("QUEUE AFTER ADDING:"+JSON.stringify(queue))
                 console.log("BroadCasting! ", "queue");
                 client.send(JSON.stringify({ type: "queue", data: queue }));
               }
@@ -46,6 +44,15 @@ function initWebsocket(server) {
         }
       }
     });
+  });
+}
+
+function sendToClients(wsServer, socket, messageToSend) {
+  wsServer.clients.forEach((client) => {
+    if (client !== socket && client.readyState === ws.OPEN) {
+      //console.log("BroadCasting! ", "queue");
+      client.send(messageToSend);
+    }
   });
 }
 

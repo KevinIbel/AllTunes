@@ -35,8 +35,9 @@ export const nextSong = () => {
   };
 };
 
-export const previousSong = () => {
-  axios.post('/me/player/previous');
+export const previousSong = ms => {
+  ms = 0;
+  axios.put(`/me/player/seek?position_ms=${ms}`);
   return {
     type: 'CHANGE_SONG'
   };

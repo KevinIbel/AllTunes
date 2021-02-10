@@ -6,28 +6,24 @@ function songsControl(props) {
   return (
     <div className="song-control">
       <Button
-        onClick={() => props.shuffle(!props.shuffleActive)}
+        onClick={(e) => props.shuffle(!props.shuffleActive)}
         className={"shuffle-song" + (props.shuffleActive ? " active" : "")}
         icon="fa-random"
       />
       <Button
         className="back-song"
         icon="fa-step-backward reverse"
-        onClick={props.previousSong}
+        onClick={(e) => props.previousSong()}
       />
       <Button
         className="play-btn"
-        onClick={props.playing ? props.pauseSong : props.playSong}
-        icon={
-          "play-btn " +
-          (props.playing ? "fa-pause-circle-o" : "fa-play-circle-o")
-        }y
-        playBtn
-      />
+        onClick={(e) => props.playing ? props.pauseSong() : props.playSong()}
+        icon={'play-btn ' + (props.playing ? 'fa-pause-circle-o' : 'fa-play-circle-o')}
+      />;
       <Button
         className="next-song"
         icon="fa-step-forward forward"
-        onClick={props.nextSong}
+        onClick={(e) => props.nextSong()}
       />
       <Button
         onClick={() =>
