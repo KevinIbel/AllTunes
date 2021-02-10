@@ -8,7 +8,8 @@ import SongSider from "./components/songSider";
 import VolumeControl from "./components/volumeControl";
 import withPlayer from "../hoc/playerHoc";
 
-function SongsPlayer(props) {
+
+const SongsPlayer = props => {
   function toSeconds(ms) {
     return ms / 1000;
   }

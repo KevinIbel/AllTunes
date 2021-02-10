@@ -2,35 +2,25 @@ import React from "react";
 
 import Button from "./controlButton";
 
+//had to change the buttons to have an event on them. as I had a dom to json converting issue.
+//The e event is not passed to playSong and then isn't stringified. 
 function songsControl(props) {
   return (
     <div className="song-control">
       <Button
-        onClick={(e) => props.shuffle(!props.shuffleActive)}
-        className={"shuffle-song" + (props.shuffleActive ? " active" : "")}
-        icon="fa-random"
-      />
-      <Button
         className="back-song"
         icon="fa-step-backward reverse"
-        onClick={(e) => props.previousSong()}
+        onClick={(event2) => props.previousSong()}
       />
       <Button
         className="play-btn"
-        onClick={(e) => props.playing ? props.pauseSong() : props.playSong()}
+        onClick={(event3) => props.playing ? props.pauseSong() : props.playSong()}
         icon={'play-btn ' + (props.playing ? 'fa-pause-circle-o' : 'fa-play-circle-o')}
       />;
       <Button
         className="next-song"
         icon="fa-step-forward forward"
-        onClick={(e) => props.nextSong()}
-      />
-      <Button
-        onClick={() =>
-          props.repeatContext(props.repeatActive ? "off" : "context")
-        }
-        className={"repeat-song" + (props.repeatActive ? " active" : "")}
-        icon="fa-retweet"
+        onClick={(event4) => props.nextSong()}
       />
     </div>
   );
