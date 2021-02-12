@@ -28,26 +28,29 @@ export const setStatus = status => {
   };
 };
 
-export const nextSong = () => {
-  axios.post('/me/player/next');
+export const nextSong = (uri) => {
+  axios.post('/me/player/next', {
+    uri: uri,
+  });
   return {
-    type: 'CHANGE_SONG'
+    type: 'CHANGE_SONG',
   };
 };
 
 export const previousSong = ms => {
-  ms = 0;
   axios.put(`/me/player/seek?position_ms=${ms}`);
   return {
-    type: 'CHANGE_SONG'
+    type: 'CHANGE_SONG',
+
+
   };
 };
 
-export const playSong = (context = false, offset) => {
-  if (context && offset) {
+export const playSong = (context = false, position_ms) => {
+  if (context && position_ms) {
     axios.put('/me/player/play', {
       context_uri: context,
-      offset: { position: offset }
+      position_ms
     });
   } else {
     if (context) {
@@ -63,10 +66,10 @@ export const playSong = (context = false, offset) => {
   };
 };
 //test gitlabbug
-export const playTracks = (tracks, offset) => {
+export const playTracks = (uri, position_ms) => {
   axios.put('/me/player/play', {
-    uris: tracks,
-    offset: { position: offset }
+    uris: uri,
+    position_ms: position_ms
   });
   return {
     type: 'PLAY_STATE'
@@ -76,7 +79,7 @@ export const playTracks = (tracks, offset) => {
 export const pauseSong = () => {
   axios.put('/me/player/pause');
   return {
-    type: 'PAUSE_STATE'
+    type: 'PAUSE_STATE',
   };
 };
 

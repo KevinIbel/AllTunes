@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from "react";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import VolumeUpIcon from "@material-ui/icons/VolumeUp";
-import PersonIcon from "@material-ui/icons/Person";
+
 import { Container } from "@material-ui/core";
-import { Box } from "@material-ui/core";
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { withStyles } from '@material-ui/core/styles';
+
 import TableCell from '@material-ui/core/TableCell';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
+
 import TableRow from '@material-ui/core/TableRow';
 
 const style = {
@@ -80,7 +71,7 @@ const style = {
                         class="cover"
                         alt="cover"
                         style={{ width: "50px", height: "50px" }}
-                        src={track.trackCover}
+                        src={track.trackCover} 
                       />}</TableCell>
               <TableCell style={{padding: '2px'}} >{track.name}, {track.artists}</TableCell>
              

@@ -115,6 +115,7 @@ export default function TrackTable(props) {
                             artists={row.artists}
                             roomKey={props.roomKey}
                             access_token={props.access_token}
+                            duration_ms={row.duration_ms}
                             
                           ></QueueButton>
                           

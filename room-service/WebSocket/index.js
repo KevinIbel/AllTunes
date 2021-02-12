@@ -19,6 +19,35 @@ function initWebsocket(server) {
         const lobby = getQueue();
         console.log("Sending Queue!");
         socket.send(JSON.stringify({ type: "queue", data: lobby }));
+      } else if (message === "PlaybackRequest") {
+        // Send the current playback status
+        // skipSong, previousSong, pauseSong, playSong, seekSong
+        // { uri: this.queue[0][uri], position_ms: this.queue[0][position_ms] }
+        const songSeek = getSongAtPos();
+        if (songSeek != null) {
+          socket.send(JSON.stringify({ type: "playSong", data: songSeek }));
+        }
+      } else if (message === "SkipRequest") {
+        const nextSong = getNextSong();
+        if (nextSong != null) {
+          sendToClients(socket, JSON.stringify({ type: "skipSong", data: nextSong }));
+        }
+      } else if (message === "PreviousRequest") {
+        const songSeek = getSongAtStart();
+        if (songSeek != null) {
+          sendToClients(socket, JSON.stringify({ type: "previousSong", data: songSeek }));
+        }
+      } else if (message === "PauseRequest") {
+        // Spotify pause requests don't need anything.
+        sendToClients(socket, JSON.stringify({ type: "pauseSong", data: null }));
+      } else if (message === "PlayRequest") {
+        const songSeek = getSongAtPos();
+        if (songSeek != null) {
+          sendToClients(socket, JSON.stringify({ type: "playSong", data: songSeek }));
+        }
+      } else if (message === "SeekRequest") {
+        // This will probably have to be expanded into more than a simple request.
+        // When the host clikcs on the SongSlider, info has to be sent about the position.
       } else {
         try {
           const contents = JSON.parse(message);
@@ -47,7 +76,7 @@ function initWebsocket(server) {
   });
 }
 
-function sendToClients(wsServer, socket, messageToSend) {
+function sendToClients(socket, messageToSend) {
   wsServer.clients.forEach((client) => {
     if (client !== socket && client.readyState === ws.OPEN) {
       //console.log("BroadCasting! ", "queue");
@@ -71,5 +100,22 @@ function addToQueue(track) {
 function getQueue() {
   return getRoom().getQueue();
 }
+
+// { uri: this.queue[0][uri], position_ms: this.queue[0][position_ms] }
+function getNextSong() {
+  return getRoom().getNextSong();
+}
+
+function getSongAtStart() {
+  return getRoom().getSongAtStart();
+}
+
+function getSongAtPos() {
+  return getRoom().getSongAtPos();
+}
+
+
+
+
 
 module.exports = { initWebsocket };

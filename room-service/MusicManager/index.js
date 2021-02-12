@@ -18,7 +18,9 @@ class MusicManager {
         artistAcc.push(currArtist.name);
         return artistAcc;
       }, []);
+      var duration_ms = currTrack.duration_ms;
       trackAcc.push({
+        duration_ms: duration_ms,
         name: name,
         artists: artists,
         uri: uri,
@@ -64,6 +66,9 @@ class MusicManager {
    * @param {Array} userTrack  TO UPDATE
    */
   addToQueue = (track) => {
+    console.log("THE TRACK WE'RE ADDING: "+JSON.stringify(track));
+    track.position_ms = 0;
+    console.log("trackWithPos: "+JSON.stringify(track));
     this.queue.push(track);
     return this.queue;
   };
@@ -73,6 +78,33 @@ class MusicManager {
    */
   getQueue = () => {
     return this.queue;
+  };
+
+  simplifySongInfo = (song) => {
+    return { uri: song.songuri, position_ms: song.position_ms }
+  }
+
+  getNextSong = () => {
+    if (this.queue.length > 0) {
+      this.queue.shift();
+      return this.simplifySongInfo(this.queue[0]);
+    }
+    return null;
+  };
+
+  getSongAtStart = () => {
+    if (this.queue.length > 0) {
+      this.queue[0][position_ms] = 0;
+      return this.simplifySongInfo(this.queue[0]);
+    }
+    return null;
+  };
+
+  getSongAtPos = () => {
+    if (this.queue.length > 0) {
+      return this.simplifySongInfo(this.queue[0]);
+    }
+    return null;
   };
 }
 

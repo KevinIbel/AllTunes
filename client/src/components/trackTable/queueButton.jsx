@@ -32,7 +32,7 @@ export default function QueueButton(props) {
       color="secondary"
       variant="contained"
       onClick={() => {
-      addToQueue({name: props.name, songuri: props.songuri, trackCover: props.trackCover, artists: props.artists});
+      addToQueue({name: props.name, songuri: props.songuri, trackCover: props.trackCover, artists: props.artists, duration_ms: props.duration_ms});
       }}
     > 
       Queue

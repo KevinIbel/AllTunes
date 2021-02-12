@@ -102,6 +102,18 @@ class Room {
     return this.musicManager.getQueue();
   };
 
+  getNextSong() {
+    return this.musicManager.getNextSong();
+  };
+
+  getSongAtStart() {
+    return this.musicManager.getSongAtStart();
+  };
+
+  getSongAtPos() {
+    return this.musicManager.getSongAtPos();
+  };
+
   broadcastChanges(data) {
     const wsClient = new ws("ws://localhost:8888");
     wsClient.on("open", () => {

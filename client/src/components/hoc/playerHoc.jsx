@@ -33,23 +33,23 @@ function withPlayer(WrappedComponent) {
     }
 
     nextSong = (skip) => {
-      this.ws.send(JSON.stringify({ type: 'skipSong', data: skip }));
+      this.ws.send("SkipRequest");
     };
 
     previousSong = (prev) => {
-      this.ws.send(JSON.stringify({ type: 'previousSong', data: prev }));
+      this.ws.send("PreviousRequest");
     };
 
     pauseSong = (pause) => {
-      this.ws.send(JSON.stringify({ type: 'pauseSong', data: pause }));
+      this.ws.send("PauseRequest");
     };
 
     playSong = (play) => {
-      this.ws.send(JSON.stringify({ type: 'playSong', data: play }));
+      this.ws.send("PlayRequest");
     };
 
     seekSong = (seek) => {
-      this.ws.send(JSON.stringify({ type: 'seekSong', data: seek }));
+      this.ws.send("SeekRequest");
     };
 
     render = () => (
