@@ -59,11 +59,6 @@ export default function App() {
     }
   }, [access_token]);
 
-  
-  const getRoomKey = function() {
-    return roomKey;
-  }
-
   return (
     <ThemeProvider
       theme={createMuiTheme({
