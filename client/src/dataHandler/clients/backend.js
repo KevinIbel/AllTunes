@@ -38,6 +38,7 @@ export async function createRoom(host) {
  * @param {String} host.token
  * @param {String} host.username
  */
+let requestSent = false;
 export async function addCustomer(customer, roomIpAddress) {
   var config = {
     method: "put",
@@ -50,14 +51,20 @@ export async function addCustomer(customer, roomIpAddress) {
     },
     data: JSON.stringify(customer),
   };
-
-  return axios(config)
-    .then(function (response) {
-      return response;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  console.log("sending request", requestSent);
+  if (!requestSent) {
+    requestSent=true
+    return axios(config)
+      .then(function (response) {
+        console.log("response sent");
+        return response;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  } else {
+    return "request already sent";
+  }
 }
 
 /**
