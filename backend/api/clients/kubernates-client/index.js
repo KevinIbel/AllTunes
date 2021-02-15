@@ -3,6 +3,7 @@ const roomServicePodDefinition = require("./room-service-pod.json");
 const roomServiceServiceDefinition = require("./room-service-service.json");
 
 const kubernatesUrl = "127.0.0.1:8001";
+const nodeExternalIp = "35.242.159.208";
 
 async function getPodData(roomKey) {
   const name = "room-service-" + roomKey.toLowerCase();
@@ -110,25 +111,43 @@ async function deletePod(roomKey) {
 
 async function isServiceReady(roomKey) {
   const service = await getServiceData(roomKey);
-  return service.status &&
-    service.status.loadBalancer &&
-    service.status.loadBalancer.ingress
-    ? true
-    : false;
+  const nodePort = service.spec.ports[0].nodePort;
+
+  var config = {
+    method: "get",
+    url: `http://${nodeExternalIp}:${nodePort}/room`,
+  };
+
+  while (true) {
+    await wait(500);
+    let ret;
+    try{
+      ret = await axios(config);
+    } catch(error){
+      continue
+    }
+    if (ret && ret.status == 200) {
+      return true;
+    }
+  }
 }
 
 async function isPodReady(roomKey) {
   const pod = await getPodData(roomKey);
   return pod.status.phase == "Running" ? true : false;
 }
-async function getServiceIp(roomKey) {
+async function getServiceNodePort(roomKey) {
   const service = await getServiceData(roomKey);
-  return service.status.loadBalancer.ingress[0].ip;
+  return service.spec.ports[0].nodePort;
 }
 
 async function getPodIp(roomKey) {
   const pod = await getPodData(roomKey);
   return pod.status.podIP;
+}
+
+function wait(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
 module.exports = {
@@ -138,6 +157,6 @@ module.exports = {
   deletePod,
   isPodReady,
   isServiceReady,
-  getServiceIp,
+  getServiceNodePort,
   getPodIp,
 };
