@@ -56,11 +56,9 @@ export default function UserLoading(props) {
         setAddedToRoom(true);
         props.setRoomIp(rooms[props.roomKey]);
       } else {
-        console.log("missing key user Display name or roomKey or accessToken");
-        console.log(props)
+        console.error("Missing key User Display name or roomKey or accessToken");
       }
     } catch (error) {
-      console.log("error adding user to room");
       console.error(error);
     }
   }

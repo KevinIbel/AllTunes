@@ -51,12 +51,10 @@ export async function addCustomer(customer, roomIpAddress) {
     },
     data: JSON.stringify(customer),
   };
-  console.log("sending request", requestSent);
   if (!requestSent) {
     requestSent=true
     return axios(config)
       .then(function (response) {
-        console.log("response sent");
         return response;
       })
       .catch(function (error) {
