@@ -46,16 +46,16 @@ export const previousSong = ms => {
   };
 };
 
-export const playSong = (context = false, position_ms) => {
-  if (context && position_ms) {
+export const playSong = (uri, position_ms) => {
+  if (uri && position_ms) {
     axios.put('/me/player/play', {
-      context_uri: context,
-      position_ms
+      uri: uri,
+      position_ms : position_ms
     });
   } else {
-    if (context) {
+    if (uri) {
       axios.put('/me/player/play', {
-        context_uri: context
+        uri: uri
       });
     } else {
       axios.put('/me/player/play');
@@ -67,6 +67,8 @@ export const playSong = (context = false, position_ms) => {
 };
 //test gitlabbug
 export const playTracks = (uri, position_ms) => {
+  console.log("AXIOS SPOTIFY:" + JSON.stringify(uri) + JSON.stringify(position_ms));
+
   axios.put('/me/player/play', {
     uris: uri,
     position_ms: position_ms

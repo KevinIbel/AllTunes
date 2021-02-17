@@ -36,10 +36,8 @@ const style = {
     // Only update the rows when the message contains a queue.
     ws.onmessage = (message) => {
       try {
-        console.log(message)
         const contents = JSON.parse(message.data);
         if (contents.type == "queue") {
-          console.log("GOT SOMETHING!:" + JSON.stringify(contents.data.name));
           setQueueList(contents.data);
         }
       } catch (e) {

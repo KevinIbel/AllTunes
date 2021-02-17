@@ -30,18 +30,22 @@ const SongsPlayer = props => {
     ws.onmessage = (message) => {
       try {
         const contents = JSON.parse(message.data);
+        console.log("SONG PLAYER:" + JSON.stringify(contents));
+        
         // Here we should handle the different playback updates (eg. pause, play, skip)
-        if (contents.type == "nextSong") { // The data should come is as data: { uris: [one_song's_uri] } (no position_ms because it will always be 0 for skipSong)
-        playTracks([contents.data.uri], contents.data.position_ms)        
+        if (contents.type == "skipSong") { // The data should come is as data: { uris: [one_song's_uri] } (no position_ms because it will always be 0 for skipSong)
+        playTracks([contents.data.uri], contents.data.position_ms)     
           // Make user's spotify play a given song. (will have a Song URI and position 0 (if position isn't 0 by default))
           // This is because we keep track of what's next in our app, not in SPotify
         } else if (contents.type == "previousSong") {
           playTracks([contents.data.uri], contents.data.position_ms)
+
           // Just set the current song to pos 0
-        }
-      else if (contents.type == "playTracks") {
+        } else if (contents.type == "playSong") {
+        console.log("SONG PLAYER playSong msg type:" + JSON.stringify(contents.data));
         playTracks([contents.data.uri], contents.data.position_ms)
         // play the song
+
       } //rest of msg type handling goes here
         
          else if (contents.type == "pauseSong") {

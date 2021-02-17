@@ -10,17 +10,17 @@ function songsControl(props) {
       <Button
         className="back-song"
         icon="fa-step-backward reverse"
-        onClick={(event2) => props.previousSong()}
+        onClick={(event1) => props.previousSong()}
       />
       <Button
         className="play-btn"
-        onClick={(event3) => props.playing ? props.pauseSong() : props.playSong()}
+        onClick={(event2) => props.playing ? props.pauseSong() : props.playTracks()}
         icon={'play-btn ' + (props.playing ? 'fa-pause-circle-o' : 'fa-play-circle-o')}
       />;
       <Button
         className="next-song"
         icon="fa-step-forward forward"
-        onClick={(event4) => props.nextSong()}
+        onClick={(event3) => props.nextSong()}
       />
     </div>
   );

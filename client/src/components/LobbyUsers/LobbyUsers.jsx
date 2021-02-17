@@ -36,7 +36,6 @@ export default function LobbyUsers(props) {
     // Only update the rows when the message contains tracks.
     ws.onmessage = (message) => {
       try {
-        console.log(message)
         const contents = JSON.parse(message.data);
         if (contents.type == "lobby") {
           setUserList(contents.data);

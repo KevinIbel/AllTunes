@@ -44,7 +44,7 @@ function withPlayer(WrappedComponent) {
       this.ws.send("PauseRequest");
     };
 
-    playSong = (play) => {
+    playTracks = (play) => {
       this.ws.send("PlayRequest");
     };
 
@@ -55,11 +55,11 @@ function withPlayer(WrappedComponent) {
     render = () => (
       <WrappedComponent
         {...this.props}
-        playContext={(context, offset) => this.playSong(context, offset)}
+        playContext={(uri, position_ms) => this.playTracks(uri, position_ms)}
         nextSong={this.nextSong}
         previousSong={this.previousSong}
         pauseSong={this.pauseSong}
-        playSong={this.playSong}
+        playTracks={this.playTracks}
         seekSong={this.seekSong}
       />
     );

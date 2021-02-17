@@ -20,9 +20,6 @@ function initWebsocket(server) {
         console.log("Sending Queue!");
         socket.send(JSON.stringify({ type: "queue", data: lobby }));
       } else if (message === "PlaybackRequest") {
-        // Send the current playback status
-        // skipSong, previousSong, pauseSong, playSong, seekSong
-        // { uri: this.queue[0][uri], position_ms: this.queue[0][position_ms] }
         const songSeek = getSongAtPos();
         if (songSeek != null) {
           socket.send(JSON.stringify({ type: "playSong", data: songSeek }));
@@ -53,6 +50,7 @@ function initWebsocket(server) {
           const contents = JSON.parse(message);
           if (contents.type === "addTrackToQueue") {
             const queue = addToQueue(contents.data);
+          
             wsServer.clients.forEach((client) => {
               if (client !== socket && client.readyState === ws.OPEN) {
                 console.log("BroadCasting! ", "queue");
