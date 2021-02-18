@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import UserDetails from "../components/userDetails/userDetails";
 import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
 import TrackTable from "../components/trackTable/TrackTable";
@@ -6,6 +6,8 @@ import Modal from './modal';
 import "./style/room.css";
 
 export default function Userroom(props) {
+  const [isModalVisible, setModelVisible] = useState(false);
+
   return (
     <section>
       <div class="main">
@@ -16,14 +18,13 @@ export default function Userroom(props) {
       </div>
       <div class="qr">
 		  Let a user join the room! Scan below.<br></br><br></br>
-		  <button class="buttoncss" onClick={ this.selectModal }
+		  <button class="buttoncss" onClick={setModelVisible(true)}
 		     >Open Modal</button>      
 		     <Modal 
-		         displayModal={this.state.modal}
-		         closeModal={this.selectModal}
+		         displayModal={isModalVisible}
+		         closeModal={setModelVisible(false)}
 		     />
 	    </div>
     </section>
-    
   );
 }
