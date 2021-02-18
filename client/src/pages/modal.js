@@ -1,5 +1,6 @@
 import React from 'react';
 import QRCode from "react-weblineindia-qrcode-generator";
+
 const Modal = props => {
      
      const divStyle = { 
