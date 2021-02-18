@@ -10,4 +10,4 @@ spec:
   - port: 3000
     targetPort: 3000
   type: LoadBalancer
-  loadBalancerIP: "35.246.33.106"
+  loadBalancerIP: "34.77.228.84"

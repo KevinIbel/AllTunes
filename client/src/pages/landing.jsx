@@ -8,7 +8,7 @@ var client_id = "aeedb64c42db49bf8413aab94c44637c"; // Your client id
 var scope =
   "streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-modify user-top-read user-follow-modify";
 
-const url = process.env.NODE_ENV == 'development' ? "http://localhost:3000" : "http://35.246.33.106:3000"
+const url = process.env.NODE_ENV == 'development' ? "http://localhost:3000" : "http://34.77.228.84:3000"
 
 export default function Landing(props) {
 

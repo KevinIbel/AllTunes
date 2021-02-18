@@ -50,7 +50,7 @@ export default function Userroom(props) {
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <p id="simple-modal-description">
-        <QRCode value="http://localhost:3000/#roomkey${roomKey}" size={550} />
+        <QRCode value={`#roomKey=${props.roomKey}`} size={550} />
       </p>
     </div>
   );
