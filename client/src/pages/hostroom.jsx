@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {useState } from "react";
 import { setToken } from "../dataHandler/store/actions/spotify";
 import Footer from "../components/footer/footer";
 import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
 import WebPlaybackReact from "../components/spotify/webPlayback";
 import TrackTable from "../components/trackTable/TrackTable";
 import QueueSection from "../components/lobbyTopTracks/queueSection";
-
 import "./style/hostroom.css";
 
 export default function Hostroom(props) {

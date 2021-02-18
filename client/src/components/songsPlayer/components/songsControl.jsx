@@ -1,5 +1,4 @@
 import React from "react";
-
 import Button from "./controlButton";
 
 //had to change the buttons to have an event on them. as I had a dom to json converting issue.

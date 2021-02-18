@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { createRoom } from "../dataHandler/clients/backend";
-import "./style/loading.css";
 import { Redirect } from "react-router-dom";
+import "./style/loading.css";
+
 //Pushing to master.
 
 export default function Loading(props) {

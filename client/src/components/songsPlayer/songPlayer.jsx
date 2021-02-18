@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-
-import "./songsPlayer.css";
-
 import DetailSection from "./components/detailsSection";
 import SongsControl from "./components/songsControl";
 import SongSider from "./components/songSider";
 import VolumeControl from "./components/volumeControl";
 import withPlayer from "../hoc/playerHoc";
 import {playTracks, pauseSong} from '../../dataHandler/store/actions/spotify';
+import "./songsPlayer.css";
 
 
 

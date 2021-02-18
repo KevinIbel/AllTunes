@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {useState} from "react";
 import { setToken } from "../dataHandler/store/actions/spotify";
 import WebPlaybackReact from "../components/spotify/webPlayback";
-
-
 import UserDetails from "../components/userDetails/userDetails";
 import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
 import TrackTable from "../components/trackTable/TrackTable";
