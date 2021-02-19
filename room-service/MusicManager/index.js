@@ -106,6 +106,15 @@ class MusicManager {
     }
     return null;
   };
+
+  setSongPos = (progressMS) => {
+    if (this.queue.length > 0) {
+      this.queue[0, "position_ms"] = progressMS;
+      console.log(JSON.stringify(this.queue[0]));
+      return this.simplifySongInfo(this.queue[0]);
+    }
+    return null;
+  };
 }
 
 module.exports = MusicManager;

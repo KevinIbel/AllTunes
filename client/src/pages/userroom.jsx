@@ -28,7 +28,7 @@ export default function Userroom(props) {
           roomIp={props.roomIp}
           
         ></Footer>
-                </n>
+                </WebPlaybackReact>
 
         ) : null}
           {props.access_token ? (

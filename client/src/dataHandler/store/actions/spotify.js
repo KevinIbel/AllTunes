@@ -37,6 +37,19 @@ export const nextSong = (uri) => {
   };
 };
 
+export async function progressMS() {
+ 
+  try {
+    const response = await axios.get(`/me/player/currently-playing?market=GB`);
+  console.log("LET'S GET PROGRESS_MS" + JSON.stringify(response.data.progress_ms));
+  return response.data.progress_ms;
+  }catch (error) {
+    return error;
+  }  
+
+};
+  
+
 export const previousSong = ms => {
   axios.put(`/me/player/seek?position_ms=${ms}`);
   return {

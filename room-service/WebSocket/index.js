@@ -27,16 +27,17 @@ function initWebsocket(server) {
       } else if (message === "SkipRequest") {
         const nextSong = getNextSong();
         if (nextSong != null) {
-          sendToClients(socket, JSON.stringify({ type: "skipSong", data: nextSong }));
+          sendToClients(socket, JSON.stringify({ type: "playSong", data: nextSong }));
         }
       } else if (message === "PreviousRequest") {
-        const songSeek = getSongAtStart();
+        const songSeek = setSongPos(0); // setSongPos returns queue[0]
         if (songSeek != null) {
-          sendToClients(socket, JSON.stringify({ type: "previousSong", data: songSeek }));
+          sendToClients(socket, JSON.stringify({ type: "playSong", data: songSeek }));
         }
-      } else if (message === "PauseRequest") {
+      //} else if (message === "PauseRequest") {
         // Spotify pause requests don't need anything.
-        sendToClients(socket, JSON.stringify({ type: "pauseSong", data: null }));
+        
+      //  sendToClients(socket, JSON.stringify({ type: "pauseSong", data: null }));
       } else if (message === "PlayRequest") {
         const songSeek = getSongAtPos();
         if (songSeek != null) {
@@ -57,6 +58,14 @@ function initWebsocket(server) {
                 client.send(JSON.stringify({ type: "queue", data: queue }));
               }
             });
+          } else if (contents.type === "PauseRequest") {
+            console.log("WS SERVER RECEIVED: "+JSON.stringify(contents));
+            const songData = setSongPos(contents.data);
+            console.log("SONGDATA"+ contents.data)
+            console.log("songData: "+JSON.stringify(songData));
+            sendToClients(socket, JSON.stringify({ type: "pauseSong", data: songData }));
+            const lobbyQueue = getQueue();
+            console.log("QUEUE AFTER UPDATE:"+JSON.stringify(lobbyQueue));
           } else {
             wsServer.clients.forEach((client) => {
               if (client !== socket && client.readyState === ws.OPEN) {
@@ -112,6 +121,12 @@ function getSongAtPos() {
   return getRoom().getSongAtPos();
 }
 
+function setSongPos(progress_ms) {
+  return getRoom().setSongPos(progress_ms), console.log("WEEWAAAAindex.js"+ JSON.stringify(progress_ms));
+}
+
+function isQueueEmpty(){
+}
 
 
 

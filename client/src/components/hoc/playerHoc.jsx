@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-
+import {progressMS} from '../../dataHandler/store/actions/spotify';
+import axios from 'axios';
 
 //Higher order component 'withPlayer' which returns a class component. Before these two were separate, now they're within one.
 //We connect the websocket, build the contols then send these controls as a wrapped component. 
@@ -40,9 +41,12 @@ function withPlayer(WrappedComponent) {
       this.ws.send("PreviousRequest");
     };
 
-    pauseSong = (pause) => {
-      this.ws.send("PauseRequest");
-    };
+  async  pauseSong(pause){
+      const ms = await progressMS()
+        console.log("PLAYERHOC GET PROGRESSMS: " + ms);
+        this.ws.send(JSON.stringify({ type: "PauseRequest", data: ms}))
+      
+    } ;
 
     playTracks = (play) => {
       this.ws.send("PlayRequest");
@@ -58,7 +62,7 @@ function withPlayer(WrappedComponent) {
         playContext={(uri, position_ms) => this.playTracks(uri, position_ms)}
         nextSong={this.nextSong}
         previousSong={this.previousSong}
-        pauseSong={this.pauseSong}
+        pauseSong={(progress_ms) => this.pauseSong(progress_ms)}
         playTracks={this.playTracks}
         seekSong={this.seekSong}
       />

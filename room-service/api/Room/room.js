@@ -114,6 +114,10 @@ class Room {
     return this.musicManager.getSongAtPos();
   };
 
+  setSongPos = (progressMS) => {
+    return this.musicManager.setSongPos(progressMS);
+  };
+
   broadcastChanges(data) {
     const wsClient = new ws("ws://localhost:8888");
     wsClient.on("open", () => {
