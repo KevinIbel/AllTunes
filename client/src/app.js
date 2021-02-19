@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Hostroom from "./pages/hostRoom";
-import Userroom from "./pages/userRoom";
+import Hostroom from "./pages/hostroom";
+import Userroom from "./pages/userroom";
 import Landing from "./pages/landing";
 import Loading from "./pages/loading";
 import UserLoading from "./pages/userLoading";
