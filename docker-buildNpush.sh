@@ -8,16 +8,16 @@ cp -r ./client/build ./client-server
 
 
 
-docker build -t jamesangel/alltunes-backend ./backend 
+docker build -t haytchyt/alltunes-backend ./backend 
 
-docker push jamesangel/alltunes-backend
+docker push haytchyt/alltunes-backend
 
-docker build -t jamesangel/alltunes-room-service ./room-service
+docker build -t haytchyt/alltunes-room-service ./room-service
 
-docker push jamesangel/alltunes-room-service
+docker push haytchyt/alltunes-room-service
 
-docker build -t jamesangel/alltunes-client-server ./client-server
+docker build -t haytchyt/alltunes-client-server ./client-server
 
-docker push jamesangel/alltunes-client-server
+docker push haytchyt/alltunes-client-server
 
 kubectl apply -f ./kube
