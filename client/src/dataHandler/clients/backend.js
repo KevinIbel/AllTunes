@@ -3,7 +3,7 @@ import axios from "axios";
 const backendUrl =
   process.env.NODE_ENV == "development"
     ? "http://localhost:8888/room"
-    : "http://34.78.145.59:8000/room";
+    : "http://35.246.74.70:8000/room";
 
 /**
  * @param {String} host.token
