@@ -5,6 +5,7 @@ import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
 import WebPlaybackReact from "../components/spotify/webPlayback";
 import TrackTable from "../components/trackTable/TrackTable";
 import "./style/hostroom.css";
+import QrModal from "../components/modal/qrmodal";
 
 export default function Hostroom(props) {
   useState(() => {
@@ -12,19 +13,23 @@ export default function Hostroom(props) {
   }, props.access_token);
 
   return (
-    <div class="main">
-      {props.access_token ? (
-        <WebPlaybackReact access_token={props.access_token}>
-          <Footer />
-        </WebPlaybackReact>
-      ) : null}
-      <TrackTable
-        roomIp={props.roomIp}
-        host={true}
-        access_token={props.access_token}
-        roomKey={props.roomKey}
-      ></TrackTable>
-      <LobbyUsers host={true} roomIp={props.roomIp}></LobbyUsers>
-    </div>
+    <section>
+      <div class="main">
+        {props.access_token ? (
+          <WebPlaybackReact access_token={props.access_token}>
+            <Footer />
+          </WebPlaybackReact>
+        ) : null}
+        <TrackTable
+          roomIp={props.roomIp}
+          host={true}
+          access_token={props.access_token}
+          roomKey={props.roomKey}
+        ></TrackTable>
+        <LobbyUsers host={true} roomIp={props.roomIp}></LobbyUsers>
+        <QrModal roomKey={props.roomKey}></QrModal>
+      </div>
+    </section>
+    
   );
 }
