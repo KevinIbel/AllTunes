@@ -44,8 +44,7 @@ function initWebsocket(server) {
           sendToClients(socket, JSON.stringify({ type: "playSong", data: songSeek }));
         }
       } else if (message === "SeekRequest") {
-        // This will probably have to be expanded into more than a simple request.
-        // When the host clikcs on the SongSlider, info has to be sent about the position.
+        //
       } else {
         try {
           const contents = JSON.parse(message);
@@ -64,6 +63,14 @@ function initWebsocket(server) {
             console.log("UPDATED SONG INFO "+JSON.stringify(updatedSongInfo));
             console.log("UPDATED SONG INFO222222 "+JSON.stringify(contents.data));
             sendToClients(socket, JSON.stringify({ type: "pauseSong", data: updatedSongInfo }));
+            const lobbyQueue = getQueue();
+            console.log("QUEUE AFTER UPDATE:"+JSON.stringify(lobbyQueue));
+          } else if (contents.type === "SeekRequest") {
+            console.log("WS SERVER SEEKREQUEST: "+JSON.stringify(contents));
+            const updatedSongInfo = setSongPos(contents.data);
+            console.log("UPDATED SONG INFO "+JSON.stringify(updatedSongInfo));
+            console.log("UPDATED SONG INFO222222 "+JSON.stringify(contents.data));
+            sendToClients(socket, JSON.stringify({ type: "playSong", data: updatedSongInfo }));
             const lobbyQueue = getQueue();
             console.log("QUEUE AFTER UPDATE:"+JSON.stringify(lobbyQueue));
           } else {

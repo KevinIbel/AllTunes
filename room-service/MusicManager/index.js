@@ -9,7 +9,7 @@ class MusicManager {
    * @param {Array} tracks An array of tracks given from spotify.
    */
   reduceUserTracks = (tracks) => {
-    // Reduce the data to track name, artists, uri, and counter
+    // Reduce the data
     return tracks.reduce(function (trackAcc, currTrack) {
       var trackCover = currTrack.album.images[1].url; // 0 is a large image (640x640), 1 is medium (300x300), 2 is small (64x64)
       var name = currTrack.name;
@@ -32,8 +32,8 @@ class MusicManager {
   };
 
   /**
-   * This function updates the music manager with a new users tracks.
-   * @param {Array} userTracks  A reduced array of tracks, ensure tracks are reduced using .reduceUserTracks()
+   * This function updates the music manager with a new user's tracks.
+   * @param {Array} userTracks  A reduced array of tracks; ensure tracks are reduced using .reduceUserTracks()
    */
   updateAllTracks = (userTracks) => {
     // For all new user tracks, if a track is a duplicate increase the existing one's counter. Otherwise add it to the array.
@@ -63,10 +63,10 @@ class MusicManager {
 
   /**
    * This function adds a track to the play queue.
-   * @param {Array} userTrack  TO UPDATE
+   * @param {Array} track A track object with the attributes: name, songuri, trackCover, artists, duration_ms.
+   * @returns All the tracks in the music manager.
    */
   addToQueue = (track) => {
-    console.log("THE TRACK WE'RE ADDING: "+JSON.stringify(track));
     track.positionMS = 0;
     console.log("trackWithPos: "+JSON.stringify(track));
     this.queue.push(track);
