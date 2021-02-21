@@ -1,5 +1,5 @@
 import React from 'react';
-import SongPlayer from '../songsPlayer/songPlayer';
+import SongsPlayer from '../songsPlayer/songsPlayer';
 
 const style = {
   position: 'fixed',
@@ -15,7 +15,7 @@ const style = {
 
 const footer = props => (
   <div className="footer" style={style}>
-    <SongPlayer host={props.host} />
+    <SongsPlayer host={props.host} />
   </div>
 ); 
 

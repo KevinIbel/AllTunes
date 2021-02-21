@@ -67,6 +67,7 @@ const SongsPlayer = props => {
       ws.send("PlaybackRequest");
     };
   }, [ws]);
+  toSeconds = ms => ms / 1000;
 
   function toSeconds(ms) {
     return ms / 1000;
@@ -77,6 +78,7 @@ const SongsPlayer = props => {
     ? toSeconds(props.currentSong.duration_ms)
     : 1;
 
+    
   return (
     
  
@@ -103,8 +105,8 @@ const SongsPlayer = props => {
         value={position / duration}
         position={position}
         duration={duration}
-        onChange={(value) =>
-          props.seekSong(Math.round(value * duration * 1000))
+        onChange={value =>
+          this.props.seekSong(Math.round(value * duration * 1000))
         }
       />
       ) : null}

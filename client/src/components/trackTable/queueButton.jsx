@@ -7,14 +7,6 @@ export default function QueueButton(props) {
   const [roomKey, setRoomKey] = useState(props.roomKey);
   const [access_token, setAccess_token] = useState(props.access_token);
 
-  //useEffect(() => {
-  //  const wsUrl =
-  //    process.env.NODE_ENV == "development"
-  //      ? "ws://localhost:8888"
-  //      : "ws://" + props.roomIp;
-  //  setWs(new WebSocket(wsUrl));
-  //}, [props.roomIp]);
-
   useState(() => {
     setAccess_token(props.access_token);
   }, [props.access_token, access_token]);
@@ -32,10 +24,16 @@ export default function QueueButton(props) {
       color="secondary"
       variant="contained"
       onClick={() => {
-      addToQueue({name: props.name, songuri: props.songuri, trackCover: props.trackCover, artists: props.artists, duration_ms: props.duration_ms});
+        addToQueue({
+          name: props.name,
+          songuri: props.songuri,
+          trackCover: props.trackCover,
+          artists: props.artists,
+          duration_ms: props.duration_ms
+        });
       }}
     > 
-      Queue
+    Queue
     </Button>
   );
 }

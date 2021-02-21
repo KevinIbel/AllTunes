@@ -108,7 +108,6 @@ function getQueue() {
   return getRoom().getQueue();
 }
 
-// { uri: this.queue[0][uri], position_ms: this.queue[0][position_ms] }
 function getNextSong() {
   return getRoom().getNextSong();
 }
