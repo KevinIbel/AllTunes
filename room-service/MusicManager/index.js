@@ -67,7 +67,7 @@ class MusicManager {
    */
   addToQueue = (track) => {
     console.log("THE TRACK WE'RE ADDING: "+JSON.stringify(track));
-    track.position_ms = 0;
+    track.positionMS = 0;
     console.log("trackWithPos: "+JSON.stringify(track));
     this.queue.push(track);
     return this.queue;
@@ -81,8 +81,8 @@ class MusicManager {
   };
 
   simplifySongInfo = (song) => {
-    console.log("Let's simplify into" + song.songuri + "<URI POS>" + song.position_ms)
-    return { uri: song.songuri, position_ms: song.position_ms }
+    console.log("Let's simplify into" + song.songuri + "<URI POS>" + song.positionMS)
+    return { uri: song.songuri, positionMS: song.positionMS }
   }
 
   getNextSong = () => {
@@ -95,7 +95,7 @@ class MusicManager {
 
   getSongAtStart = () => {
     if (this.queue.length > 0) {
-      this.queue[0][position_ms] = 0;
+      this.queue[0][positionMS] = 0;
       return this.simplifySongInfo(this.queue[0]);
     }
     return null;
@@ -110,8 +110,8 @@ class MusicManager {
 
   setSongPos = (progressMS) => {
     if (this.queue.length > 0) {
-      this.queue[0, "position_ms"] = progressMS;
-      console.log(JSON.stringify("SECOND PART FROM WS SERVERRECEIVED" + JSON.stringify(this.queue[0])));
+      this.queue[0].positionMS = progressMS;
+      console.log("SECOND PART FROM WS SERVERRECEIVED" + JSON.stringify(this.queue[0]));
       return this.simplifySongInfo(this.queue[0]);
     }
     return null;

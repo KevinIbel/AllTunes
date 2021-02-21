@@ -115,7 +115,10 @@ class Room {
   };
 
   setSongPos = (progressMS) => {
-    return this.musicManager.setSongPos(progressMS);
+
+    const temp = this.musicManager.setSongPos(progressMS)
+    console.log("we are in room.jshello: " + JSON.stringify(temp));
+    return temp;
   };
 
   broadcastChanges(data) {

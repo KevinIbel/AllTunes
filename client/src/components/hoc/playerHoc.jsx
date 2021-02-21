@@ -59,7 +59,6 @@ function withPlayer(WrappedComponent) {
     render = () => (
       <WrappedComponent
         {...this.props}
-        playContext={(uri, position_ms) => this.playTracks(uri, position_ms)}
         nextSong={this.nextSong}
         previousSong={this.previousSong}
         pauseSong={(progress_ms) => this.pauseSong(progress_ms)}

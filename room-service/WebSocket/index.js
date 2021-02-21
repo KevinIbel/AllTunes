@@ -51,8 +51,7 @@ function initWebsocket(server) {
           const contents = JSON.parse(message);
           if (contents.type === "addTrackToQueue") {
             const queue = addToQueue(contents.data);
-            console.log("queuedata"+ JSON.stringify(queue))
-
+          
             wsServer.clients.forEach((client) => {
               if (client !== socket && client.readyState === ws.OPEN) {
                 console.log("BroadCasting! ", "queue");
@@ -61,10 +60,10 @@ function initWebsocket(server) {
             });
           } else if (contents.type === "PauseRequest") {
             console.log("WS SERVER RECEIVED: "+JSON.stringify(contents));
-            const songData = setSongPos(contents.data);
-            console.log("SONGDATA"+ contents.data)
-            console.log("songData: "+JSON.stringify(songData));
-            sendToClients(socket, JSON.stringify({ type: "pauseSong", data: songData }));
+            const updatedSongInfo = setSongPos(contents.data);
+            console.log("UPDATED SONG INFO "+JSON.stringify(updatedSongInfo));
+            console.log("UPDATED SONG INFO222222 "+JSON.stringify(contents.data));
+            sendToClients(socket, JSON.stringify({ type: "pauseSong", data: updatedSongInfo }));
             const lobbyQueue = getQueue();
             console.log("QUEUE AFTER UPDATE:"+JSON.stringify(lobbyQueue));
           } else {
@@ -123,7 +122,7 @@ function getSongAtPos() {
 }
 
 function setSongPos(progress_ms) {
-  return getRoom().setSongPos(progress_ms), console.log("WEEWAAAAindex.js"+ JSON.stringify(progress_ms));
+  return getRoom().setSongPos(progress_ms);
 }
 
 function isQueueEmpty(){
