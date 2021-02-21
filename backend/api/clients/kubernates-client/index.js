@@ -3,7 +3,7 @@ const roomServicePodDefinition = require("./room-service-pod.json");
 const roomServiceServiceDefinition = require("./room-service-service.json");
 
 const kubernatesUrl = "127.0.0.1:8001";
-const nodeExternalIp = "35.242.159.208";
+const nodeExternalIp = "34.89.110.208";
 
 async function getPodData(roomKey) {
   const name = "room-service-" + roomKey.toLowerCase();
@@ -121,10 +121,10 @@ async function isServiceReady(roomKey) {
   while (true) {
     await wait(500);
     let ret;
-    try{
+    try {
       ret = await axios(config);
-    } catch(error){
-      continue
+    } catch (error) {
+      continue;
     }
     if (ret && ret.status == 200) {
       return true;
@@ -138,7 +138,7 @@ async function isPodReady(roomKey) {
 }
 async function getServiceNodePort(roomKey) {
   const service = await getServiceData(roomKey);
-  return service.spec.ports[0].nodePort;
+  return nodeExternalIp + ":" + service.spec.ports[0].nodePort;
 }
 
 async function getPodIp(roomKey) {

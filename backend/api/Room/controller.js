@@ -8,7 +8,6 @@ const {
 } = require("../clients/kubernates-client/index");
 
 const { initRoom } = require("../clients/room-client/index");
-const nodeExternalIp = "35.242.159.208";
 class RoomController {
   constructor() {
     this.rooms = {};
@@ -29,9 +28,13 @@ class RoomController {
       await createPod(roomKey); //create new pod in kubernates cluster
       await createService(roomKey); //create new service for pod
       await isServiceReady(roomKey); //wait until the service is ready
-      const serviceIp = nodeExternalIp + ':' + (await getServiceNodePort(roomKey)); //get nodePort of Service
+      const serviceIp = await getServiceNodePort(roomKey); //get nodePort of Service
       await initRoom(serviceIp, host); //initialize the room
       this.rooms[roomKey] = serviceIp;
+      console.log("new room created", {
+        roomKey: roomKey,
+        serviceIp: serviceIp,
+      });
       return { status: 201, data: { roomKey, roomIp: serviceIp } }; //return room key
     } catch (error) {
       console.error(error);
@@ -62,6 +65,5 @@ class RoomController {
     }
   }
 }
-
 
 module.exports = RoomController;
