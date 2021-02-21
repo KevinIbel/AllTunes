@@ -81,6 +81,7 @@ class MusicManager {
   };
 
   simplifySongInfo = (song) => {
+    console.log("Let's simplify into" + song.songuri + "<URI POS>" + song.position_ms)
     return { uri: song.songuri, position_ms: song.position_ms }
   }
 
@@ -110,7 +111,7 @@ class MusicManager {
   setSongPos = (progressMS) => {
     if (this.queue.length > 0) {
       this.queue[0, "position_ms"] = progressMS;
-      console.log(JSON.stringify(this.queue[0]));
+      console.log(JSON.stringify("SECOND PART FROM WS SERVERRECEIVED" + JSON.stringify(this.queue[0])));
       return this.simplifySongInfo(this.queue[0]);
     }
     return null;

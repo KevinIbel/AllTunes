@@ -51,7 +51,8 @@ function initWebsocket(server) {
           const contents = JSON.parse(message);
           if (contents.type === "addTrackToQueue") {
             const queue = addToQueue(contents.data);
-          
+            console.log("queuedata"+ JSON.stringify(queue))
+
             wsServer.clients.forEach((client) => {
               if (client !== socket && client.readyState === ws.OPEN) {
                 console.log("BroadCasting! ", "queue");
