@@ -6,6 +6,7 @@ import WebPlaybackReact from "../components/spotify/webPlayback";
 import TrackTable from "../components/trackTable/TrackTable";
 import QueueSection from "../components/lobbyTopTracks/queueSection";
 import "./style/hostroom.css";
+import QrModal from "../components/modal/qrmodal";
 
 export default function Hostroom(props) {
   useState(() => {
@@ -30,7 +31,9 @@ export default function Hostroom(props) {
       ></TrackTable>
       <LobbyUsers  roomIp={props.roomIp}></LobbyUsers>
       <QueueSection host={true} roomIp={props.roomIp}></QueueSection>
+      <QrModal roomKey={props.roomKey}></QrModal>
 
     </div>
+
   );
 }

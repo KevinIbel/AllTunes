@@ -6,7 +6,7 @@ import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
 import TrackTable from "../components/trackTable/TrackTable";
 import QueueSection from "../components/lobbyTopTracks/queueSection";
 import Footer from "../components/footer/footer";
-
+import QrModal from "../components/modal/qrmodal";
 import "./style/room.css";
 
 
@@ -18,6 +18,7 @@ export default function Userroom(props) {
   }, props.access_token);
 
   return (
+
     <div class="main">
        {props.access_token ? (
                  <WebPlaybackReact access_token={props.access_token}>
@@ -45,7 +46,9 @@ export default function Userroom(props) {
 
                 </QueueSection>
                       ) : null}
+                       <QrModal roomKey={props.roomKey}></QrModal>
 
     </div>
+
   );
 }

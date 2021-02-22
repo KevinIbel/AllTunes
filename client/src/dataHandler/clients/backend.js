@@ -3,7 +3,7 @@ import axios from "axios";
 const backendUrl =
   process.env.NODE_ENV == "development"
     ? "http://localhost:8888/room"
-    : "http://35.187.88.243:8000/room";
+    : "http://35.246.74.70:8000/room";
 
 /**
  * @param {String} host.token
@@ -38,6 +38,7 @@ export async function createRoom(host) {
  * @param {String} host.token
  * @param {String} host.username
  */
+let requestSent = false;
 export async function addCustomer(customer, roomIpAddress) {
   var config = {
     method: "put",
@@ -50,14 +51,18 @@ export async function addCustomer(customer, roomIpAddress) {
     },
     data: JSON.stringify(customer),
   };
-
-  return axios(config)
-    .then(function (response) {
-      return response;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  if (!requestSent) {
+    requestSent=true
+    return axios(config)
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  } else {
+    return "request already sent";
+  }
 }
 
 /**

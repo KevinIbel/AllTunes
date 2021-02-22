@@ -31,7 +31,11 @@ export default function App() {
 
   useEffect(() => {
     const hashParams = getHashParams();
-    setRoomKey(hashParams.roomKey);
+    if(hashParams.state){
+      setRoomKey(hashParams.state);
+    } else{
+      setRoomKey(hashParams.roomKey);
+    }
     setAccess_token(hashParams.access_token);
   }, [roomKey, access_token]);
 
@@ -95,6 +99,7 @@ export default function App() {
             <UserLoading
               access_token={access_token}
               roomKey={roomKey}
+              setRoomKey={setRoomKey}
               display_name={display_name}
               roomIp={roomIp}
               setRoomIp={setRoomIp}

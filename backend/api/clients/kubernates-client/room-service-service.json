@@ -9,7 +9,7 @@
         "selector": {
             "app": "room-service"
         },
-        "type": "LoadBalancer",
+        "type": "NodePort",
         "ports": [
             {
                 "port": 8888,

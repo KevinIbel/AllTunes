@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import querystring from "querystring";
 import "./style/landing.css";
 import Container from "@material-ui/core/Container";
@@ -8,10 +8,11 @@ var client_id = "aeedb64c42db49bf8413aab94c44637c"; // Your client id
 var scope =
   "streaming user-read-private user-read-email user-read-currently-playing user-read-playback-state user-modify-playback-state user-library-modify user-top-read user-follow-modify";
 
-const url = process.env.NODE_ENV == 'development' ? "http://localhost:3000" : "http://34.77.48.74:3000"
+  const url = process.env.NODE_ENV == 'development' ? "http://localhost:3000" : "http://35.246.33.106:3000"
 
 export default function Landing(props) {
-  function login(customer) {
+
+  function login(customer, roomKey) {
     var redirect_uri;
     if (customer === "host") {
       redirect_uri = `${url}/loading/`;
@@ -25,9 +26,18 @@ export default function Landing(props) {
         client_id: client_id,
         scope: scope,
         redirect_uri: redirect_uri,
+        state: roomKey ? roomKey : undefined
       });
     return redirect;
   }
+
+  useEffect(() => {
+    console.log(props)
+    if(props.roomKey){
+      const url = login('customer', props.roomKey)
+      window.location.assign(url)
+    }
+  }, [props])
 
   return (
     <Container fixed>
@@ -38,7 +48,7 @@ export default function Landing(props) {
         <a type="button" className="buttoncss" href={login("host")}>
           Host a room
         </a>
-        <a type="button" className="buttoncss" href={login("joiner")}>
+        <a type="button" className="buttoncss" href={login("customer")}>
           Join a room
         </a>
       </div>
