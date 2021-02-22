@@ -29,6 +29,7 @@ function initWebsocket(server) {
         if (nextSong != null) {
           sendToClients(socket, JSON.stringify({ type: "playSong", data: nextSong }));
         }
+        sendToClients(socket, JSON.stringify({ type: "queue", data: getQueue() }));
       } else if (message === "PreviousRequest") {
         const songSeek = setSongPos(0); // setSongPos returns queue[0]
         if (songSeek != null) {
@@ -40,9 +41,12 @@ function initWebsocket(server) {
       //  sendToClients(socket, JSON.stringify({ type: "pauseSong", data: null }));
       } else if (message === "PlayRequest") {
         const songSeek = getSongAtPos();
+        console.log("SONGSEEK: "+JSON.stringify(songSeek));
         if (songSeek != null) {
           sendToClients(socket, JSON.stringify({ type: "playSong", data: songSeek }));
+          setNextSongTimer(songSeek.duration_ms, songSeek.positionMS);
         }
+        sendToClients(socket, JSON.stringify({ type: "queue", data: getQueue() }));
       } else if (message === "SeekRequest") {
         //
       } else {
@@ -58,18 +62,13 @@ function initWebsocket(server) {
               }
             });
           } else if (contents.type === "PauseRequest") {
-            console.log("WS SERVER RECEIVED: "+JSON.stringify(contents));
             const updatedSongInfo = setSongPos(contents.data);
-            console.log("UPDATED SONG INFO "+JSON.stringify(updatedSongInfo));
-            console.log("UPDATED SONG INFO222222 "+JSON.stringify(contents.data));
             sendToClients(socket, JSON.stringify({ type: "pauseSong", data: updatedSongInfo }));
+            clearNextSongTimer();
             const lobbyQueue = getQueue();
             console.log("QUEUE AFTER UPDATE:"+JSON.stringify(lobbyQueue));
           } else if (contents.type === "SeekRequest") {
-            console.log("WS SERVER SEEKREQUEST: "+JSON.stringify(contents));
             const updatedSongInfo = setSongPos(contents.data);
-            console.log("UPDATED SONG INFO "+JSON.stringify(updatedSongInfo));
-            console.log("UPDATED SONG INFO222222 "+JSON.stringify(contents.data));
             sendToClients(socket, JSON.stringify({ type: "playSong", data: updatedSongInfo }));
             const lobbyQueue = getQueue();
             console.log("QUEUE AFTER UPDATE:"+JSON.stringify(lobbyQueue));
@@ -132,6 +131,14 @@ function setSongPos(progress_ms) {
 }
 
 function isQueueEmpty(){
+}
+
+function setNextSongTimer(duration_ms, positionMS) {
+  return getRoom().setNextSongTimer(duration_ms, positionMS);
+}
+
+function clearNextSongTimer() {
+  return getRoom().clearNextSongTimer();
 }
 
 

@@ -12,6 +12,8 @@ class Room {
     this.musicManager = new MusicManager();
     this.host = host;
     this.customers = [];
+    this.timer = null;
+    this.remainder = 1;
     new SpotifyClient(host).getFavTracks().then((hostTracks) => {
       const reducedTracks = this.musicManager.reduceUserTracks(hostTracks);
       this.musicManager.updateAllTracks(reducedTracks);
@@ -106,10 +108,6 @@ class Room {
     return this.musicManager.getNextSong();
   };
 
-  getSongAtStart() {
-    return this.musicManager.getSongAtStart();
-  };
-
   getSongAtPos() {
     return this.musicManager.getSongAtPos();
   };
@@ -125,8 +123,36 @@ class Room {
     const wsClient = new ws("ws://localhost:8888");
     wsClient.on("open", () => {
       const messageToSend = { message: "broadcast", ...data };
-      // console.log("BroadCasting" , messageToSend)
       wsClient.send(JSON.stringify(messageToSend));
+      wsClient.close(1000, "Tracks sent.");
+    });
+  }
+
+  decrementUpdate = () => {
+    this.remainder--;
+    if (this.remainder < 0) {
+      clearInterval(this.timer)
+      this.musicManager.getNextSong();
+      this.playNextSong()
+    }
+  }
+
+  setNextSongTimer = (duration_ms, positionMS) => {
+    if (this.musicManager.getQueue().length > 0) {
+      this.remainder = (duration_ms - positionMS)/1000;
+      console.log("duration"+ duration_ms);
+      this.timer = setInterval(this.decrementUpdate, 1000);
+    }
+  }
+
+  clearNextSongTimer = () => {
+    clearInterval(this.timer);
+  }
+
+  playNextSong() {
+    const wsClient = new ws("ws://localhost:8888");
+    wsClient.on("open", () => {
+      wsClient.send("PlayRequest");
       wsClient.close(1000, "Tracks sent.");
     });
   }

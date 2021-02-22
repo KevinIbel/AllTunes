@@ -78,6 +78,7 @@ export default function TrackTable(props) {
       newRow.name = currentValue.name;
       newRow.uri = currentValue.uri;
       newRow.trackCover = currentValue.trackCover;
+      newRow.duration_ms = currentValue.duration_ms;
       accumulator.push(newRow);
       return accumulator;
     }, []);

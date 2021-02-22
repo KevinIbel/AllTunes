@@ -2,6 +2,7 @@ class MusicManager {
   constructor() {
     this.allTracks = [];
     this.queue = [];
+    
   }
 
   /**
@@ -73,6 +74,7 @@ class MusicManager {
     return this.queue;
   };
 
+ 
   /**
    * @returns All the tracks in the play queue.
    */
@@ -81,13 +83,13 @@ class MusicManager {
   };
 
   simplifySongInfo = (song) => {
-    console.log("Let's simplify into" + song.songuri + "<URI POS>" + song.positionMS)
-    return { uri: song.songuri, positionMS: song.positionMS }
+    return { uri: song.songuri, positionMS: song.positionMS, duration_ms: song.duration_ms }
   }
 
+
   getNextSong = () => {
-    if (this.queue.length > 0) {
-      this.queue.shift();
+    if (this.queue.length > 1) {
+      this.queue.shift()
       return this.simplifySongInfo(this.queue[0]);
     }
     return null;
@@ -116,6 +118,10 @@ class MusicManager {
     }
     return null;
   };
+
+  
+
+
 }
 
 module.exports = MusicManager;
