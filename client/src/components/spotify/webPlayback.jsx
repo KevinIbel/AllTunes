@@ -115,13 +115,10 @@ function WebPlayback(props) {
 
   useEffect(() => {
     const init = async () => {
-      props.onPlayerLoading();
       await waitForSpotify();
       await setupWebPlaybackEvents();
       await setupWaitingForDevice();
-      props.onPlayerWaitingForDevice(device_data);
       await waitForDeviceToBeSelected();
-      props.onPlayerDeviceSelected();
     };
     init()
   }, []);
