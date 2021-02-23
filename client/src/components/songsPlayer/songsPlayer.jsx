@@ -4,7 +4,7 @@ import SongsControl from "./components/songsControl";
 import SongSlider from "./components/songSlider";
 import VolumeControl from "./components/volumeControl";
 import withPlayer from "../hoc/playerHoc";
-import {playTracks, pauseSong} from '../../dataHandler/store/actions/spotify';
+import {playTracks, pauseSong, nextSong} from '../../dataHandler/store/actions/spotify';
 import "./songsPlayer.css";
 
 
@@ -35,6 +35,8 @@ const SongsPlayer = props => {
         playTracks([contents.data.uri], contents.data.positionMS)     
           // Make user's spotify play a given song. (will have a Song URI and position 0 (if position isn't 0 by default))
           // This is because we keep track of what's next in our app, not in SPotify
+        } else if (contents.type === "skipLastSong") {
+          nextSong()
         } else if (contents.type === "previousSong") {
           playTracks([contents.data.uri], contents.data.positionMS)
 

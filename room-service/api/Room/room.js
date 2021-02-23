@@ -133,7 +133,8 @@ class Room {
     if (this.remainder < 0) {
       clearInterval(this.timer)
       this.musicManager.getNextSong();
-      this.playNextSong()
+      this.playNextSong();
+      this.notifyQueueUpdate();
     }
   }
 
@@ -153,9 +154,18 @@ class Room {
     const wsClient = new ws("ws://localhost:8888");
     wsClient.on("open", () => {
       wsClient.send("PlayRequest");
-      wsClient.close(1000, "Tracks sent.");
+      wsClient.close(1000, "PlayRequest sent.");
     });
   }
+
+  notifyQueueUpdate() {
+    const wsClient = new ws("ws://localhost:8888");
+    wsClient.on("open", () => {
+      wsClient.send("QueueUpdate");
+      wsClient.close(1000, "QueueUpdate sent.");
+    });
+  }
+
 }
 
 module.exports = Room;

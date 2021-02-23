@@ -28,10 +28,8 @@ export const setStatus = status => {
   };
 };
 
-export const nextSong = (uri) => {
-  axios.post('/me/player/next', {
-    uri: uri,
-  });
+export const nextSong = ms => {
+  axios.post(`/me/player/next`);
   return {
     type: 'CHANGE_SONG',
   };

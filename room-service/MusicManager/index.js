@@ -91,6 +91,8 @@ class MusicManager {
     if (this.queue.length > 1) {
       this.queue.shift()
       return this.simplifySongInfo(this.queue[0]);
+    } else if (this.queue.length === 1) {
+      this.queue.shift()
     }
     return null;
   };
