@@ -7,8 +7,6 @@ import withPlayer from "../hoc/playerHoc";
 import {playTracks, pauseSong, nextSong} from '../../dataHandler/store/actions/spotify';
 import "./songsPlayer.css";
 
-
-
 const SongsPlayer = props => {
   const [ws, setWs] = useState();
 
@@ -20,8 +18,7 @@ const SongsPlayer = props => {
     setWs(new WebSocket(wsUrl));
   }, [props.roomIp]);
 
-  // This useEffect should handle the different playback update messages.
-  // THe different message types are : skipSong, previousSong, pauseSong, playSong, seekSong
+  // Handle the different playback update messages.
   useEffect(() => {
     if (!ws) return;
     // Only update the playback when the message contains playback updates.
@@ -29,31 +26,15 @@ const SongsPlayer = props => {
       try {
         const contents = JSON.parse(message.data);
         console.log("SONG PLAYER:" + JSON.stringify(contents));
-        
-        // Here we should handle the different playback updates (eg. pause, play, skip)
-        if (contents.type === "skipSong") { // The data should come is as data: { uris: [one_song's_uri] } (no position_ms because it will always be 0 for skipSong)
-        playTracks([contents.data.uri], contents.data.positionMS)     
-          // Make user's spotify play a given song. (will have a Song URI and position 0 (if position isn't 0 by default))
-          // This is because we keep track of what's next in our app, not in SPotify
-        } else if (contents.type === "skipLastSong") {
-          nextSong()
+        if (contents.type === "skipLastSong") {
+          nextSong();
         } else if (contents.type === "previousSong") {
-          playTracks([contents.data.uri], contents.data.positionMS)
-
-          // Just set the current song to pos 0
+          playTracks([contents.data.uri], contents.data.positionMS);
         } else if (contents.type === "playSong") {
-        console.log("SONG PLAYER playSong msg type:" + JSON.stringify(contents.data));
-        playTracks([contents.data.uri], contents.data.positionMS)
-        // play the song
-
-      } //rest of msg type handling goes here
-        
-         else if (contents.type === "pauseSong") {
-
-          pauseSong()
-          // pause the song
-        } //rest of msg type handling goes here
-
+          playTracks([contents.data.uri], contents.data.positionMS);
+        } else if (contents.type === "pauseSong") {
+          pauseSong();
+        }
       } catch (e) {
         // If the message doesn't have playback updates, the playback isn't updated.
         console.log(e);
@@ -61,15 +42,12 @@ const SongsPlayer = props => {
     };
   }, [props.roomIp, ws]);
 
-  // We should use this useEffect to make it so that a user's Spotify playback is updated when the join/the WS gets set up.
-
   useEffect(() => {
     if (!ws) return;
     ws.onopen = () => {
       ws.send("PlaybackRequest");
     };
   }, [ws]);
-  toSeconds = ms => ms / 1000;
 
   function toSeconds(ms) {
     return ms / 1000;
@@ -80,10 +58,7 @@ const SongsPlayer = props => {
     ? toSeconds(props.currentSong.duration_ms)
     : 1;
 
-    
   return (
-    
- 
     <div className="player-container">
       {(props.currentSong.id) ? (
         <DetailSection
