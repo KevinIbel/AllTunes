@@ -25,7 +25,6 @@ const SongsPlayer = props => {
     ws.onmessage = (message) => {
       try {
         const contents = JSON.parse(message.data);
-        console.log("SONG PLAYER:" + JSON.stringify(contents));
         if (contents.type === "skipLastSong") {
           nextSong();
         } else if (contents.type === "previousSong") {

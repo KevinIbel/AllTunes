@@ -43,7 +43,6 @@ function withPlayer(WrappedComponent) {
 
     async  pauseSong(pause){
         const ms = await progressMS()
-        console.log("PLAYERHOC GET PROGRESSMS: " + ms);
         this.ws.send(JSON.stringify({ type: "PauseRequest", data: ms}))
       
     } ;
