@@ -5,7 +5,7 @@ import {progressMS} from '../../dataHandler/store/actions/spotify';
 import axios from 'axios';
 
 //Higher order component 'withPlayer' which returns a class component. Before these two were separate, now they're within one.
-//We connect the websocket, build the contols then send these controls as a wrapped component. 
+//We connect the websocket, build the controls then send these controls as a wrapped component. 
 //We export the redux connect hoc, and we need to compose both withplayer and connected the wrapped componenet.
 //this is then sent over to songsPlayer
 function withPlayer(WrappedComponent) {
