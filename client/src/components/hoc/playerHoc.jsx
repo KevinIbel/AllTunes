@@ -20,7 +20,10 @@ function withPlayer(WrappedComponent) {
     }
 
     shouldComponentUpdate(nextProps) {
-      return nextProps.playing || (this.props.playing && !nextProps.playing);
+      if(nextProps.playing || (this.props.playing && !nextProps.playing)){
+      return true;
+      }
+      return false;
     }
 
     componentDidUpdate(prevProps) {
