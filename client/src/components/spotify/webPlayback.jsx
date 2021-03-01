@@ -42,6 +42,7 @@ function WebPlayback(props) {
         if (webPlaybackInstance) {
           webPlaybackInstance.getCurrentState().then((state) => {
             if (state !== null) {
+              startStatePolling();
               clearInterval(deviceSelectedInterval);
               resolve(state);
             }
@@ -49,6 +50,12 @@ function WebPlayback(props) {
         }
       });
     });
+  }
+  function startStatePolling() {
+    statePollingInterval = setInterval(async () => {
+      let state = await webPlaybackInstance.getCurrentState();
+      await handleState(state);
+    }, props.playerRefreshRateMs || 1000);
   }
 
   function clearStatePolling() {

@@ -12,6 +12,8 @@ class Room {
     this.musicManager = new MusicManager();
     this.host = host;
     this.customers = [];
+    this.timer = null;
+    this.remainder = 1;
     new SpotifyClient(host).getFavTracks().then((hostTracks) => {
       const reducedTracks = this.musicManager.reduceUserTracks(hostTracks);
       this.musicManager.updateAllTracks(reducedTracks);
@@ -58,6 +60,8 @@ class Room {
     }
   };
 
+  
+
   /**
    * @returns {Object} All the music in the room
    */
@@ -84,15 +88,84 @@ class Room {
     return this.customers;
   }
 
+  /**
+   * @param {Object} track The track to add to the play queue.
+   * @returns All the tracks in the play queue after updating.
+   */
+  addToQueue = (track) => {
+    this.musicManager.addToQueue(track);
+    return this.musicManager.getQueue();
+  }
+
+  /**
+   * @returns All the tracks in the play queue.
+   */
+  getQueue() {
+    return this.musicManager.getQueue();
+  };
+
+  getNextSong() {
+    return this.musicManager.getNextSong();
+  };
+
+  getSongAtPos() {
+    return this.musicManager.getSongAtPos();
+  };
+
+  setSongPos = (progressMS) => {
+
+    const temp = this.musicManager.setSongPos(progressMS)
+    console.log("we are in room.jshello: " + JSON.stringify(temp));
+    return temp;
+  };
+
   broadcastChanges(data) {
     const wsClient = new ws("ws://localhost:8888");
     wsClient.on("open", () => {
       const messageToSend = { message: "broadcast", ...data };
-      // console.log("BroadCasting" , messageToSend)
       wsClient.send(JSON.stringify(messageToSend));
       wsClient.close(1000, "Tracks sent.");
     });
   }
+
+  decrementUpdate = () => {
+    this.remainder--;
+    if (this.remainder < 0) {
+      clearInterval(this.timer)
+      this.musicManager.getNextSong();
+      this.playNextSong();
+      this.notifyQueueUpdate();
+    }
+  }
+
+  setNextSongTimer = (duration_ms, positionMS) => {
+    if (this.musicManager.getQueue().length > 0) {
+      this.remainder = (duration_ms - positionMS)/1000;
+      console.log("duration"+ duration_ms);
+      this.timer = setInterval(this.decrementUpdate, 1000);
+    }
+  }
+
+  clearNextSongTimer = () => {
+    clearInterval(this.timer);
+  }
+
+  playNextSong() {
+    const wsClient = new ws("ws://localhost:8888");
+    wsClient.on("open", () => {
+      wsClient.send("PlayRequest");
+      wsClient.close(1000, "PlayRequest sent.");
+    });
+  }
+
+  notifyQueueUpdate() {
+    const wsClient = new ws("ws://localhost:8888");
+    wsClient.on("open", () => {
+      wsClient.send("QueueUpdate");
+      wsClient.close(1000, "QueueUpdate sent.");
+    });
+  }
+
 }
 
 module.exports = Room;

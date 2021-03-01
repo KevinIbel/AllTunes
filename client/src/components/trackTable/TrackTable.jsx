@@ -78,6 +78,7 @@ export default function TrackTable(props) {
       newRow.name = currentValue.name;
       newRow.uri = currentValue.uri;
       newRow.trackCover = currentValue.trackCover;
+      newRow.duration_ms = currentValue.duration_ms;
       accumulator.push(newRow);
       return accumulator;
     }, []);
@@ -108,10 +109,17 @@ export default function TrackTable(props) {
                       <TableCell padding="checkbox">
                         <div style={{ paddingRight: "10px" }}>
                           <QueueButton
+                            ws = {ws}
+                            name = {row.name }
                             songuri={row.uri}
+                            trackCover={row.trackCover}
+                            artists={row.artists}
                             roomKey={props.roomKey}
                             access_token={props.access_token}
+                            duration_ms={row.duration_ms}
+                            
                           ></QueueButton>
+                          
                         </div>
                       </TableCell>
                     ) : (

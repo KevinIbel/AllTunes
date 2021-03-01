@@ -1,5 +1,4 @@
 import React from "react";
-
 import withUiActions from "../../hoc/uiHoc";
 import withStatus from "../../hoc/statusHoc";
 import TrackCover from "../../trackCover/trackCover";

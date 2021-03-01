@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import {containsCurrentSong} from '../../../store/actions/libraryActions';
-//Pushing to master.
 
 export default function(ComposedComponent) {
   class StatusHoc extends Component {

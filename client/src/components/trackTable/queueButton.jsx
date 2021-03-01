@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 
@@ -15,22 +15,8 @@ export default function QueueButton(props) {
     setRoomKey(props.roomKey);
   }, [props.roomKey, roomKey]);
 
-  function queueUpSong() {
-    var config = {
-      method: "post",
-      url: `https://api.spotify.com/v1/me/player/queue/?uri=${songuri}`,
-      headers: {
-        Authorization: "Bearer " + access_token,
-      },
-    };
-
-    return axios(config)
-      .then(function (response) {
-        return response;
-      })
-      .catch(function (error) {
-        throw error;
-      });
+  function addToQueue(track) {
+    props.ws.send(JSON.stringify({ type: "addTrackToQueue", data: track }))
   }
 
   return (
@@ -38,10 +24,16 @@ export default function QueueButton(props) {
       color="secondary"
       variant="contained"
       onClick={() => {
-        queueUpSong();
+        addToQueue({
+          name: props.name,
+          songuri: props.songuri,
+          trackCover: props.trackCover,
+          artists: props.artists,
+          duration_ms: props.duration_ms
+        });
       }}
-    >
-      Queue
+    > 
+    Queue
     </Button>
   );
 }
