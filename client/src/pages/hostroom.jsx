@@ -55,14 +55,16 @@ export default function Hostroom(props) {
 
           </div>
           <div class="switcher">
-            <button style={{background:"rgb(40, 40, 40)",borderRadius: "10px",border: "none",padding: "6px 12px"}}>
-            <QueueMusicIcon style={{ marginLeft: '-1rem' }}  fontSize={"large"}></QueueMusicIcon>
+            <button style={{background:"rgb(40, 40, 40)",border: "none", outlineWidth: 0}}>
+            <QueueMusicIcon   fontSize={"large"}></QueueMusicIcon>
             </button>
-            <button style={{background:"rgb(40, 40, 40)",borderRadius: "10px",border: "none",padding: "6px 12px"}}>
-            <AudiotrackIcon style={{ marginLeft: '5rem' }} fontSize={"large"}></AudiotrackIcon>
+            <button style={{background:"rgb(40, 40, 40)",border: "none", outlineWidth: 0}}>
+            <div style={{ marginLeft: '8rem' }}></div>
+            <AudiotrackIcon  fontSize={"large"}></AudiotrackIcon>
             </button>
-            <button style={{background:"rgb(40, 40, 40)",borderRadius: "10px",border: "none",padding: "6px 12px"}}>
-            <GroupIcon style={{ marginLeft: '5rem' }} fontSize={"large"}></GroupIcon>
+            <button style={{background:"rgb(40, 40, 40)",border: "none", outlineWidth: 0}}>
+            <div style={{ marginLeft: '2.5rem' }}></div>
+            <GroupIcon  fontSize={"large"}></GroupIcon>
             </button>
           </div>
           <div class="playback">
