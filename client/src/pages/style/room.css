@@ -41,6 +41,8 @@ div.hostedBy {
 body {
   color: #000000;
   background-color: #000000;
+  margin: 0px;
+  padding: 0px;
 }
 
 div.titleText {
@@ -94,4 +96,45 @@ div.queue {
 
 ul {
   list-style-type: none;
+}
+
+div.logo {
+  position:absolute;
+  height: 15%;
+  overflow: hidden;
+  margin: 0;
+  width: 100%; 
+  margin: 0px;
+  padding: 0px;
+}
+
+div.mobileMain {
+  width: 100%;
+}
+
+img.ourLogo {
+  text-align: center;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 60%;
+  height: 60%;
+}
+
+
+div.switcher {
+  top: 100%;
+  bottom:20%;
+  width: 100%; 
+  background-color: rgb(40, 40, 40);
+  position: absolute;
+  top:85%;
+  right:0;
+  bottom:auto;
+  left:0;
+  text-align: center;
+  display: block;
+  justify-content: center;
+  align-items: center;
 }
