@@ -28,30 +28,44 @@ export const setStatus = status => {
   };
 };
 
-export const nextSong = () => {
-  axios.post('/me/player/next');
+export const nextSong = ms => {
+  axios.post(`/me/player/next`);
   return {
-    type: 'CHANGE_SONG'
+    type: 'CHANGE_SONG',
   };
 };
 
-export const previousSong = () => {
-  axios.post('/me/player/previous');
+export async function progressMS() {
+ 
+  try {
+    const response = await axios.get(`/me/player/currently-playing?market=GB`);
+  return response.data.progress_ms;
+  }catch (error) {
+    return error;
+  }  
+
+};
+  
+
+export const previousSong = ms => {
+  axios.put(`/me/player/seek?position_ms=${ms}`);
   return {
-    type: 'CHANGE_SONG'
+    type: 'CHANGE_SONG',
+
+
   };
 };
 
-export const playSong = (context = false, offset) => {
-  if (context && offset) {
+export const playSong = (uri, position_ms) => {
+  if (uri && position_ms) {
     axios.put('/me/player/play', {
-      context_uri: context,
-      offset: { position: offset }
+      uri: uri,
+      position_ms : position_ms
     });
   } else {
-    if (context) {
+    if (uri) {
       axios.put('/me/player/play', {
-        context_uri: context
+        uri: uri
       });
     } else {
       axios.put('/me/player/play');
@@ -62,10 +76,10 @@ export const playSong = (context = false, offset) => {
   };
 };
 //test gitlabbug
-export const playTracks = (tracks, offset) => {
+export const playTracks = (uri, position_ms) => {
   axios.put('/me/player/play', {
-    uris: tracks,
-    offset: { position: offset }
+    uris: uri,
+    position_ms: position_ms
   });
   return {
     type: 'PLAY_STATE'
@@ -75,7 +89,7 @@ export const playTracks = (tracks, offset) => {
 export const pauseSong = () => {
   axios.put('/me/player/pause');
   return {
-    type: 'PAUSE_STATE'
+    type: 'PAUSE_STATE',
   };
 };
 

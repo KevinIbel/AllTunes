@@ -1,0 +1,48 @@
+title Time Sequance Diagram
+
+
+entryspacing 0.9
+Client(Host)->Client(Host): clicks host room
+
+Client(Host)->Spotify:  Login
+
+Spotify->Client(Host): Token
+
+
+Client(Host)-->Client(Host): waitOnLoadingPage
+
+Client(Host)->RoomService: CreateRoom
+
+
+RoomService->Spotify: GetFavTracks
+
+Spotify->RoomService: FavTracks
+
+RoomService->Client(Host): RoomKey + TrackList
+
+Client(Host)-->Client(Host): Listen For updates to Tracklist
+
+Client(Host)-->Spotify: Queue Songs from Tracklist
+
+
+
+Client(Join)->Client(Join): clicks Join Room
+
+Client(Join)->Spotify: Login
+
+Spotify->Client(Join): Token
+
+Client(Join)->Client(Join):Goes to page to enter roomKey
+
+Client(Join)->Client(Join): Goes to userRoom
+
+Client(Join)->RoomService: addCustomer
+
+RoomService->Spotify: GetFavTracks
+
+Spotify->RoomService: FavTracks
+
+RoomService->Client(Join):Tracklist
+
+RoomService->Client(Host):Tracklist
+

@@ -1,19 +1,23 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
+import React, { useEffect } from "react";
 import querystring from "querystring";
 import "./style/landing.css";
+import Container from "@material-ui/core/Container";
+//Pushing to master.
 
 var client_id = "aeedb64c42db49bf8413aab94c44637c"; // Your client id
 var scope =
-  "streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-modify user-top-read";
+  "streaming user-read-private user-read-email user-read-currently-playing user-read-playback-state user-modify-playback-state user-library-modify user-top-read user-follow-modify";
 
-class Landing extends React.Component {
-  login(customer) {
+  const url = process.env.NODE_ENV == 'development' ? "http://localhost:3000" : "http://35.246.33.106:3000"
+
+export default function Landing(props) {
+
+  function login(customer, roomKey) {
     var redirect_uri;
     if (customer === "host") {
-      redirect_uri = "http://localhost:3000/loading/";
+      redirect_uri = `${url}/loading/`;
     } else {
-      redirect_uri = "http://localhost:3000/userloading/";
+      redirect_uri = `${url}/userloading/`;
     }
     var redirect =
       "https://accounts.spotify.com/authorize?" +
@@ -22,48 +26,32 @@ class Landing extends React.Component {
         client_id: client_id,
         scope: scope,
         redirect_uri: redirect_uri,
+        state: roomKey ? roomKey : undefined
       });
     return redirect;
   }
 
-  render() {
-    return (
-      <section>
-        <div id="titleText" title="titleText" class="titleText">
-          AllTunes
-        </div>
-        <br></br>
-        <br></br>
-        <div id="bodyText" title="bodyText" class="bodyText">
-          Please choose whether you will like to create a new room as a DJ, or
-          join a room as a Listener.
-        </div>
-        <br></br>
-        <br></br>
-        <div class="button_cont" align="center">
-          <a
-            type="button"
-            class="buttoncss"
-            rel="nofollow noopener"
-            href={this.login("host")}
-          >
-            Host a room
-          </a>
-        </div>
-        <br></br>
-        <div class="button_cont" align="center">
-          <a
-            type="button"
-            class="buttoncss"
-            rel="nofollow noopener"
-            href={this.login("joiner")}
-          >
-            Join a room
-          </a>
-        </div>
-      </section>
-    );
-  }
-}
+  useEffect(() => {
+    console.log(props)
+    if(props.roomKey){
+      const url = login('customer', props.roomKey)
+      window.location.assign(url)
+    }
+  }, [props])
 
-export default withRouter(Landing);
+  return (
+    <Container fixed>
+      <div id="titleText" title="titleText" className="titleText">
+        AllTunes
+      </div>
+      <div className="button_cont">
+        <a type="button" className="buttoncss" href={login("host")}>
+          Host a room
+        </a>
+        <a type="button" className="buttoncss" href={login("customer")}>
+          Join a room
+        </a>
+      </div>
+    </Container>
+  );
+}

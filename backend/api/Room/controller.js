@@ -1,43 +1,51 @@
+const crypto = require("crypto");
 const {
-  getPodData,
   createPod,
+  createService,
   deletePod,
-  isPodReady,
-  getPodIP,
+  isServiceReady,
+  getServiceNodePort,
 } = require("../clients/kubernates-client/index");
 
-const {
-  initRoom,
-} = require("../clients/room-client/index");
-
+const { initRoom } = require("../clients/room-client/index");
 class RoomController {
   constructor() {
     this.rooms = {};
   }
 
+  /**
+   * This function creates a new instance of room-service within the Kubernates cluster.
+   * @param {Object} host.username The hosts username
+   * @param {String} host.token The customers spotify access token
+   */
   async createRoom(host) {
     try {
-      const pod = await createPod(); //create new pod in kubernates cluster
-      console.log(pod)
-      var isPodRunning = false;
-      while (!isPodRunning) {
-        //wait until pod is ready
-        isPodRunning = await isPodReady(pod.metadata.name);
-      }
-      await wait(5000);
-      const podIP = (await getPodIP(pod.metadata.name)) + ":8888"; //get ip address of pod
-      const key = await initRoom(podIP, host); //initalise the room with the hostname
-      this.rooms[key] = await getPodData(pod.metadata.name);
-      return { status: 201, data: key }; //return room key
+      const roomKey = crypto
+        .randomBytes(20)
+        .toString("hex")
+        .substring(0, 10)
+        .toUpperCase();
+      await createPod(roomKey); //create new pod in kubernates cluster
+      await createService(roomKey); //create new service for pod
+      await isServiceReady(roomKey); //wait until the service is ready
+      const serviceIp = await getServiceNodePort(roomKey); //get nodePort of Service
+      await initRoom(serviceIp, host); //initialize the room
+      this.rooms[roomKey] = serviceIp;
+      console.log("new room created", {
+        roomKey: roomKey,
+        serviceIp: serviceIp,
+      });
+      return { status: 201, data: { roomKey, roomIp: serviceIp } }; //return room key
     } catch (error) {
-      return { status: 500, data: error.stack };
+      console.error(error);
+      return { status: 500, data: error };
     }
   }
 
   async deleteRoom(roomKey) {
     try {
       const pod = this.rooms[roomKey];
-      const data = await deletePod(this.rooms[roomKey].metadata.name);
+      await deletePod(this.rooms[roomKey].metadata.name);
       delete this.rooms[roomKey];
       return { status: 200, data: pod };
     } catch (error) {
@@ -56,10 +64,6 @@ class RoomController {
       return { status: 400, data: "room does not exist" };
     }
   }
-}
-
-function wait(milliseconds) {
-  return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
 module.exports = RoomController;

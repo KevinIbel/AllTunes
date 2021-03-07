@@ -21,3 +21,20 @@ export const containsCurrentSong = id => {
 };
 
 
+      // Make an API call to Spotify here
+      const songProgressSuccess = progress_ms => {
+        return {
+          type: 'current_progress_ms',
+          progress_ms: progress_ms
+        };
+      };
+      
+      export const progressMS = progress_ms => {
+    
+       
+        axios.get(`/me/player/currently-playing`);
+        return {
+          progress_ms: progress_ms
+        
+          };
+      };

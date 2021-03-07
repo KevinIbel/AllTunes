@@ -1,0 +1,27 @@
+
+.player-container {
+  .details-section,
+  .volume-control-container {
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    height: 56px;
+    width: 200px;
+    line-height: 14px;
+    cursor: default;
+    text-overflow: ellipsis;
+  }
+
+  .details-section {
+    left: 20px;
+    top: 7px;
+    @media (max-width: 700px) {
+      width: 150px;
+    }
+    @media (max-width: 550px) {
+      width: 100px;
+    }
+  }
+
+  
+}

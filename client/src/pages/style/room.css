@@ -1,84 +1,97 @@
-* {
-    box-sizing: border-box;
-}
+/*  pushing to master */
 
 div.main {
-    width: 75%;
-    float: left;
+  width: 100%;
+  float: left;
 }
 
 div.menu {
-    width: 25%;
-    float: right;
-    padding: 15px;
+  width: 25%;
+  float: right;
+  padding: 15px;
+}
+
+div.qr {
+  position: fixed;
+  bottom: 7%;
+  left: 0;
+  font-family: Trebuchet MS, Helvetica, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: underline;
+  color: white;
 }
 
 div.totalUsers {
-    font-family:Trebuchet MS, Helvetica, sans-serif;
-    font-size:20px;
-    text-align: center;
-    text-decoration: underline;
-    color: white;
+  font-family: Trebuchet MS, Helvetica, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: underline;
+  color: white;
 }
 
 div.hostedBy {
-    font-family:Trebuchet MS, Helvetica, sans-serif;
-    font-size:20px;
-    text-align: center;
-    text-decoration: underline;
-    color: white;
+  font-family: Trebuchet MS, Helvetica, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: underline;
+  color: white;
 }
 
 body {
-	color:#000000;
-    background-color:#000000;
+  color: #000000;
+  background-color: #000000;
 }
 
 div.titleText {
-    font-family:Trebuchet MS, Helvetica, sans-serif;
-    font-size:50px;
-    text-align: center;
-    color: white;
+  font-family: Trebuchet MS, Helvetica, sans-serif;
+  font-size: 50px;
+  text-align: center;
+  color: white;
 }
 
 div.spotifyTrackInfo {
-    font-family:Trebuchet MS, Helvetica, sans-serif;
-    font-size:20px;
-    text-align: center;
-    color: white;
+  font-family: Trebuchet MS, Helvetica, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  color: white;
 }
 
 img.spotifyArt {
-    border-radius: 8px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 img.editName {
-    border-radius: 8px;
-    display: block;
-    display: inline-block;
+  border-radius: 8px;
+  display: block;
+  display: inline-block;
 }
 
-div.divider
-{
-	content: "";
-	position: absolute;
-	left: 5%;
-	right: 5%;
-	width: 60%;
-	height: 1px;
-	background-image: linear-gradient(to right, transparent, rgb(255, 255, 255), transparent);
+div.divider {
+  content: "";
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  width: 60%;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    rgb(255, 255, 255),
+    transparent
+  );
 }
 
 div.queue {
-    font-family:Trebuchet MS, Helvetica, sans-serif;
-    font-size:20px;
-    text-align: center;
-    color: white;
+  font-family: Trebuchet MS, Helvetica, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  color: white;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }

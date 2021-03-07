@@ -1,76 +1,95 @@
-import React, { Component } from "react";
-import { addCustomer } from "../dataHandler/clients/backend";
+import React, { useState, useEffect } from "react";
+import { addCustomer, getRooms } from "../dataHandler/clients/backend";
 import { Redirect } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "./style/userLoading.css";
 
-export default class UserLoading extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isAddedToRoom: false,
-    };
-  }
+export default function UserLoading(props) {
+  const [isAddedToRoom, setAddedToRoom] = useState(false);
+  const [rooms, setRooms] = useState();
+  const [roomKey, setRoomKey] = useState();
 
-  getHashParams() {
-    var hashParams = {};
-    var e,
-      r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    e = r.exec(q);
-    while (e) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-      e = r.exec(q);
+  useEffect(() => {
+    if (props.roomKey) {
+      joinWithRoomKey();
     }
-    return hashParams;
+  }, [props]);
+
+  useEffect(() => {
+    getRoomKeys();
+  }, rooms);
+
+  useEffect(() => {
+  }, [isAddedToRoom]);
+
+  async function joinWithRoomKey() {
+    await getRoomKeys();
+    await addCustomerToRoom();
   }
 
-  async addCustomerToRoom() {
-    const params = this.getHashParams();
-    const token = params.access_token;
-    this.setState({ ...this.state, access_token: token });
-    const customer = {
-      token: token,
-      username: "james",
-    };
+  async function getRoomKeys() {
+    if (process.env.NODE_ENV == "development") {
+      const rooms = {};
+      if (props.roomKey) {
+        rooms[props.roomKey] = "http://localhost:8888";
+      } else {
+        rooms["00000000"] = "http://localhost:8888";
+      }
+      setRooms(rooms);
+    } else {
+      setRooms(await getRooms());
+    }
+  }
+
+  async function addCustomerToRoom() {
     try {
-      await addCustomer(customer);
-      this.setState({ ...this.state, isAddedToRoom: true });
+      if (props.access_token && (props.roomKey || process.env.NODE_ENV == "development") && props.display_name) {
+        await addCustomer(
+          {
+            token: props.access_token,
+            username: props.display_name,
+            userid: props.id,
+          },
+          rooms[props.roomKey ? props.roomKey : roomKey]
+        );
+        setAddedToRoom(true);
+        props.setRoomIp(rooms[props.roomKey]);
+      } else {
+        console.error("Missing key User Display name or roomKey or accessToken");
+      }
     } catch (error) {
       console.error(error);
     }
   }
 
-  render() {
-    if (this.state.isAddedToRoom) {
-      return (
-        <Redirect
-          to={`/userroom/#roomKey=${this.state.roomKey}&access_token=${this.state.access_token}`}
-        ></Redirect>
-      );
-    } else {
-      return (
-        <form noValidate id={"form"}>
-          <TextField
-            onChange={(event) => {
-              this.setState({ ...this.state, roomKey: event.target.value });
-            }}
-            id="standard-basic"
-            label="Room Key"
-            color="primary"
-          />
-          <Button
-            onClick={() => {
-              this.addCustomerToRoom();
-            }}
-            variant="contained"
-            color="primary"
-          >
-            Join Room
-          </Button>
-        </form>
-      );
-    }
+  if (isAddedToRoom) {
+    return (
+      <Redirect
+        to={`/userroom/#roomKey=${props.roomKey}&access_token=${props.access_token}`}
+      ></Redirect>
+    );
+  } else {
+    return (
+      <form noValidate id={"form"}>
+        <TextField
+          onChange={(event) => {
+            setRoomKey(event.target.value);
+          }}
+          id="standard-basic"
+          label="Room Key"
+          color="primary"
+        />
+        <Button
+          onClick={() => {
+            addCustomerToRoom();
+          }}
+          variant="contained"
+          color="primary"
+        >
+          Join Room
+        </Button>
+      </form>
+    );
   }
 }

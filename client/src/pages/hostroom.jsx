@@ -1,79 +1,39 @@
-import React from "react";
-import { connect } from "react-redux";
-import { setToken, fetchUser } from "../dataHandler/store/actions/spotify";
-import CurrPlaying from "../containers/currPlaying/currPlaying";
-import MainSection from "../containers/mainSection/mainSection";
+import React, {useState } from "react";
+import { setToken } from "../dataHandler/store/actions/spotify";
+import Footer from "../components/footer/footer";
+import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
 import WebPlaybackReact from "../components/spotify/webPlayback";
 import TrackTable from "../components/trackTable/TrackTable";
+import QueueSection from "../components/lobbyTopTracks/queueSection";
+import "./style/hostroom.css";
+import QrModal from "../components/modal/qrmodal";
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      playerLoaded: false,
-      access_token: null,
-    };
-  }
+export default function Hostroom(props) {
+  useState(() => {
+    setToken(props.access_token);
+  }, props.access_token);
 
-  componentDidMount() {
-    const { roomKey, access_token } = this.getHashParams();
-    this.setState({ ...this.state, access_token, roomKey });
-    this.props.setToken(access_token);
-  }
+  return (
+    <div class="main">
+      {props.access_token ? (
+        <WebPlaybackReact access_token={props.access_token}>
+          <Footer
+            host={true}
+            roomIp={props.roomIp}
+          ></Footer>
+        </WebPlaybackReact>
+      ) : null}
+      <TrackTable
+        roomIp={props.roomIp}
+        host={true}
+        access_token={props.access_token}
+        roomKey={props.roomKey}
+      ></TrackTable>
+      <LobbyUsers  roomIp={props.roomIp}></LobbyUsers>
+      <QueueSection host={true} roomIp={props.roomIp}></QueueSection>
+      <QrModal roomKey={props.roomKey}></QrModal>
 
-  getHashParams() {
-    var hashParams = {};
-    var e,
-      r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    e = r.exec(q);
-    while (e) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-      e = r.exec(q);
-    }
-    return hashParams;
-  }
+    </div>
 
-  render() {
-    let webPlaybackSdkProps = {
-      playerName: "Alltunes App",
-      playerRefreshRateMs: 1000,
-      playerAutoConnect: true,
-      onPlayerRequestAccessToken: () => this.state.access_token,
-      onPlayerLoading: () => {},
-      startStatePolling: () => {},
-      onPlayerWaitingForDevice: () => {
-        this.setState({ playerLoaded: true });
-      },
-      onPlayerError: (e) => {
-        console.log(e);
-      },
-      onPlayerDeviceSelected: () => {
-        this.setState({ playerLoaded: true });
-      },
-    };
-    return (
-      <div class="main">
-          <WebPlaybackReact {...webPlaybackSdkProps}>
-            <CurrPlaying />
-            <MainSection />
-          </WebPlaybackReact>
-          <br></br>
-          <TrackTable host={true}></TrackTable>
-      </div>
-    );
-  }
+  );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    token: state.sessionReducer.token,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  setToken: (token) => dispatch(setToken(token)),
-  fetchUser: () => dispatch(fetchUser()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
