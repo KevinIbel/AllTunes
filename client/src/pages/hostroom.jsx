@@ -8,19 +8,29 @@ import QueueSection from "../components/lobbyTopTracks/queueSection";
 import "./style/hostroom.css";
 import "./style/room.css";
 import QrModal from "../components/modal/qrmodal";
+import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import {
   BrowserView,
   MobileView
 } from "react-device-detect";
 import OurLogo from './style/ourlogo.png';
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';
-import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import GroupIcon from '@material-ui/icons/Group';
+import TrackListModal from "../components/modal/trackListModal";
 
 export default function Hostroom(props) {
   useState(() => {
     setToken(props.access_token);
   }, props.access_token);
+
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+
 
 
   return (
@@ -51,20 +61,23 @@ export default function Hostroom(props) {
           <div class="logo">
             <img class="ourLogo" src={OurLogo} alt="All Tunes Logo" />
           </div>
-          <div class="modal">
-
+          <div class="modal">            <div class="tl">
+              {open ? 
+                <h1>hi</h1> : null}
+            </div>
           </div>
           <div class="switcher">
-            <button style={{background:"rgb(40, 40, 40)",border: "none", outlineWidth: 0}}>
-            <QueueMusicIcon   fontSize={"large"}></QueueMusicIcon>
+            <button style={{ background: "rgb(40, 40, 40)", border: "none", outlineWidth: 0 }}>
+              <div style={{ marginLeft: '4.5rem' }}></div>
+              <QueueMusicIcon fontSize={"large"}></QueueMusicIcon>
             </button>
-            <button style={{background:"rgb(40, 40, 40)",border: "none", outlineWidth: 0}}>
-            <div style={{ marginLeft: '8rem' }}></div>
-            <AudiotrackIcon  fontSize={"large"}></AudiotrackIcon>
+            <button style={{ background: "rgb(40, 40, 40)", border: "none", outlineWidth: 0 }}>
+              <div style={{ marginLeft: '5.5rem' }}></div>
+              <GroupIcon fontSize={"large"}></GroupIcon>
             </button>
-            <button style={{background:"rgb(40, 40, 40)",border: "none", outlineWidth: 0}}>
-            <div style={{ marginLeft: '2.5rem' }}></div>
-            <GroupIcon  fontSize={"large"}></GroupIcon>
+            <button onClick={handleOpen} style={{ background: "rgb(40, 40, 40)", border: "none" }}>
+              <div style={{ marginLeft: '4rem' }}></div>
+              <AudiotrackIcon fontSize={"large"}></AudiotrackIcon>
             </button>
           </div>
           <div class="playback">
