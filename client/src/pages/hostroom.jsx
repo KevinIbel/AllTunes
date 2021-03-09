@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { setToken } from "../dataHandler/store/actions/spotify";
 import Footer from "../components/footer/footer";
 import LobbyUsers from "../components/LobbyUsers/LobbyUsers";
-import WebPlaybackReact from "../components/spotify/webPlayback";
 import TrackTable from "../components/trackTable/TrackTable";
 import QueueSection from "../components/lobbyTopTracks/queueSection";
+import WebPlaybackReact from "../components/spotify/webPlayback";
 import "./style/hostroom.css";
 import "./style/room.css";
 import QrModal from "../components/modal/qrmodal";
@@ -16,7 +16,6 @@ import {
 import OurLogo from './style/ourlogo.png';
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';
 import GroupIcon from '@material-ui/icons/Group';
-import TrackListModal from "../components/modal/trackListModal";
 
 export default function Hostroom(props) {
   useState(() => {
@@ -60,7 +59,13 @@ export default function Hostroom(props) {
           </div>
           <div class="modal"> <div class="tl">
               {open ? 
-                <TrackTable></TrackTable>: null}
+                <TrackTable
+                roomIp={props.roomIp}
+                host={true}
+                access_token={props.access_token}
+                roomKey={props.roomKey}
+              ></TrackTable>
+        : null}
             </div>
           </div>
           <div class="switcher">
