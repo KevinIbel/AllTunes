@@ -61,9 +61,9 @@ export default function Hostroom(props) {
           <div class="logo">
             <img class="ourLogo" src={OurLogo} alt="All Tunes Logo" />
           </div>
-          <div class="modal">            <div class="tl">
+          <div class="modal"> <div class="tl">
               {open ? 
-                <h1>hi</h1> : null}
+                <TrackTable></TrackTable>: null}
             </div>
           </div>
           <div class="switcher">

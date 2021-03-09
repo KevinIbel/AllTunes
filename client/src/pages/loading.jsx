@@ -32,7 +32,7 @@ export default function Loading(props) {
       to={`/hostroom/#roomKey=${roomKey}&access_token=${props.access_token}`}
     ></Redirect>
   ) : (
-    <div class={"loadingText"}>
+    <div className={"loadingText"}>
       The page is loading, you will be redirected shortly!
     </div>
   );
