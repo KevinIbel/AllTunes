@@ -30,9 +30,6 @@ export default function Hostroom(props) {
     setOpen(true);
   };
 
-
-
-
   return (
     <div>
       <BrowserView>

@@ -128,7 +128,7 @@ div.switcher {
   bottom:20%;
   width: 100%; 
   background-color: rgb(40, 40, 40);
-  position: absolute;
+  position: fixed;
   top:86%;
   right:0;
   bottom:auto;
