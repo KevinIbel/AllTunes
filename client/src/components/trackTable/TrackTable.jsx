@@ -12,14 +12,16 @@ import TrackCover from "../trackCover/trackCover";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    display: 'flex',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'hide',
   },
   paper: {
     width: "100%",
     marginBottom: theme.spacing(2),
   },
   table: {
-    minWidth: 750,
+    minWidth: 350,
   },
   visuallyHidden: {
     border: 0,
@@ -31,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: 20,
     width: 1,
+    
   },
+
 }));
 
 export default function TrackTable(props) {

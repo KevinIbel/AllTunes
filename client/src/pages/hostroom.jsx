@@ -23,11 +23,10 @@ export default function Hostroom(props) {
   }, props.access_token);
 
 
-  const [open, setOpen] = useState(false);
+  const [currentModal, openModal] = useState(null);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+
+
 
   return (
     <div>
@@ -57,27 +56,44 @@ export default function Hostroom(props) {
           <div class="logo">
             <img class="ourLogo" src={OurLogo} alt="All Tunes Logo" />
           </div>
-          <div class="modal"> <div class="tl">
-              {open ? 
-                <TrackTable
-                roomIp={props.roomIp}
-                host={true}
-                access_token={props.access_token}
-                roomKey={props.roomKey}
-              ></TrackTable>
-        : null}
+          <div className="modal">
+            {currentModal === 'roomQueueList' ? 
+              <TrackTable
+              roomIp={props.roomIp}
+              host={true}
+              access_token={props.access_token}
+              roomKey={props.roomKey}
+              >  
+              </TrackTable>
+            : null}
             </div>
-          </div>
+            <div className="roomModal">
+              {currentModal === 'roomList' ?
+              <LobbyUsers 
+              roomIp={props.roomIp}>
+              </LobbyUsers>
+              : null}
+            </div>
+            <div className="queueList"> 
+            {currentModal === 'queueList' ?
+              <QueueSection 
+                host={true} 
+                roomIp={props.roomIp}>
+                </QueueSection>
+            : null}
+            </div>
+          
           <div class="switcher">
-            <button style={{ background: "rgb(40, 40, 40)", border: "none", outlineWidth: 0 }}>
+            <button
+             onClick={() => openModal('queueList')} style={{ background: "rgb(40, 40, 40)", border: "none"}}>
               <div style={{ marginLeft: '4.5rem' }}></div>
               <QueueMusicIcon fontSize={"large"}></QueueMusicIcon>
             </button>
-            <button style={{ background: "rgb(40, 40, 40)", border: "none", outlineWidth: 0 }}>
+            <button  onClick={() => openModal('roomList')} style={{ background: "rgb(40, 40, 40)", border: "none"}}>
               <div style={{ marginLeft: '5.5rem' }}></div>
               <GroupIcon fontSize={"large"}></GroupIcon>
             </button>
-            <button onClick={handleOpen} style={{ background: "rgb(40, 40, 40)", border: "none" }}>
+            <button onClick={() => openModal('roomQueueList')} style={{ background: "rgb(40, 40, 40)", border: "none" }}>
               <div style={{ marginLeft: '4rem' }}></div>
               <AudiotrackIcon fontSize={"large"}></AudiotrackIcon>
             </button>
