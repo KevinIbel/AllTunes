@@ -29,7 +29,8 @@
     "socket.io": "^3.0.4",
     "socket.io-client": "^3.0.5",
     "spotify-web-api-js": "^1.5.1",
-    "spotify-web-api-node": "^4.0.0"
+    "spotify-web-api-node": "^4.0.0",
+    "styled-components": "^5.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

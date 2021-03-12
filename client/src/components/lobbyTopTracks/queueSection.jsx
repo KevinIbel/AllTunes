@@ -8,13 +8,14 @@ const style = {
     height: '100%',
     top: '0px',
     left: '0%',
-    width:'12%',
+    width:'auto',
     position: 'fixed',
     color: 'rgb(30 215 96)',
     textAlign: 'center',
-    background: 'rgb(40, 40, 40)'
- };
+    background: 'rgb(40, 40, 40)',
+    overflowY:'scroll',
 
+ };
  
  export default function LobbyQueue(props) {
   const [queueList, setQueueList] = useState([]);
@@ -56,7 +57,7 @@ const style = {
     <Container style={style}>
       
         <h2 className={"title"}>Lobby Queue</h2>
-        <Table >
+        <Table>
         
         {queueList.map((track) => {
           return (
@@ -65,9 +66,10 @@ const style = {
                <img
                         class="cover"
                         alt="cover"
-                        style={{ width: "50px", height: "50px" }}
+                        style={{ width: "50px", height: "50px", objectFit: "contain" }}
                         src={track.trackCover} 
-                      />}</TableCell>
+                />}
+                </TableCell>
               <TableCell style={{padding: '2px'}} >{track.name}, {track.artists}</TableCell>
              
             </TableRow>

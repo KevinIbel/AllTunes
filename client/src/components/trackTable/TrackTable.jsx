@@ -17,11 +17,14 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'hide',
   },
   paper: {
+    marginTop: theme.spacing(3),
     width: "100%",
-    marginBottom: theme.spacing(2),
+    overflowX: "auto",
+    marginBottom: theme.spacing(15),
+    margin: "auto"
   },
   table: {
-    minWidth: 350,
+    minWidth: 100,
   },
   visuallyHidden: {
     border: 0,
@@ -89,7 +92,7 @@ export default function TrackTable(props) {
   }
 
   return (
-    <Container>
+    <Container fixed>
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -101,17 +104,17 @@ export default function TrackTable(props) {
               {rows.map((row, index) => {
                 return (
                   <TableRow tabIndex={-1} key={row.name}>
-                    <TableCell align="left" padding={"none"}>
+                    <TableCell  align="left" padding={"none"}>
                       <TrackCover
                         trackCover={row.trackCover}
-                        size={"75px"}
+                        size={"45px"}
                       ></TrackCover>
                     </TableCell>
-                    <TableCell align="left">{row.artists}</TableCell>
-                    <TableCell align="left">{row.name}</TableCell>
+                    <TableCell style={{padding: '0px'}} align="left">{row.artists}</TableCell>
+                    <TableCell style={{padding: '0px'}} align="left">{row.name}</TableCell>
                     {props.host ? (
-                      <TableCell padding="checkbox">
-                        <div style={{ paddingRight: "10px" }}>
+                      <TableCell>
+                        <div>
                           <QueueButton
                             ws = {ws}
                             name = {row.name }

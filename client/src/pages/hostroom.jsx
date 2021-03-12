@@ -22,12 +22,11 @@ export default function Hostroom(props) {
     setToken(props.access_token);
   }, props.access_token);
 
-
   const [currentModal, openModal] = useState(null);
-
-
-
-
+  const [appState, changeChange] = useState({
+      activeObject: null,
+      objects: [{id: 1}]
+  });
   return (
     <div>
       <BrowserView>
@@ -74,7 +73,7 @@ export default function Hostroom(props) {
               </LobbyUsers>
               : null}
             </div>
-            <div className="queueList"> 
+            <div className="modal"> 
             {currentModal === 'queueList' ?
               <QueueSection 
                 host={true} 
@@ -84,11 +83,13 @@ export default function Hostroom(props) {
             </div>
           
           <div class="switcher">
-            <button
+            {appState.objects.map((elements,index) => (
+            <button key={index} classnName="box active"
              onClick={() => openModal('queueList')} style={{ background: "rgb(40, 40, 40)", border: "none"}}>
               <div style={{ marginLeft: '4.5rem' }}></div>
               <QueueMusicIcon fontSize={"large"}></QueueMusicIcon>
             </button>
+             ))}
             <button  onClick={() => openModal('roomList')} style={{ background: "rgb(40, 40, 40)", border: "none"}}>
               <div style={{ marginLeft: '5.5rem' }}></div>
               <GroupIcon fontSize={"large"}></GroupIcon>

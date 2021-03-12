@@ -156,3 +156,20 @@ div.modal {
     background-color: pink;
     width: 100%; 
   }
+
+  .box{
+    width:200px;
+    height:200px;
+    margin:10px;
+    transition: background-color 0.1s ease-in-out;
+  }
+
+  .inactive{
+    background-color:pink;
+  }
+  .active {
+    background-color: blue;
+    width:200px;
+    height:200px;
+    margin:10px;
+  }
