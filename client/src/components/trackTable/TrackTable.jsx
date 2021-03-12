@@ -13,7 +13,7 @@ import TrackCover from "../trackCover/trackCover";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
     overflowX: 'hide',
   },
   paper: {
@@ -48,7 +48,7 @@ export default function TrackTable(props) {
 
   useEffect(() => {
     const wsUrl =
-      process.env.NODE_ENV == "development"
+      process.env.NODE_ENV === "development"
         ? "ws://localhost:8888"
         : "ws://" + props.roomIp;
     setWs(new WebSocket(wsUrl));
@@ -60,7 +60,7 @@ export default function TrackTable(props) {
     ws.onmessage = (message) => {
       try {
         const contents = JSON.parse(message.data);
-        if (contents.type == "tracks") {
+        if (contents.type === "tracks") {
           setRows(formatRows(contents.data));
         }
       } catch (e) {
@@ -103,7 +103,7 @@ export default function TrackTable(props) {
             <TableBody>
               {rows.map((row, index) => {
                 return (
-                  <TableRow tabIndex={-1} key={row.name}>
+                  <TableRow tabIndex={-1} key={index}>
                     <TableCell  align="left" padding={"none"}>
                       <TrackCover
                         trackCover={row.trackCover}

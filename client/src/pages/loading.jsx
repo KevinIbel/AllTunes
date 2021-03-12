@@ -17,7 +17,7 @@ export default function Loading(props) {
           hostId: props.userId,
         };
         let data = await createRoom(host);
-        if (process.env.NODE_ENV == "development") {
+        if (process.env.NODE_ENV === "development") {
           data = { roomKey: "00000000" };
         }
         setRoomKey(data.roomKey);

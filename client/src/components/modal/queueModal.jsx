@@ -41,9 +41,9 @@ export default function QrModal(props) {
     };
 
     return (
-        <div class="qr">
+        <div className="qr">
             Let a user join the room! Scan below.<br></br><br></br>
-            <button class="buttoncss" onClick={handleOpen}
+            <button className="buttoncss" onClick={handleOpen}
             >Show QR Code</button>
             <Modal
                 open={open}

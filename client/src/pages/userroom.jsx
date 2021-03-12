@@ -19,7 +19,7 @@ export default function Userroom(props) {
 
   return (
 
-    <div class="main">
+    <div className="main">
        {props.access_token ? (
                  <WebPlaybackReact access_token={props.access_token}>
 

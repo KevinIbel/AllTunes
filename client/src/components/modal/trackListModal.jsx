@@ -42,7 +42,7 @@ export default function QrModal(props) {
     };
 
     return (
-        <div class="qr">
+        <div className="qr">
             
             <Modal
                 open={open}
@@ -51,7 +51,7 @@ export default function QrModal(props) {
                 aria-describedby="simple-modal-description"
             ><div style={modalStyle} className={classes.paper}>
                     <p id="simple-modal-description">
-                        <div class="ttable">
+                        <div classNamme="ttable">
                             <TrackTable></TrackTable>
                         </div>
                     </p>

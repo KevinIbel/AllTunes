@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import QRCode from "react-weblineindia-qrcode-generator";
 
 export default function QrModal(props) {
-    const url = process.env.NODE_ENV == 'development' ? "http://localhost:3000" : "http://35.246.33.106:3000"
+    const url = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "http://35.246.33.106:3000"
 
     function getModalStyle() {
         const top = 50;
@@ -41,9 +41,9 @@ export default function QrModal(props) {
     };
 
     return (
-        <div class="qr">
+        <div className="qr">
             Let a user join the room! Scan below.<br></br><br></br>
-            <button class="buttoncss" onClick={handleOpen}
+            <button className="buttoncss" onClick={handleOpen}
             >Show QR Code</button>
             <Modal
                 open={open}

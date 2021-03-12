@@ -23,14 +23,11 @@ export default function Hostroom(props) {
   }, props.access_token);
 
   const [currentModal, openModal] = useState(null);
-  const [appState, changeChange] = useState({
-      activeObject: null,
-      objects: [{id: 1}]
-  });
+
   return (
     <div>
       <BrowserView>
-        <div class="main">
+        <div className="main">
           {props.access_token ? (
             <WebPlaybackReact access_token={props.access_token}>
               <Footer
@@ -51,10 +48,11 @@ export default function Hostroom(props) {
         </div>
       </BrowserView>
       <MobileView>
-        <div class="mobileMain">
-          <div class="logo">
-            <img class="ourLogo" src={OurLogo} alt="All Tunes Logo" />
+        <div className="mobileMain">
+          <div className="logo">
+            <img className="ourLogo" src={OurLogo} alt="All Tunes Logo" />
           </div>
+
           <div className="modal">
             {currentModal === 'roomQueueList' ? 
               <TrackTable
@@ -66,6 +64,7 @@ export default function Hostroom(props) {
               </TrackTable>
             : null}
             </div>
+
             <div className="roomModal">
               {currentModal === 'roomList' ?
               <LobbyUsers 
@@ -73,33 +72,35 @@ export default function Hostroom(props) {
               </LobbyUsers>
               : null}
             </div>
+
             <div className="modal"> 
             {currentModal === 'queueList' ?
               <QueueSection 
                 host={true} 
                 roomIp={props.roomIp}>
-                </QueueSection>
+              </QueueSection>
             : null}
             </div>
           
-          <div class="switcher">
-            {appState.objects.map((elements,index) => (
-            <button key={index} classnName="box active"
+          <div className="switcher">
+            <button
              onClick={() => openModal('queueList')} style={{ background: "rgb(40, 40, 40)", border: "none"}}>
               <div style={{ marginLeft: '4.5rem' }}></div>
               <QueueMusicIcon fontSize={"large"}></QueueMusicIcon>
             </button>
-             ))}
-            <button  onClick={() => openModal('roomList')} style={{ background: "rgb(40, 40, 40)", border: "none"}}>
-              <div style={{ marginLeft: '5.5rem' }}></div>
-              <GroupIcon fontSize={"large"}></GroupIcon>
-            </button>
+
             <button onClick={() => openModal('roomQueueList')} style={{ background: "rgb(40, 40, 40)", border: "none" }}>
               <div style={{ marginLeft: '4rem' }}></div>
               <AudiotrackIcon fontSize={"large"}></AudiotrackIcon>
             </button>
+
+            <button  onClick={() => openModal('roomList')} style={{ background: "rgb(40, 40, 40)", border: "none"}}>
+              <div style={{ marginLeft: '4.5rem' }}></div>
+              <GroupIcon fontSize={"large"}></GroupIcon>
+            </button>
+
           </div>
-          <div class="playback">
+          <div className="playback">
             <WebPlaybackReact access_token={props.access_token}>
               <Footer
                 host={true}

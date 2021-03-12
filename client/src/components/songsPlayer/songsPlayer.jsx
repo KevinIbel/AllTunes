@@ -12,7 +12,7 @@ const SongsPlayer = props => {
 
   useEffect(() => {
     const wsUrl =
-      process.env.NODE_ENV == "development"
+      process.env.NODE_ENV === "development"
         ? "ws://localhost:8888"
         : "ws://" + props.roomIp;
     setWs(new WebSocket(wsUrl));

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import {playSong, pauseSong, playTracks, nextSong, previousSong} from '../../dataHandler/store/actions/spotify';
 import {containsCurrentSong} from '../../dataHandler/store/actions/libraryActions';
 
-export default function(ComposedComponent) {
+export default function statusHoc(ComposedComponent) {
   class StatusHoc extends Component {
     render = () => <ComposedComponent {...this.props} />;
   }
