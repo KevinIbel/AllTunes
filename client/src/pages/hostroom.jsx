@@ -47,7 +47,7 @@ export default function Hostroom(props) {
       <MobileView>
         <div className="mobileMain">
           <div className="logo">
-            <img className="ourLogo" src={OurLogo} alt="All Tunes Logo" />
+            <img className="ourLogo" src={allTunesLogo} alt="All Tunes Logo" />
           </div>
 
           <div className="modal">
