@@ -12,14 +12,19 @@ import TrackCover from "../trackCover/trackCover";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    display: 'flex',
+    marginTop: theme.spacing(3),
+    overflowX: 'hide',
   },
   paper: {
+    marginTop: theme.spacing(3),
     width: "100%",
-    marginBottom: theme.spacing(2),
+    overflowX: "auto",
+    marginBottom: theme.spacing(15),
+    margin: "auto"
   },
   table: {
-    minWidth: 750,
+    minWidth: 100,
   },
   visuallyHidden: {
     border: 0,
@@ -31,7 +36,9 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: 20,
     width: 1,
+    
   },
+
 }));
 
 export default function TrackTable(props) {
@@ -41,7 +48,7 @@ export default function TrackTable(props) {
 
   useEffect(() => {
     const wsUrl =
-      process.env.NODE_ENV == "development"
+      process.env.NODE_ENV === "development"
         ? "ws://localhost:8888"
         : "ws://" + props.roomIp;
     setWs(new WebSocket(wsUrl));
@@ -53,7 +60,7 @@ export default function TrackTable(props) {
     ws.onmessage = (message) => {
       try {
         const contents = JSON.parse(message.data);
-        if (contents.type == "tracks") {
+        if (contents.type === "tracks") {
           setRows(formatRows(contents.data));
         }
       } catch (e) {
@@ -85,7 +92,7 @@ export default function TrackTable(props) {
   }
 
   return (
-    <Container>
+    <Container fixed>
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -96,18 +103,18 @@ export default function TrackTable(props) {
             <TableBody>
               {rows.map((row, index) => {
                 return (
-                  <TableRow tabIndex={-1} key={row.name}>
-                    <TableCell align="left" padding={"none"}>
+                  <TableRow tabIndex={-1} key={index}>
+                    <TableCell  align="left" padding={"none"}>
                       <TrackCover
                         trackCover={row.trackCover}
-                        size={"75px"}
+                        size={"45px"}
                       ></TrackCover>
                     </TableCell>
-                    <TableCell align="left">{row.artists}</TableCell>
-                    <TableCell align="left">{row.name}</TableCell>
+                    <TableCell style={{padding: '0px'}} align="left">{row.artists}</TableCell>
+                    <TableCell style={{padding: '0px'}} align="left">{row.name}</TableCell>
                     {props.host ? (
-                      <TableCell padding="checkbox">
-                        <div style={{ paddingRight: "10px" }}>
+                      <TableCell>
+                        <div>
                           <QueueButton
                             ws = {ws}
                             name = {row.name }

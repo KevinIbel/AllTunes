@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import {progressMS} from '../../dataHandler/store/actions/spotify';
-import axios from 'axios';
 
 //Higher order component 'withPlayer' which returns a class component. Before these two were separate, now they're within one.
 //We connect the websocket, build the controls then send these controls as a wrapped component. 
@@ -14,7 +13,7 @@ function withPlayer(WrappedComponent) {
       super(props);
 
       const wsUrl =
-        process.env.NODE_ENV == 'development' ? 'ws://localhost:8888' : 'ws://' + props.roomIp;
+        process.env.NODE_ENV === 'development' ? 'ws://localhost:8888' : 'ws://' + props.roomIp;
 
       this.ws = new WebSocket(wsUrl);
     }

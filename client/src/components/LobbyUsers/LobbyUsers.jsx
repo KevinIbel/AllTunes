@@ -10,13 +10,13 @@ import "./LobbyUsers.css";
 
 const style = {
   position: "fixed",
-  width: "20%",
+  width:'auto',
   height: "100%",
-  bottom: 0,
-  left: "90%",
+  bottom: "0",
+  right: "0",
   background: "rgb(40, 40, 40)",
-  zIndex: 2000,
   color: "rgb(30 215 96)"
+  
 };
 
 export default function LobbyUsers(props) {
@@ -25,7 +25,7 @@ export default function LobbyUsers(props) {
 
   useEffect(() => {
     const wsUrl =
-      process.env.NODE_ENV == "development"
+      process.env.NODE_ENV === "development"
         ? "ws://localhost:8888"
         : "ws://" + props.roomIp;
     setWs(new WebSocket(wsUrl));
@@ -37,7 +37,7 @@ export default function LobbyUsers(props) {
     ws.onmessage = (message) => {
       try {
         const contents = JSON.parse(message.data);
-        if (contents.type == "lobby") {
+        if (contents.type === "lobby") {
           setUserList(contents.data);
         }
       } catch (e) {
@@ -58,9 +58,9 @@ export default function LobbyUsers(props) {
     <Container style={style}>
       <List component="nav" aria-label="contacts">
         <h2 className={"title"}>Room Lobby</h2>
-        {userList.map((user) => {
+        {userList.map((user,index) => {
           return (
-            <ListItem>
+            <ListItem key={index}>
               {user.host === true ? (
                 <Box alignItems="center" display="flex">
                   <VolumeUpIcon color="secondary"></VolumeUpIcon>
@@ -71,6 +71,7 @@ export default function LobbyUsers(props) {
                     }}
                     button="true"
                     target="_blank"
+                    rel="noreferrer"
                     href={"https://open.spotify.com/user/" + user.displayName}
                   >
                     <ListItemText primary={user.displayName}> </ListItemText>
@@ -86,6 +87,7 @@ export default function LobbyUsers(props) {
                     }}
                     button="true"
                     target="_blank"
+                    rel="noreferrer"
                     href={"https://open.spotify.com/user/" + user.displayName}
                   >
                     <ListItemText primary={user.displayName}></ListItemText>
