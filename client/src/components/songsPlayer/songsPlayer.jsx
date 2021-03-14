@@ -4,8 +4,9 @@ import SongsControl from "./components/songsControl";
 import SongSlider from "./components/songSlider";
 import VolumeControl from "./components/volumeControl";
 import withPlayer from "../hoc/playerHoc";
-import {playTracks, pauseSong, nextSong} from '../../dataHandler/store/actions/spotify';
+import {playTracks, pauseSong, nextSong, seekSong} from '../../dataHandler/store/actions/spotify';
 import "./songsPlayer.css";
+
 
 const SongsPlayer = props => {
   const [ws, setWs] = useState();
@@ -81,6 +82,9 @@ const SongsPlayer = props => {
         value={position / duration}
         position={position}
         duration={duration}
+        onChange={value =>
+          seekSong(Math.round(value * duration * 1000))
+        }
       />
       ) : null}
       <VolumeControl />
