@@ -81,9 +81,6 @@ const SongsPlayer = props => {
         value={position / duration}
         position={position}
         duration={duration}
-        onChange={value =>
-          this.props.seekSong(Math.round(value * duration * 1000))
-        }
       />
       ) : null}
       <VolumeControl />
