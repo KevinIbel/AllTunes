@@ -9,10 +9,7 @@ import "./style/hostroom.css";
 import "./style/room.css";
 import QrModal from "../components/modal/qrmodal";
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
-import {
-  BrowserView,
-  MobileView
-} from "react-device-detect";
+import {BrowserView,MobileView} from "react-device-detect";
 import OurLogo from './style/ourlogo.png';
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';
 import GroupIcon from '@material-ui/icons/Group';
