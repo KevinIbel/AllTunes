@@ -2,7 +2,6 @@ class MusicManager {
   constructor() {
     this.allTracks = [];
     this.queue = [];
-    
   }
 
   /**
@@ -50,10 +49,23 @@ class MusicManager {
       }
     }
     // Tracks are sorted by their counter (number of duplicate occurances).
-    this.allTracks.sort(function (a, b) {
+    
+    this.shuffleAllTracks(this.allTracks).sort(function (a, b) {
       return b.counter - a.counter;
     });
   };
+
+  shuffleAllTracks = (tracks) => {
+    var remainderToShuffle = tracks.length;
+    var randInRemainder, toSwap;
+    while (remainderToShuffle) {
+      randInRemainder = Math.floor(Math.random() * remainderToShuffle--);
+      toSwap = tracks[remainderToShuffle];
+      tracks[remainderToShuffle] = tracks[randInRemainder];
+      tracks[randInRemainder] = toSwap;
+    }
+    return tracks;
+  }
 
   /**
    * @returns All the tracks in the music manager.
