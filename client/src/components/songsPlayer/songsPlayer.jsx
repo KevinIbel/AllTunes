@@ -83,7 +83,7 @@ const SongsPlayer = props => {
         position={position}
         duration={duration}
         onChange={value =>
-          seekSong(Math.round(value * duration * 1000))
+        seekSong(Math.round(value * duration * 1000))
         }
       />
       ) : null}
