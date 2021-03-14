@@ -10,7 +10,7 @@ import "./style/room.css";
 import QrModal from "../components/modal/qrmodal";
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import {BrowserView,MobileView} from "react-device-detect";
-import allTunesLogo from './style/allTunesLogo.png';
+import AllTunesLogo from './style/allTunesLogo.png';
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';
 import GroupIcon from '@material-ui/icons/Group';
 
@@ -47,7 +47,7 @@ export default function Hostroom(props) {
       <MobileView>
         <div className="mobileMain">
           <div className="logo">
-            <img className="allTunesLogo" src={allTunesLogo} alt="All Tunes Logo" />
+            <img className="allTunesLogo" src={AllTunesLogo} alt="All Tunes Logo" />
           </div>
 
           <div className="modal">
