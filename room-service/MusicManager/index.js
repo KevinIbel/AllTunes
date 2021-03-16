@@ -81,7 +81,6 @@ class MusicManager {
    */
   addToQueue = (track) => {
     track.positionMS = 0;
-    console.log("trackWithPos: "+JSON.stringify(track));
     this.queue.push(track);
     return this.queue;
   };
@@ -138,7 +137,6 @@ class MusicManager {
   setSongPos = (progressMS) => {
     if (this.queue.length > 0) {
       this.queue[0].positionMS = progressMS;
-      console.log("SECOND PART FROM WS SERVERRECEIVED" + JSON.stringify(this.queue[0]));
       return this.simplifySongInfo(this.queue[0]);
     }
     return null;
