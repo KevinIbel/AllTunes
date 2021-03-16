@@ -104,7 +104,18 @@ class MusicManager {
       this.queue.shift()
       return this.simplifySongInfo(this.queue[0]);
     } else if (this.queue.length === 1) {
-      this.queue.shift()
+      // When the queue empties, auto-queue a random song in the lobby.
+      this.queue.shift();
+      const randomTrack = this.allTracks[Math.floor(Math.random() * this.allTracks.length)];
+      const reformattedTrack = {
+        name: randomTrack.name,
+        songuri: randomTrack.uri,
+        trackCover: randomTrack.trackCover,
+        artists: randomTrack.artists,
+        duration_ms: randomTrack.duration_ms
+      }
+      this.addToQueue(reformattedTrack);
+      return this.simplifySongInfo(this.queue[0]);
     }
     return null;
   };
