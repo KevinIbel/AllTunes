@@ -7,8 +7,8 @@ const style = {
   bottom: 0,
   left: 0,
   background: 'rgb(40, 40, 40)',
-  height: 80,
-  zIndex: 2000
+  height: 90,
+  zIndex: 1
 };
 
 

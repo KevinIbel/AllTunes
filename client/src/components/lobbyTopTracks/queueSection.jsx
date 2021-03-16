@@ -7,8 +7,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-const style = {
-    height: '100%',
+const style1 = {
+    height: '91.5%',
     top: '0px',
     left: '0%',
     width:'auto',
@@ -16,9 +16,10 @@ const style = {
     color: 'rgb(30 215 96)',
     textAlign: 'center',
     background: 'rgb(40, 40, 40)',
-    overflowY:'scroll',
-
+    textOverflow: 'ellipsis',
+    overflow:'auto',
  };
+
  
  export default function LobbyQueue(props) {
   const [queueList, setQueueList] = useState([]);
@@ -57,11 +58,12 @@ const style = {
 
   
   return (
-    <Container style={style}>
+    <div>
+    <Container style={style1}>
       <h2 className={"title"}>Lobby Queue</h2>
         <Paper>
-          <TableContainer>
-            <Table>
+          <TableContainer >
+            <Table style={{tableLayout:'fixed', display:'table-cell', width:'350px',minWidth:'350px', marginBottom: '100%'}}>
               {queueList.map((track,index) => {
                 return (
                   <TableBody  key={index}>
@@ -83,5 +85,6 @@ const style = {
           </TableContainer>
         </Paper>
     </Container>
+    </div>
   );
 }

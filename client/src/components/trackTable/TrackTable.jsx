@@ -15,16 +15,20 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     marginTop: theme.spacing(3),
     overflowX: 'hide',
+    whiteSpace:"unset"
+
   },
   paper: {
     marginTop: theme.spacing(3),
-    width: "100%",
     overflowX: "auto",
-    marginBottom: theme.spacing(15),
-    margin: "auto"
+    marginBottom: theme.spacing(25),
+    whiteSpace:"unset"
   },
   table: {
     minWidth: 100,
+    width:'80%',
+    whiteSpace:"unset"
+
   },
   visuallyHidden: {
     border: 0,
@@ -34,9 +38,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     padding: 0,
     position: "absolute",
-    top: 20,
+    top: 202,
     width: 1,
-    
+    whiteSpace:"unset"
+
   },
 
 }));
@@ -92,13 +97,17 @@ export default function TrackTable(props) {
   }
 
   return (
-    <Container fixed>
+    <Container    style={{    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center', }}
+    >
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
             aria-label="enhanced table"
+            style={{tableLayout:'fixed', display:'table-cell', paddingLeft:"3px", width:"500px"}}
           >
             <TableBody>
               {rows.map((row, index) => {
@@ -107,7 +116,7 @@ export default function TrackTable(props) {
                     <TableCell  align="left" padding={"none"}>
                       <TrackCover
                         trackCover={row.trackCover}
-                        size={"45px"}
+                        size={"55px"}
                       ></TrackCover>
                     </TableCell>
                     <TableCell style={{padding: '0px'}} align="left">{row.artists}</TableCell>
