@@ -48,8 +48,7 @@ class MusicManager {
         this.allTracks.push(userTracks[i]);
       }
     }
-    // Tracks are sorted by their counter (number of duplicate occurances).
-    
+    // Tracks are shuffled and then sorted by their counter (number of duplicate occurances).
     this.shuffleAllTracks(this.allTracks).sort(function (a, b) {
       return b.counter - a.counter;
     });
@@ -84,7 +83,6 @@ class MusicManager {
     this.queue.push(track);
     return this.queue;
   };
-
  
   /**
    * @returns All the tracks in the play queue.
@@ -96,7 +94,6 @@ class MusicManager {
   simplifySongInfo = (song) => {
     return { uri: song.songuri, positionMS: song.positionMS, duration_ms: song.duration_ms }
   }
-
 
   getNextSong = () => {
     if (this.queue.length > 1) {
@@ -141,10 +138,6 @@ class MusicManager {
     }
     return null;
   };
-
-  
-
-
 }
 
 module.exports = MusicManager;
