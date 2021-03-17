@@ -25,6 +25,8 @@ export default function Hostroom(props) {
 
   const [currentModal, openModal] = useState(null);
 
+
+  
   return (
     <div>
       <BrowserView>
