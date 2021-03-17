@@ -42,7 +42,7 @@ export default function QrModal(props) {
 
     return (
         <div className="qr">
-            {/* Let a user join the room! Scan below.<br></br><br></br>
+            Let a user join the room! Scan below.<br></br><br></br>
             <button className="buttoncss" onClick={handleOpen}
             >Show QR Code</button>
             <Modal
@@ -54,7 +54,7 @@ export default function QrModal(props) {
                     <p id="simple-modal-description">
                         <QRCode value={url + `#roomKey=${props.roomKey}`} size={550} />
                     </p>
-                </div></Modal> */}
+                </div></Modal>
         </div>
     )
 }
