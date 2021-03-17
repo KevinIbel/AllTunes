@@ -143,7 +143,7 @@ div.switcher {
  {
   white-space: nowrap;
   position: absolute;
-  top:45px;
+  top:25px;
   line-height: 1px;
   cursor: default;
   text-overflow: ellipsis;
@@ -157,5 +157,18 @@ div.switcher {
   height: 0px;
   position: fixed;
   bottom: 90px;
+
+}
+
+.player-container .details-section-mobile
+ {
+  white-space: nowrap;
+  position: absolute;
+  top:45px;
+  line-height: 1px;
+  cursor: default;
+  text-overflow: ellipsis;
+  font-family: Trebuchet MS, Helvetica, sans-serif;
+  color: white;
 
 }
