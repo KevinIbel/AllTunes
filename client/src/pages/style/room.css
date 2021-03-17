@@ -143,12 +143,13 @@ div.switcher {
 .player-container .details-section {
     white-space: nowrap;
     position: absolute;
-    top: 45px;
+    top: 25px;
     line-height: 1px;
     cursor: default;
     text-overflow: ellipsis;
     font-family: Trebuchet MS, Helvetica, sans-serif;
     color: white;
+    left:21%;
 }
 
 .details-section-track-cover {

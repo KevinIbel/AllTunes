@@ -7,12 +7,13 @@ import QueueSection from "../components/lobbyTopTracks/queueSection";
 import WebPlaybackReact from "../components/spotify/webPlayback";
 import QrModal from "../components/modal/qrmodal";
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
-import { BrowserView, MobileView } from "react-device-detect";
+import {BrowserView,MobileView} from "react-device-detect";
 import AllTunesLogo from './style/allTunesLogo.png';
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import GroupIcon from '@material-ui/icons/Group';
 import QRCode from "react-weblineindia-qrcode-generator";
+
 import "./style/hostroom.css";
 import "./style/room.css";
 
@@ -21,12 +22,11 @@ export default function Hostroom(props) {
     setToken(props.access_token);
   }, props.access_token);
 
-  const url = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "http://35.246.33.106:3000"
-
   const [currentModal, openModal] = useState(null);
 
+  const url = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "http://35.246.33.106:3000"
 
-  
+
   return (
     <div>
       <BrowserView>
@@ -47,51 +47,50 @@ export default function Hostroom(props) {
           ></TrackTable>
           <LobbyUsers roomIp={props.roomIp}></LobbyUsers>
           <QueueSection host={true} roomIp={props.roomIp}></QueueSection>
-          <div class="qr">
-            <QrModal roomKey={props.roomKey}></QrModal>
-          </div>
+          <QrModal roomKey={props.roomKey}></QrModal>
         </div>
       </BrowserView>
       <MobileView  >
         <div className="mobileMain">
           <div className="modal">
-            {currentModal === 'roomQueueList' ?
+            {currentModal === 'roomQueueList' ? 
               <TrackTable
-                roomIp={props.roomIp}
-                host={true}
-                access_token={props.access_token}
-                roomKey={props.roomKey}
-              >
+              roomIp={props.roomIp}
+              host={true}
+              access_token={props.access_token}
+              roomKey={props.roomKey}
+              >  
               </TrackTable>
-              : null}
-          </div>
+            : null}
+            </div>
 
-          <div className="roomModal">
-            {currentModal === 'roomList' ?
-              <LobbyUsers
-                roomIp={props.roomIp}>
+            <div className="roomModal">
+              {currentModal === 'roomList' ?
+              <LobbyUsers 
+              roomIp={props.roomIp}>
               </LobbyUsers>
               : null}
-          </div>
+            </div>
 
-          <div className="queueueueue">
+            <div className="modal"> 
             {currentModal === 'queueList' ?
-              <QueueSection
-                host={true}
+              <QueueSection 
+                host={true} 
                 roomIp={props.roomIp}>
               </QueueSection>
-              : null}
-          </div>
+            : null}
+            </div>
 
-          <div className="qrMobile">
+            <div className="qrMobile">
             {currentModal === 'qrCode' ?
               <QRCode value={url + `#roomKey=${props.roomKey}`} size={250} />
               : null}
-          </div>
+             </div>
+
 
           <div className="switcher">
             <button
-              onClick={() => openModal('queueList')} style={{ background: "rgb(40, 40, 40)", border: "none" }}>
+             onClick={() => openModal('queueList')} style={{ background: "rgb(40, 40, 40)", border: "none"}}>
               <div style={{ marginLeft: '4.5rem' }}></div>
               <QueueMusicIcon fontSize={"large"}></QueueMusicIcon>
             </button>
@@ -101,7 +100,7 @@ export default function Hostroom(props) {
               <AudiotrackIcon fontSize={"large"}></AudiotrackIcon>
             </button>
 
-            <button onClick={() => openModal('roomList')} style={{ background: "rgb(40, 40, 40)", border: "none" }}>
+            <button  onClick={() => openModal('roomList')} style={{ background: "rgb(40, 40, 40)", border: "none"}}>
               <div style={{ marginLeft: '4.5rem' }}></div>
               <GroupIcon fontSize={"large"}></GroupIcon>
             </button>
