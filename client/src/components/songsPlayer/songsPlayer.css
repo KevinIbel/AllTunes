@@ -80,7 +80,7 @@
 
 .player-container .volume-control-container {
   right: 45px;
-  top: 51px;
+  top: 35px;
   display: flex;
 }
 @media (max-width: 750px) {

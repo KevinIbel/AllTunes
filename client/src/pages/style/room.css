@@ -143,7 +143,7 @@ div.switcher {
 .player-container .details-section {
     white-space: nowrap;
     position: absolute;
-    top: 25px;
+    top: 15px;
     line-height: 1px;
     cursor: default;
     text-overflow: ellipsis;
