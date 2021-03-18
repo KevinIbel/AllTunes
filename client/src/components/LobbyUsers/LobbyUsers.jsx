@@ -15,8 +15,9 @@ const style = {
   bottom: "0",
   right: "0",
   background: "rgb(40, 40, 40)",
-  color: "rgb(30 215 96)"
-  
+  color: "rgb(30 215 96)",
+  textAlign: 'center',
+  overflow:'auto',
 };
 
 export default function LobbyUsers(props) {
@@ -56,7 +57,7 @@ export default function LobbyUsers(props) {
 
   return (
     <Container style={style}>
-      <List component="nav" aria-label="contacts">
+      <List style={{width:'350px',minWidth:'350px'}} component="nav" aria-label="contacts">
         <h2 className={"title"}>Room Lobby</h2>
         {userList.map((user,index) => {
           return (
@@ -74,7 +75,7 @@ export default function LobbyUsers(props) {
                     rel="noreferrer"
                     href={"https://open.spotify.com/user/" + user.displayName}
                   >
-                    <ListItemText primary={user.displayName}> </ListItemText>
+                  <ListItemText primary={user.displayName}> </ListItemText>
                   </a>
                 </Box>
               ) : (

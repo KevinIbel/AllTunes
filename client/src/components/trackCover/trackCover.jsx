@@ -13,7 +13,7 @@ const trackCover = (props) => {
   }
 
   return props.currentSong.album || props.trackCover ? (
-    <div style={{ float: "left", paddingRight: "10px" }}>
+    <div style={{float: "left", paddingRight: "0" }}>
       <img
         className="cover"
         alt="cover"
