@@ -2,7 +2,6 @@ class MusicManager {
   constructor() {
     this.allTracks = [];
     this.queue = [];
-    
   }
 
   /**
@@ -49,11 +48,23 @@ class MusicManager {
         this.allTracks.push(userTracks[i]);
       }
     }
-    // Tracks are sorted by their counter (number of duplicate occurances).
-    this.allTracks.sort(function (a, b) {
+    // Tracks are shuffled and then sorted by their counter (number of duplicate occurances).
+    this.shuffleAllTracks(this.allTracks).sort(function (a, b) {
       return b.counter - a.counter;
     });
   };
+
+  shuffleAllTracks = (tracks) => {
+    var remainderToShuffle = tracks.length;
+    var randInRemainder, toSwap;
+    while (remainderToShuffle) {
+      randInRemainder = Math.floor(Math.random() * remainderToShuffle--);
+      toSwap = tracks[remainderToShuffle];
+      tracks[remainderToShuffle] = tracks[randInRemainder];
+      tracks[randInRemainder] = toSwap;
+    }
+    return tracks;
+  }
 
   /**
    * @returns All the tracks in the music manager.
@@ -69,11 +80,9 @@ class MusicManager {
    */
   addToQueue = (track) => {
     track.positionMS = 0;
-    console.log("trackWithPos: "+JSON.stringify(track));
     this.queue.push(track);
     return this.queue;
   };
-
  
   /**
    * @returns All the tracks in the play queue.
@@ -86,13 +95,23 @@ class MusicManager {
     return { uri: song.songuri, positionMS: song.positionMS, duration_ms: song.duration_ms }
   }
 
-
   getNextSong = () => {
     if (this.queue.length > 1) {
       this.queue.shift()
       return this.simplifySongInfo(this.queue[0]);
     } else if (this.queue.length === 1) {
-      this.queue.shift()
+      // When the queue empties, auto-queue a random song in the lobby.
+      this.queue.shift();
+      const randomTrack = this.allTracks[Math.floor(Math.random() * this.allTracks.length)];
+      const reformattedTrack = {
+        name: randomTrack.name,
+        songuri: randomTrack.uri,
+        trackCover: randomTrack.trackCover,
+        artists: randomTrack.artists,
+        duration_ms: randomTrack.duration_ms
+      }
+      this.addToQueue(reformattedTrack);
+      return this.simplifySongInfo(this.queue[0]);
     }
     return null;
   };
@@ -115,15 +134,10 @@ class MusicManager {
   setSongPos = (progressMS) => {
     if (this.queue.length > 0) {
       this.queue[0].positionMS = progressMS;
-      console.log("SECOND PART FROM WS SERVERRECEIVED" + JSON.stringify(this.queue[0]));
       return this.simplifySongInfo(this.queue[0]);
     }
     return null;
   };
-
-  
-
-
 }
 
 module.exports = MusicManager;
