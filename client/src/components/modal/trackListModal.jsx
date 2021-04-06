@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import QRCode from "react-weblineindia-qrcode-generator";
+import TrackTable from "../trackTable/TrackTable";
 
 export default function QrModal(props) {
-    const url = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "http://35.246.33.106:3000"
+    const url = process.env.NODE_ENV == 'development' ? "http://localhost:3000" : "http://35.246.33.106:3000"
 
     function getModalStyle() {
         const top = 50;
@@ -42,9 +43,7 @@ export default function QrModal(props) {
 
     return (
         <div className="qr">
-            Let a user join the room! Scan below.<br></br><br></br>
-            <button className="buttoncss" onClick={handleOpen}
-            >Show QR Code</button>
+            
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -52,7 +51,9 @@ export default function QrModal(props) {
                 aria-describedby="simple-modal-description"
             ><div style={modalStyle} className={classes.paper}>
                     <p id="simple-modal-description">
-                        <QRCode value={url + `#roomKey=${props.roomKey}`} size={550} />
+                        <div classNamme="ttable">
+                            <TrackTable></TrackTable>
+                        </div>
                     </p>
                 </div></Modal>
         </div>

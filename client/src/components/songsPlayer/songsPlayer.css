@@ -55,9 +55,8 @@
   white-space: nowrap;
   overflow: hidden;
   position: absolute;
-  height: 56px;
+  height: auto;
   width: 500px;
-  line-height: 14px;
   cursor: default;
   text-overflow: ellipsis;
   font-family: Trebuchet MS, Helvetica, sans-serif;
@@ -80,8 +79,8 @@
 }
 
 .player-container .volume-control-container {
-  right: 20px;
-  top: 37px;
+  right: 45px;
+  top: 35px;
   display: flex;
 }
 @media (max-width: 750px) {

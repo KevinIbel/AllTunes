@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
 
 export default function QueueButton(props) {
-  const [songuri] = useState(props.songuri);
   const [roomKey, setRoomKey] = useState(props.roomKey);
   const [access_token, setAccess_token] = useState(props.access_token);
 
@@ -23,6 +21,7 @@ export default function QueueButton(props) {
     <Button
       color="secondary"
       variant="contained"
+      size="small"
       onClick={() => {
         addToQueue({
           name: props.name,

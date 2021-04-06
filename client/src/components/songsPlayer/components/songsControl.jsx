@@ -15,7 +15,7 @@ function songsControl(props) {
         className="play-btn"
         onClick={(event2) => props.playing ? props.pauseSong() : props.playTracks()}
         icon={'play-btn ' + (props.playing ? 'fa-pause-circle-o' : 'fa-play-circle-o')}
-      />;
+      />
       <Button
         className="next-song"
         icon="fa-step-forward forward"

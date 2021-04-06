@@ -29,7 +29,7 @@ export default function UserLoading(props) {
   }
 
   async function getRoomKeys() {
-    if (process.env.NODE_ENV == "development") {
+    if (process.env.NODE_ENV === "development") {
       const rooms = {};
       if (props.roomKey) {
         rooms[props.roomKey] = "http://localhost:8888";
@@ -44,7 +44,7 @@ export default function UserLoading(props) {
 
   async function addCustomerToRoom() {
     try {
-      if (props.access_token && (props.roomKey || process.env.NODE_ENV == "development") && props.display_name) {
+      if (props.access_token && (props.roomKey || process.env.NODE_ENV === "development") && props.display_name) {
         await addCustomer(
           {
             token: props.access_token,

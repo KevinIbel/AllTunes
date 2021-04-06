@@ -1,97 +1,174 @@
 /*  pushing to master */
 
 div.main {
-  width: 100%;
-  float: left;
+    width: 100%;
+    float: left;
 }
 
 div.menu {
-  width: 25%;
-  float: right;
-  padding: 15px;
+    width: 25%;
+    float: right;
+    padding: 15px;
 }
 
 div.qr {
-  position: fixed;
-  bottom: 7%;
-  left: 0;
-  font-family: Trebuchet MS, Helvetica, sans-serif;
-  font-size: 20px;
-  text-align: center;
-  text-decoration: underline;
-  color: white;
+    position: fixed;
+    bottom: 10%;
+    left: 20%;
+    font-family: Trebuchet MS, Helvetica, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    text-decoration: underline;
+    color: white;
+}
+
+div.qrMobile {
+    position: fixed;
+    top: 25%;
+    left: 15%;
 }
 
 div.totalUsers {
-  font-family: Trebuchet MS, Helvetica, sans-serif;
-  font-size: 20px;
-  text-align: center;
-  text-decoration: underline;
-  color: white;
+    font-family: Trebuchet MS, Helvetica, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    text-decoration: underline;
+    color: white;
 }
 
 div.hostedBy {
-  font-family: Trebuchet MS, Helvetica, sans-serif;
-  font-size: 20px;
-  text-align: center;
-  text-decoration: underline;
-  color: white;
+    font-family: Trebuchet MS, Helvetica, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    text-decoration: underline;
+    color: white;
 }
 
 body {
-  color: #000000;
-  background-color: #000000;
+    color: #000000;
+    background-color: #000000;
+    margin: 0px;
+    padding: 0px;
 }
 
 div.titleText {
-  font-family: Trebuchet MS, Helvetica, sans-serif;
-  font-size: 50px;
-  text-align: center;
-  color: white;
+    font-family: Trebuchet MS, Helvetica, sans-serif;
+    font-size: 50px;
+    text-align: center;
+    color: white;
 }
 
 div.spotifyTrackInfo {
-  font-family: Trebuchet MS, Helvetica, sans-serif;
-  font-size: 20px;
-  text-align: center;
-  color: white;
+    font-family: Trebuchet MS, Helvetica, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color: white;
 }
 
 img.spotifyArt {
-  border-radius: 8px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 img.editName {
-  border-radius: 8px;
-  display: block;
-  display: inline-block;
+    border-radius: 8px;
+    display: block;
+    display: inline-block;
 }
 
 div.divider {
-  content: "";
-  position: absolute;
-  left: 5%;
-  right: 5%;
-  width: 60%;
-  height: 1px;
-  background-image: linear-gradient(
-    to right,
-    transparent,
-    rgb(255, 255, 255),
-    transparent
-  );
+    content: "";
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    width: 60%;
+    height: 1px;
+    background-image: linear-gradient( to right, transparent, rgb(255, 255, 255), transparent);
 }
 
 div.queue {
-  font-family: Trebuchet MS, Helvetica, sans-serif;
-  font-size: 20px;
-  text-align: center;
-  color: white;
+    font-family: Trebuchet MS, Helvetica, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color: white;
 }
 
 ul {
-  list-style-type: none;
+    list-style-type: none;
+}
+
+div.logo {
+    position: absolute;
+    height: 15%;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+div.mobileMain {
+    width: 100%;
+}
+
+div.queueueueue {}
+
+img.allTunesLogo {
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 60%;
+    height: 60%;
+}
+
+div.switcher {
+    bottom: 20%;
+    width: 100%;
+    background-color: rgb(40, 40, 40);
+    position: fixed;
+    top: 80%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-container .details-section {
+    white-space: nowrap;
+    position: absolute;
+    top: 15px;
+    line-height: 1px;
+    cursor: default;
+    text-overflow: ellipsis;
+    font-family: Trebuchet MS, Helvetica, sans-serif;
+    color: white;
+    left:21%;
+}
+
+.details-section-track-cover {
+    display: inline-block;
+    height: 0px;
+    position: fixed;
+    bottom: 90px;
+}
+
+
+.player-container .details-section-mobile
+ {
+  white-space: nowrap;
+  position: absolute;
+  top:45px;
+  line-height: 1px;
+  cursor: default;
+  text-overflow: ellipsis;
+  font-family: Trebuchet MS, Helvetica, sans-serif;
+  color: white;
+
 }

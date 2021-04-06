@@ -4,15 +4,17 @@ import SongsControl from "./components/songsControl";
 import SongSlider from "./components/songSlider";
 import VolumeControl from "./components/volumeControl";
 import withPlayer from "../hoc/playerHoc";
-import {playTracks, pauseSong, nextSong} from '../../dataHandler/store/actions/spotify';
+import {playTracks, pauseSong, nextSong, seekSong} from '../../dataHandler/store/actions/spotify';
+
 import "./songsPlayer.css";
+
 
 const SongsPlayer = props => {
   const [ws, setWs] = useState();
 
   useEffect(() => {
     const wsUrl =
-      process.env.NODE_ENV == "development"
+      process.env.NODE_ENV === "development"
         ? "ws://localhost:8888"
         : "ws://" + props.roomIp;
     setWs(new WebSocket(wsUrl));
@@ -59,6 +61,8 @@ const SongsPlayer = props => {
 
   return (
     <div className="player-container">
+                  
+
       {(props.currentSong.id) ? (
         <DetailSection
           ids={
@@ -82,11 +86,13 @@ const SongsPlayer = props => {
         position={position}
         duration={duration}
         onChange={value =>
-          this.props.seekSong(Math.round(value * duration * 1000))
+        seekSong(Math.round(value * duration * 1000))
         }
       />
       ) : null}
+
       <VolumeControl />
+
     </div>
     
   );

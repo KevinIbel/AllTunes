@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const backendUrl =
-  process.env.NODE_ENV == "development"
+  process.env.NODE_ENV === "development"
     ? "http://localhost:8888/room"
     : "http://35.246.74.70:8000/room";
 
@@ -43,7 +43,7 @@ export async function addCustomer(customer, roomIpAddress) {
   var config = {
     method: "put",
     baseURL:
-      process.env.NODE_ENV == "development"
+      process.env.NODE_ENV === "development"
         ? "http://localhost:8888/room"
         : "http://" + roomIpAddress + "/room",
     headers: {
