@@ -1,0 +1,104 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "defaultTitle",
+        "description": "defaultDescription",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "http://35.246.74.70:8000"
+        }
+    ],
+    "paths": {
+        "/room": {
+            "get": {
+                "description": "Get Keys and IP address of current rooms",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "CFHTTG56": "192.567.1234:3000"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new room",
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "roomkey": "CFHTTG56",
+                                    "roomIp": "192.567.1234:3000"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error creating new room",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": "error stack trace"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/room/{roomKey}": {
+            "get": {
+                "description": "Get IP of requested room",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "roomKey",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/html; charset=utf-8": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "192.567.1234:3000"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Not found",
+                        "content": {
+                            "text/html; charset=utf-8": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "room does not exist"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
