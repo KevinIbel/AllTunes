@@ -115,7 +115,6 @@ class Room {
   setSongPos = (progressMS) => {
 
     const temp = this.musicManager.setSongPos(progressMS)
-    console.log("we are in room.jshello: " + JSON.stringify(temp));
     return temp;
   };
 
@@ -141,7 +140,6 @@ class Room {
   setNextSongTimer = (duration_ms, positionMS) => {
     if (this.musicManager.getQueue().length > 0) {
       this.remainder = (duration_ms - positionMS)/1000;
-      console.log("duration"+ duration_ms);
       this.timer = setInterval(this.decrementUpdate, 1000);
     }
   }
