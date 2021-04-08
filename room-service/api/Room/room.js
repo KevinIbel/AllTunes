@@ -34,13 +34,17 @@ class Room {
    * @param {Object} customer The customer to add to the room
    * @param {string} customer.token The Authentication token of the user given by Spotify.
    * @param {string} customer.username The customers username
-   * @param {string} customer.userid The customers Spotify ID.
+   * @param {string} customer.userId The customers Spotify ID.
    */
 
   addCustomer = async (customer) => {
     try {
       // Check if the user has already joined the room.
-      if (!Object.keys(this.customers).includes(customer.userid)) {
+      var joinedIds = this.customers.reduce(function (custAcc, currCust) {
+        custAcc.push(currCust.userId);
+        return custAcc;
+      }, []);
+      if (!joinedIds.includes(customer.userId)) {
         // Update the tracks and userlist in the room.
         const UserTracks = await new SpotifyClient(customer).getFavTracks();
         const reducedTracks = this.musicManager.reduceUserTracks(UserTracks);
