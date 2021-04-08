@@ -49,7 +49,7 @@ export default function UserLoading(props) {
           {
             token: props.access_token,
             username: props.display_name,
-            userid: props.id,
+            userId: props.userId,
           },
           rooms[props.roomKey ? props.roomKey : roomKey]
         );
