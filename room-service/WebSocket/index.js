@@ -45,7 +45,6 @@ function initWebsocket(server) {
             break;
           case "QueueUpdate":
             const newestQueue = getQueue();
-            console.log("got QueueUpdate"+JSON.stringify(newestQueue));
             sendToClients(socket, JSON.stringify({ type: "queue", data: newestQueue }));
             break;
           case "SkipRequest":
